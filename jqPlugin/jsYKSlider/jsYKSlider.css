@@ -1,0 +1,84 @@
+.ykSlider-box {
+	 position: relative; 
+	 margin: 0 auto;
+	 overflow: hidden;
+}
+.ykSlider-item {
+	cursor:pointer;
+	position:absolute;
+	width:640px;
+	height:270px;
+	opacity: 0;
+	zIndex: 0
+}
+.ykSlider-item-link {
+	display:block;
+	overflow:hidden;
+	width:100%;
+	height:100%;
+}
+.ykSlider-item img {
+	width:100%;
+	height:100%;
+}
+.ykSlider-item-overlay {
+	z-index:1;
+	position:absolute;
+	top:0;
+	left:0;
+	background:#000;
+	width:100%;
+	height:100%;
+	opacity:0;
+	filter:opacity=0;
+}
+.ykSlider-leftNav,.ykSlider-rightNav {
+	cursor:pointer;
+	z-index:10;
+	position:absolute;
+	top:50%;
+	width:45px;
+	height:45px;
+	margin-top:-43px;
+}
+.ykSlider-leftNav {
+	left: 7px;
+	background: url("slide_prev_btn.png") no-repeat;
+	_background: none;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="slide_prev_btn.png");
+}
+.ykSlider-rightNav{
+	right:7px;
+	background:url("slide_next_btn.png") no-repeat;
+	_background:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="slide_next_btn.png");
+}
+.ykSlider-bottomNav-box{
+	height: 10px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	z-index: 140;
+	bottom: 20px; 
+}
+.ykSlider-bottomNav{
+	cursor:pointer;
+	overflow:hidden;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	width:10px;
+	height:10px;
+	margin:0 5px;
+	vertical-align:top;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	background:#c3c3c3;
+}
+.ykSlider-bottomNav:hover{
+	background:#aaa;
+}
+.ykSlider-bottomNav.sel, ykSlider-bottomNav.sel:hover{
+	background:#69aaec;
+}
