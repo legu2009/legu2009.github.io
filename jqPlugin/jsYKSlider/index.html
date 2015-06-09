@@ -4,8 +4,11 @@
 	<meta charset="utf-8">
 	<title>仿优酷 图片 轮播</title>
 	<link type="text/css" rel="stylesheet"  href="../../pubilc/reset.css" >
+	<link type="text/css" rel="stylesheet"  href="../../pubilc/syntaxhighlighter/styles/shCoreDefault.css" >
 	<link type="text/css" rel="stylesheet"  href="jsYKSlider.css" >
 	<script src="../../pubilc/jquery-1.11.3.min.js"></script>
+	<script src="../../pubilc/syntaxhighlighter/scripts/shCore.js"></script>
+	<script src="../../pubilc/syntaxhighlighter/scripts/shBrushJScript.js"></script>
 	<script src="jsYKSlider.js"></script>
 </head>
 <body>
@@ -23,8 +26,31 @@
 				{"img":"http:\/\/r4.ykimg.com\/05100000555F156367BC3D40CA04700E","title":"\u5a5a\u59fb\u65f6\u5dee","url":"http:\/\/v.youku.com\/v_show\/id_XMTI1NjEyMzE4OA==.html"},
 				{"img":"http:\/\/r1.ykimg.com\/051000005574F98867BC3D15250DF838","title":"\u5267\u661f\u8000","url":"http:\/\/v.youku.com\/v_show\/id_XMTI1NzM3MjUwNA==.html"}
 			]
-		})
+		});
+		SyntaxHighlighter.all();
 	</script>
+	<pre class="brush: js;">
+		{
+			direct : "left",//滚动的方向
+			offsetPages : 3,//默认可视最大条数
+			initPageIndex : 0,//默认当前显示第几条
+			delay : 5000,//滚动间隔（毫秒）
+			speed : 500, //滚动速度毫秒，
+			itemSize: {
+				width: 640, 
+				height: 270
+			},
+			boxWidth : 970,//最外层宽，需要使用的时候在传,默认由程序自动判断
+			boxHeight : 310,//最外层高  
+			cssOpts: {
+				'-2': {left: -530, top: 85, width: 530, height: 100},
+				'-1': {left: 0, top: 23, width: 530, height: 224},
+				'0':  {left: 165, top: 0, width: 640, height: 270},
+				'1':  {left: 440, top: 23, width: 530, height: 224},
+				'2':  {left: 970, top: 85, width: 530, height: 100}
+			}
+		}
+	</pre>
 </body>
 </html>
 
