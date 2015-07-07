@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="renderer" content="webkit">
+	<title>地图配置工具</title>
+	<link media="all" type="text/css" rel="stylesheet" href="../../pubilc/reset.css"/>
+	<style>
+    body {
+        font-size: 12px;
+        padding: 10px;
+    }
+	.file-upload {
+		display: inline-block;
+		overflow: hidden;
+		position: relative;
+		line-height: normal;
+	}
+	.file-upload input.upload {
+		cursor: pointer;
+		font-size: 20px;
+		margin: 0;
+		opacity: 0;
+		padding: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	input[type="file"] {
+		display: block;
+	}
+    .map-btn {
+        margin-left: 4px;
+        padding: 2px 10px;
+        background-color: #fff;
+        color: #333;
+        -moz-user-select: none;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: normal;
+        margin-bottom: 0;
+        padding: 6px 12px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        padding: 2px 10px;
+        margin-left: 4px;
+		line-height: normal;
+    }
+    
+    .map-btn:hover {
+        color: #333;
+        background-color: #e6e6e6;
+        border-color: #adadad
+    }
+    
+    .del-btn {
+        /*background-color: #DFBED3;*/
+    }
+    
+    #svgLoad,#addSvgBox {
+        border: 1px solid #ddd;
+        background-color: rgba(173, 225, 255, 0.7);
+        height: 660px;
+        width: 660px;
+    }
+    
+    .configure-box {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        position: absolute;
+        left: 670px;
+        padding: 5px 10px;
+        min-width: 500px;
+       	background-color: rgba(238, 238, 238, 0.8);
+       	z-index: 1000;
+    }
+    
+    .configure-box > div {
+        height: 30px;
+        line-height: 30px;
+    }
+    
+    select {
+        margin-left: 4px;
+    }
+    
+    .color-sel div {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 1px solid #ccc;
+    }
+    
+    .color-sel div.sel {
+        border: 1px solid #000;
+    }
+    
+    .color-sel .color1 {
+        background-color: #d9d9d9;
+    }
+    
+    .color-sel .color2 {
+        background-color: #faf6d8;
+    }
+    
+    .color-sel .color3 {
+        background-color: #bae9ee;
+    }
+    
+    .color-sel .color4 {
+        background-color: #dfbfd2;
+    }
+    
+    .color-sel .color5 {
+        background-color: #cbe6c8;
+    }
+    
+    .circle-btn {
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #f00;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 100;
+        cursor: pointer;
+    }
+    
+    .text-btn {
+        width: 10px;
+        height: 10px;
+        background-color: blue;
+        position: absolute;
+        left: 10px;
+        top: 0;
+        z-index: 50;
+        cursor: pointer;
+    }
+    
+    .svg-box, #addSvgBox {
+        position: relative;
+    }
+    .uploadBoxMap {
+	    overflow: hidden;
+	    position: relative;
+	    text-align: center;
+	    visibility: visible;
+	    margin-left: 4px;
+    	padding: 2px 10px;
+    }
+    .map-popTip {
+    	color: #f00;
+	    height: 39px;
+	    position: absolute;
+	    z-index: 10;
+		display: none;
+    }
+    .map-popTip-l {
+	    background: url("../../public/map/pop-ui-l.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	    display: inline-block;
+	    float: left;
+	    height: 39px;
+	    width: 20px;
+	}
+	.map-popTip-m {
+	    background: url("../../public/map/pop-ui-m.png") repeat-x scroll 100% 0 rgba(0, 0, 0, 0);
+	    display: inline-block;
+	    float: left;
+	    height: 39px;
+	    line-height: 35px;
+	    min-width: 2px;
+	    text-indent: -0.5em;
+	}
+	.map-popTip-r {
+	    background: url("../../public/map/pop-ui-r.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	    display: inline-block;
+	    float: left;
+	    height: 39px;
+	    width: 13px;
+	}
+    </style>
+	<script type="text/javascript" src="../../public/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="../../public/avalon.js"></script>
+    <script>
+	    var COLOR_GROUP_MAP = {
+	    	0: '#d89026,#c46912,#d9d9d9',
+	        1: '#faf6d8,#d5d794,#dddcd3',
+	        2: '#bae9ee,#77c8ca,#c2d9da',
+	        3: '#dfbfd2,#dc97c6,#d3ccd1',
+	        4: '#cbe6c8,#79d466,#cfdde1'
+	    };
+	    var COLOR_GROUP_MAP2 = {};
+	    var SHAP_MAP = {
+	        polygon: "path",
+	        circle: "center",
+	        path: "path"
+	    };
+	    var SHAP_NAME_MAP = {
+	        path: '块',
+	        center: '行政中心',
+	        star: '星星',
+	        text: '文字'
+	    };
+	    var SVG_PATH = {
+	        key: "10000000",
+	        svgTab: []
+	    };
+	    var AREA_ID = '905eaf1e01e84d1cb2d0e62170661b6d';
+	    (function() {
+	    	var dataBase = [{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"10000000","baseAreaId":"905eaf1e01e84d1cb2d0e62170661b6d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"","mapOutput":"","areaName":"全国","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"150000","baseAreaId":"02e4e647fb2a4d90a29b6ddd9add0a6a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"内蒙古","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420100","baseAreaId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"湖北","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"530000","baseAreaId":"11e09a1cb482443591fd0e7d9ccef15a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"云南","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"310000","baseAreaId":"171017c92baa4553874d78779ee72bb6","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"上海","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320000","baseAreaId":"19880eacb13f4125b2d7d150b5f32c5f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"江苏","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"130000","baseAreaId":"203494cd51594d74b633c87744d34886","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"河北","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"510000","baseAreaId":"27eb5106ef884a7e862d4315d10bf2fe","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"四川","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"620000","baseAreaId":"2d9fd732f0d5461b8baae67cdddb8487","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"甘肃","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"540000","baseAreaId":"2ddbc988d5c741fcb9aaa52cdcf57793","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"西藏","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"450000","baseAreaId":"3150a72f99664101bb5c06ee9ea192e6","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"广西","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460000","baseAreaId":"33471e52ce6e4a618409b6207f33d9f4","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"海南","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"440000","baseAreaId":"4049d7145d9c4c38a0e3911c1749e56f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"广东","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"120000","baseAreaId":"4665b446b1da4cbe963fed73b7e89d66","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"天津","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"520000","baseAreaId":"561e7b308e374753a60cdf9f6fc56552","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"贵州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"330000","baseAreaId":"5f0e90fe74df4c62995154d0b0af3e93","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"浙江","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"410000","baseAreaId":"66f87c0c5cf141769f058112e551c97d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"河南","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350000","baseAreaId":"6c566f608d7e4d438030c8e60cf20510","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"福建","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"110000","baseAreaId":"6fb9b978eb1b4e419fd1f1d99520ebec","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"北京","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"630000","baseAreaId":"70716d5ef1f344c08e33eb730c63ff1a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"青海","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610000","baseAreaId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"陕西","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"210000","baseAreaId":"82bf0f0ef7be449c98d500dc7a6f020e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"辽宁","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360000","baseAreaId":"8c05647370c8427ca0885800c190a408","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"江西","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640000","baseAreaId":"9646f3d5401f444684c02d38d368c047","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"宁夏","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650000","baseAreaId":"97b575c0fd744236840b47f7c25ae44b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"新疆","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"500000","baseAreaId":"a670129765c44127843df1558bec8786","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"重庆","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"370000","baseAreaId":"ae7878390a554af282f6b877b7f4827e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"山东","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"710000","baseAreaId":"b7e8778b013544b88b1995bae7201647","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"台湾","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"230000","baseAreaId":"ca8d2f274870495f8074332ef5c875a3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"黑龙江","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430000","baseAreaId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"湖南","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"220000","baseAreaId":"d5eceae65bde4ccc9fead1b88706c086","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"吉林","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"810000","baseAreaId":"d6bc8fc208d44a6991a8e232614704a7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"香港","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"140000","baseAreaId":"e87b75b13d2445808a674e12f0a09cfa","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"山西","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340000","baseAreaId":"f78c3920e26140fbad234a6d48f40ed9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"安徽","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"820000","baseAreaId":"fb84c1a924bf40d39c1c134b9857a5c0","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"905eaf1e01e84d1cb2d0e62170661b6d","mapOutput":"","areaName":"澳门","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640100","baseAreaId":"1dd7254de9d74d6f864af361f20dcb83","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"9646f3d5401f444684c02d38d368c047","mapOutput":"","areaName":"银川市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640500","baseAreaId":"48ded46c89a84df393c81782c7b70e41","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"9646f3d5401f444684c02d38d368c047","mapOutput":"","areaName":"中卫市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640300","baseAreaId":"745692e4fd8548d2a744b214e56041a3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"9646f3d5401f444684c02d38d368c047","mapOutput":"","areaName":"吴忠市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640400","baseAreaId":"b6266431c5c04a4f8ed405f02674e347","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"9646f3d5401f444684c02d38d368c047","mapOutput":"","areaName":"固原市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"653000","baseAreaId":"0794ee7ff3e747319a11e0d97ff92030","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"克孜勒苏州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"653200","baseAreaId":"1696820f38e74470b95bb2dcd70f6c94","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"和田地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"659000","baseAreaId":"2ce40c831e6941118895f9e076189090","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"区直辖","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"652700","baseAreaId":"32f0fae7242c4da79c568cdaafe89608","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"博尔塔拉蒙古自治州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"652200","baseAreaId":"3c68d3e1527f45109c3fd1dc59cb90e1","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"哈密地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"652100","baseAreaId":"5a10770ad7c043a89e51b4af38b276b4","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"吐鲁番地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"652900","baseAreaId":"5bddee7af5064f25ab7cfd51852469f8","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"阿克苏地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650100","baseAreaId":"634d29426fc245b3ac309ac1fac984be","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"乌鲁木齐市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"654000","baseAreaId":"6c926fd163af4ff490de87005700a717","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"伊犁哈萨克自治州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"652800","baseAreaId":"9dda40fe798a46fa96834dae14f32e21","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"巴音郭楞蒙古自治州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"654200","baseAreaId":"b3561f0644354c45b65c4707fc051076","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"塔城地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"653100","baseAreaId":"c464df870c9f4f75bb003697b929f3f2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"喀什地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"652300","baseAreaId":"d6b2f6f6d97947c5864ea41dc5ca3972","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"昌吉回族自治州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650200","baseAreaId":"e83ea8c40bb3420c8520d2b070a7793b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"克拉玛依市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"654300","baseAreaId":"ea46dc88b0a743b1b90e5b2c5481b610","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"97b575c0fd744236840b47f7c25ae44b","mapOutput":"","areaName":"阿勒泰地区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430300","baseAreaId":"0d96f0db5e314e0eaa5525c1a494ebec","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"湘潭","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430800","baseAreaId":"1adde9bdca4a4fe7bde4f39819f6a911","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"张家界","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430600","baseAreaId":"23bb8d275af642429231f68cd0cd4b1b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"岳阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430500","baseAreaId":"32d93b2898384bfb86950e72a4fc9ae9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"邵阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"431100","baseAreaId":"33e73e5e6a2042fa8e18c9633738d059","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"永州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430400","baseAreaId":"3e6d744456a246308d63e73ea628c12d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"衡阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430200","baseAreaId":"7532eef10b3749ad82fdb0b023e80659","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"株洲","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430900","baseAreaId":"7869105199bd46bfa20d373325531f98","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"益阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430100","baseAreaId":"9488bcf3f5f64b9192d2f2d23985acef","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"长沙","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"431300","baseAreaId":"9fb38b71b6ea4646bfd6c92b74bbfa04","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"娄底","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"431000","baseAreaId":"bad9403b0d4845e9aebeba9393f3e5a8","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"郴州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"431200","baseAreaId":"caad1f3292e94968a4b3662660879935","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"怀化","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"430700","baseAreaId":"df5ddcca824749c3a2688985ac77aec9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"常德","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"433100","baseAreaId":"eaa4ae90e216460b8b2365b0662de94f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"cd2cf9b8db7a46cfbfe0741bd8d644df","mapOutput":"","areaName":"湘西","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340100","baseAreaId":"1c06e5c1ab084626bc9f4e632cc31f05","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"合肥","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341100","baseAreaId":"2443f05759c042e7a47ac71327f78796","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"滁州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340600","baseAreaId":"2829186f71b1468a9069a6d1ee898746","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"淮北","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340500","baseAreaId":"36b21102d9fe4639b0d72259ca31dce9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"马鞍山","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341200","baseAreaId":"3ee77eb077084f09b501d8cfc20d353d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"阜阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341700","baseAreaId":"445f2da1284a43a0ac2e5eb7d23cc175","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"池州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340800","baseAreaId":"54fb43b4847b4b759c99e91eaf3b5ba7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"安庆","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341300","baseAreaId":"585a992fa62f48ea95c7a483d54bf378","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"宿州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341600","baseAreaId":"63277915218c487eaea27c4d1cea8628","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"亳州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340200","baseAreaId":"6d5f40c65fdb40da9cdebb816c1c6ee3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"芜湖","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340300","baseAreaId":"7e2496e6d902432293b2fe3aa0420468","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"蚌埠","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341500","baseAreaId":"82f2b24808054c49b21d57c33bd3f86d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"六安","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340400","baseAreaId":"9da1f4174e5e4e8f8185c8e92dadecfc","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"淮南","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340700","baseAreaId":"a9cfaf5d91d14750a6e02e27af1e0b57","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"铜陵","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341800","baseAreaId":"d1f75d22895e49f28996b7b46429a908","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"宣城","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341000","baseAreaId":"f42d72455a2e460c92d08def8cc28747","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f78c3920e26140fbad234a6d48f40ed9","mapOutput":"","areaName":"黄山","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420300","baseAreaId":"0371d3a8372046a5964e3e7da2d7682f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"十堰","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420600","baseAreaId":"1e2d1fec20b742079b6a67b7baa99ee8","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"襄樊","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420500","baseAreaId":"2345535541d14a94a20d64794e253bc4","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"宜昌","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"429021","baseAreaId":"3e48978653ed491d8786cdda9f424616","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"神农架林区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421300","baseAreaId":"491148343dea46c9a1c58f66270c60f7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"随州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420700","baseAreaId":"570f64f4b8774b949f039b643e2ebf63","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"鄂州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421200","baseAreaId":"5a0ae25ab8ac47d9a551fde416e0794e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"咸宁","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"429006","baseAreaId":"6964d05cacd3400d8444277d7a91b123","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"天门","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420800","baseAreaId":"6adfc976715b49b7a376ff24e1e8191d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"荆门","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"429004","baseAreaId":"6f616889e8024f1fb3056b9d75421adb","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"仙桃","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421100","baseAreaId":"8d410529598540fbbd22eee1163f4273","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"黄冈","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420201","baseAreaId":"a0ef950013904bbb844f7c6b57a32084","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"黄石","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421000","baseAreaId":"a4872664964844079727bb29fb1dd497","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"荆州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420900","baseAreaId":"ab64f6653b0d480082ceb84973687124","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"孝感","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"429005","baseAreaId":"ac74555b7f214ee7b2e82f1befa84a73","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"潜江","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420101","baseAreaId":"c19d04f93ab648dfbce8fea624326939","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"武汉","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"422800","baseAreaId":"f2a4bd2b1d8c4a29bffc83963a98bc62","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0eee695e3dda44ec9cc09b8c2ab8911a","mapOutput":"","areaName":"恩施自治州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"321200","baseAreaId":"363f93a5a6544ceaad47945c4cc47387","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"泰州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320700","baseAreaId":"67ea679e60014ee1a8eefc2a6fc25550","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"连云港","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320100","baseAreaId":"784053eb8688452099c42adcb0e12df9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"南京","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320400","baseAreaId":"78f0dc20cce346d5a6cce771fd233404","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"常州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320600","baseAreaId":"85f61e7fdcef40e88263ac714dc0c1d2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"南通","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320200","baseAreaId":"91d513f6c8f0470a9337128b771ebde5","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"无锡","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320900","baseAreaId":"aa36f9e9e16e4bec847c96b61bc32878","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"盐城","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320101","baseAreaId":"b055c96da110474387d2821d4f8b4579","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"苏州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"321102","baseAreaId":"b3e025e97e4d486893effb5ace6c261e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"徐州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320800","baseAreaId":"dd757e08950f4ceb9bd777a9085924f1","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"淮安","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"321100","baseAreaId":"e3415da169e24af0b50d6a538fd8d883","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"镇江","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"321000","baseAreaId":"e73418047000465897c83005925d9529","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"扬州","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"321300","baseAreaId":"f086afaf267a403aa39feff2a0958381","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"19880eacb13f4125b2d7d150b5f32c5f","mapOutput":"","areaName":"宿迁","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460300","baseAreaId":"067e93adb939426bbefe7b81a6002f71","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"33471e52ce6e4a618409b6207f33d9f4","mapOutput":"","areaName":"三沙市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460100","baseAreaId":"13740233a4e8482ebd522fa489d0a177","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"33471e52ce6e4a618409b6207f33d9f4","mapOutput":"","areaName":"海口市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460200","baseAreaId":"abc0d2369dbb46dc9899614e3171eddf","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"33471e52ce6e4a618409b6207f33d9f4","mapOutput":"","areaName":"三亚市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350500","baseAreaId":"05f8e75694024f1ea424c9b4824dc5c2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"泉州市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350100","baseAreaId":"2f328772053b4a85809a81d3985b8abb","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"福州市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350900","baseAreaId":"3538827331084b209637b2a2ece18381","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"宁德市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350200","baseAreaId":"65941ccb1e1d48f9857329ec2d3e15e6","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"厦门市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350400","baseAreaId":"7f3432e385184e58bde95a2823fb6520","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"三明市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350700","baseAreaId":"8e48b3c283b64cd9a250884191a2103a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"南平市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350800","baseAreaId":"c5887074763b447db7dcca06f964d8ab","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"龙岩市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350300","baseAreaId":"ccc9415dcf5c4ae6a084bf422be402bf","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"莆田市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350600","baseAreaId":"ee1ac66477eb42908a7f50f8af3c5f28","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6c566f608d7e4d438030c8e60cf20510","mapOutput":"","areaName":"漳州市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610800","baseAreaId":"0ab5e0c42ccb4a7e976fdc4fef4fa7ff","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"榆林","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610200","baseAreaId":"233d5ceea8a44197b976da225ca89daf","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"铜川市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"611000","baseAreaId":"41a6bc89274645d3a1143eca11756872","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"商洛","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610400","baseAreaId":"49f8d6fccd174ee591fb1e8e708d7903","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"咸阳市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610900 ","baseAreaId":"816ba083279c4160885dee941ef57059","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"安康","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610500","baseAreaId":"863ff8d620994e7d86cfd1a628b6544b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"渭南市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610100","baseAreaId":"906e3730bf63470fbbc2dda7b253352f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"西安","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610700","baseAreaId":"9296ba5a3ea049dda2314ec0a9711d42","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"汉中","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610300","baseAreaId":"ad75bca71b39414ea84ee864130f510c","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"宝鸡","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610600","baseAreaId":"f7cd7c02579c4ff387773885924ddaa3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e24bf3c2d5c4d3db2ad3b3ec3dcb263","mapOutput":"","areaName":"延安","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360900","baseAreaId":"0acfcc485c994902aec3548818497188","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"宜春市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"361100","baseAreaId":"1fc40e86d2c946cda1f3d8126996d372","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"上饶市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360100","baseAreaId":"28eafa8e3c844c23b89220badd0adb6c","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"南昌市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360600","baseAreaId":"56f4ca9bc44a4612a70920ae6d410edc","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"鹰潭市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360200","baseAreaId":"640b77f4a2b948a4a6490c6b11d4e99f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"景德镇市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360700","baseAreaId":"6fad589c3de542199e33bd02344c1763","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"赣州市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"361000","baseAreaId":"715a66238e9b4e2e8f6cd6a8b9ea9e40","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"抚州市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360400","baseAreaId":"81b6a4e25ac34045a2270416be145d10","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"九江市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360500","baseAreaId":"b931ae9cf63d4c268ad7475d63a5a3ec","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"新余市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360800","baseAreaId":"b9d8c75a77ee451d956c43e3132fe9c3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"吉安市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360300","baseAreaId":"f46627afb1624934b4062adbd8197ccc","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8c05647370c8427ca0885800c190a408","mapOutput":"","areaName":"萍乡市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640200","baseAreaId":"1491bc4551f74b7a8803c9a3b4ab1a3b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"9646f3d5401f444684c02d38d368c047","mapOutput":"","areaName":"石嘴山市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341323","baseAreaId":"b9d03c73fa114aacb89aedee86487d33","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"585a992fa62f48ea95c7a483d54bf378","mapOutput":"","areaName":"灵璧","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341621","baseAreaId":"6ba3cc634a8e4d389931fe103fe064d7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"63277915218c487eaea27c4d1cea8628","mapOutput":"","areaName":"涡阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340222","baseAreaId":"624e6c849ffb4fda92c5a460dece4be4","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6d5f40c65fdb40da9cdebb816c1c6ee3","mapOutput":"","areaName":"繁昌","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340223","baseAreaId":"8eb7bcbd1cd44fefb9ac9a2c2abe7a5f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6d5f40c65fdb40da9cdebb816c1c6ee3","mapOutput":"","areaName":"南陵","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340221","baseAreaId":"a9162db589f34e94bd1391342f06fe02","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"6d5f40c65fdb40da9cdebb816c1c6ee3","mapOutput":"","areaName":"芜湖县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340322","baseAreaId":"3bb9c6c9de1d4fbe94a615e964c0ad4c","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"7e2496e6d902432293b2fe3aa0420468","mapOutput":"","areaName":"五河","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341523","baseAreaId":"be9dbefd05284929b0c413f29dca8ca7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"82f2b24808054c49b21d57c33bd3f86d","mapOutput":"","areaName":"舒城","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340421","baseAreaId":"8b0721aed33d45c7b2bbe19e45c26159","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"9da1f4174e5e4e8f8185c8e92dadecfc","mapOutput":"","areaName":"凤台","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340721","baseAreaId":"ae464aa7f9794c6e8ae58c2da088867f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a9cfaf5d91d14750a6e02e27af1e0b57","mapOutput":"","areaName":"铜陵县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341822","baseAreaId":"17929773200a4eab89d38d300946716b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"d1f75d22895e49f28996b7b46429a908","mapOutput":"","areaName":"广德","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341824","baseAreaId":"94d3e435d34c49a39aafa9a5972df919","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"d1f75d22895e49f28996b7b46429a908","mapOutput":"","areaName":"绩溪","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341023","baseAreaId":"00eafd6052b04d4694449bde2eebb3b6","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f42d72455a2e460c92d08def8cc28747","mapOutput":"","areaName":"黟县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341003","baseAreaId":"ef6be12676dc4a65adfaea40af8c56c4","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"f42d72455a2e460c92d08def8cc28747","mapOutput":"","areaName":"黄山区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420303","baseAreaId":"a0890a34aa6c428ba912dd55f4881b50","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"0371d3a8372046a5964e3e7da2d7682f","mapOutput":"","areaName":"张湾区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420602 ","baseAreaId":"4f57234c035c4cf586789981b2692545","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1e2d1fec20b742079b6a67b7baa99ee8","mapOutput":"","areaName":"襄城区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421223 ","baseAreaId":"84e54f6c7f544993a85e87215e4e8ec2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"5a0ae25ab8ac47d9a551fde416e0794e","mapOutput":"","areaName":"崇阳县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421122","baseAreaId":"012c7f2ab09d4ae9813aa466cef8e629","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"红安县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421124","baseAreaId":"0c48f8735a434ae382728e29a7211f05","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"英山县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421127","baseAreaId":"1ced7ab99c5141278216779c289e41fc","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"黄梅县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421182","baseAreaId":"1da09e86019948f399d6859bc58b83d7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"武穴市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421126","baseAreaId":"7c2870c43f154469954cbd77d49176d3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"蕲春县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121","baseAreaId":"a35397bb1de24cf096c7ac9aec3a1403","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"团风县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421181","baseAreaId":"b294bb2776ce49f69c302ec193fc1c7f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"麻城市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421125","baseAreaId":"c9fc144c6bcd40b5ab5af6cb7e9b82c2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"浠水县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421123","baseAreaId":"e4a880a18abc46f29482ca690404aeac","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"罗田县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421102","baseAreaId":"ebf8de867a254b719306ca394f72b28a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"8d410529598540fbbd22eee1163f4273","mapOutput":"","areaName":"黄州区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420281 ","baseAreaId":"455fb3d604da4b4389bab9b1fb552a4b","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a0ef950013904bbb844f7c6b57a32084","mapOutput":"","areaName":"大冶市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"420981 ","baseAreaId":"a94c6663df484748a866012bc3dfa1f3","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"ab64f6653b0d480082ceb84973687124","mapOutput":"","areaName":"应城市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"320584","baseAreaId":"ac943cd14db84c8695de42ce52971ae2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"b055c96da110474387d2821d4f8b4579","mapOutput":"","areaName":"苏州工业园区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460202","baseAreaId":"32756b8375b24d649bb719aea3e68826","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"abc0d2369dbb46dc9899614e3171eddf","mapOutput":"","areaName":"天涯区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460203","baseAreaId":"521bcf7ad6834cbd9022e54e1d147948","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"abc0d2369dbb46dc9899614e3171eddf","mapOutput":"","areaName":"吉阳区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460204","baseAreaId":"5c30cbf0f5be48d8ab834db7a9f30287","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"abc0d2369dbb46dc9899614e3171eddf","mapOutput":"","areaName":"海棠区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"460201","baseAreaId":"8978bb3a88574e4cbedf48d82bf0bc95","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"abc0d2369dbb46dc9899614e3171eddf","mapOutput":"","areaName":"崖州区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"350981","baseAreaId":"7b9d662f76f74fae9f4c5ab92785f0f6","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"3538827331084b209637b2a2ece18381","mapOutput":"","areaName":"福安市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610222","baseAreaId":"1f3166f88b864702adf1f2f9974222f9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"233d5ceea8a44197b976da225ca89daf","mapOutput":"","areaName":"宜君","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610111","baseAreaId":"54896ed8aca644e5a0a3802081b87bdb","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"906e3730bf63470fbbc2dda7b253352f","mapOutput":"","areaName":"灞桥","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610114","baseAreaId":"5b355b0d0885441ab7870fac6fe7c062","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"906e3730bf63470fbbc2dda7b253352f","mapOutput":"","areaName":"阎良","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610122","baseAreaId":"d2414429465b492ab47a38dd4f87db7f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"906e3730bf63470fbbc2dda7b253352f","mapOutput":"","areaName":"蓝田","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"610112","baseAreaId":"e1afd0118c7446f2860b1d1de430f140","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"906e3730bf63470fbbc2dda7b253352f","mapOutput":"","areaName":"未央","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"360121","baseAreaId":"2d71f0834b2f4ba1bd41feb7f405a0c9","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"28eafa8e3c844c23b89220badd0adb6c","mapOutput":"","areaName":"南昌县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640202","baseAreaId":"80ae47bdf68b4f1d874bdaae5362dbf8","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1491bc4551f74b7a8803c9a3b4ab1a3b","mapOutput":"","areaName":"大武口区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640205","baseAreaId":"cfdfa4dff1a7441698de3a524b048908","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1491bc4551f74b7a8803c9a3b4ab1a3b","mapOutput":"","areaName":"惠农区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640221","baseAreaId":"e618eafe45de4b6d95dad32bfbc5dd44","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1491bc4551f74b7a8803c9a3b4ab1a3b","mapOutput":"","areaName":"平罗县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640121","baseAreaId":"84aedfab25e54d4a96909ab6a5fd3fa4","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1dd7254de9d74d6f864af361f20dcb83","mapOutput":"","areaName":"永宁县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640181","baseAreaId":"8c2322315d5b4fe9b5ab96427f3508cc","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1dd7254de9d74d6f864af361f20dcb83","mapOutput":"","areaName":"灵武市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640106","baseAreaId":"98d2b8fd79c44db3976beb5caeac0d36","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1dd7254de9d74d6f864af361f20dcb83","mapOutput":"","areaName":"金凤区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640104","baseAreaId":"b154957aba17467eab129c8bbf3321d7","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1dd7254de9d74d6f864af361f20dcb83","mapOutput":"","areaName":"兴庆区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640105","baseAreaId":"b2180ae0e683497298f7bc0e5f8c4750","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1dd7254de9d74d6f864af361f20dcb83","mapOutput":"","areaName":"西夏区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640122","baseAreaId":"c7c777580c314c8d892dfcadd292c55e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1dd7254de9d74d6f864af361f20dcb83","mapOutput":"","areaName":"贺兰县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640522","baseAreaId":"9cb1cd71c63849d39ce4b68c39cce976","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"48ded46c89a84df393c81782c7b70e41","mapOutput":"","areaName":"海原县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640502","baseAreaId":"e337c1e2a5fe4e06b1218607bdf93936","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"48ded46c89a84df393c81782c7b70e41","mapOutput":"","areaName":"沙坡头区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640521","baseAreaId":"eb63f084681743e4a16253b100152c24","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"48ded46c89a84df393c81782c7b70e41","mapOutput":"","areaName":"中宁县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640422","baseAreaId":"1ff815294e39499d8df8d43304323f5a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"b6266431c5c04a4f8ed405f02674e347","mapOutput":"","areaName":"西吉县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640402","baseAreaId":"725593dbc9e340d9828b585b45d71e2e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"b6266431c5c04a4f8ed405f02674e347","mapOutput":"","areaName":"原州区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640423","baseAreaId":"7f999d091d534d45bdfa7d73b35eeb12","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"b6266431c5c04a4f8ed405f02674e347","mapOutput":"","areaName":"隆德县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640425","baseAreaId":"a6361ac5b44c432dbed50a3480d0ac5c","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"b6266431c5c04a4f8ed405f02674e347","mapOutput":"","areaName":"彭阳县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"640424","baseAreaId":"d93eb74252d34ad98eaa1e0435bb47b2","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"b6266431c5c04a4f8ed405f02674e347","mapOutput":"","areaName":"泾源县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650103","baseAreaId":"092ea343bca645abbb4a20bc427be2ce","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"沙依巴克区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650106","baseAreaId":"352aa1e1326d4e569308c11d94da8b97","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"头屯河区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650107","baseAreaId":"4ac97f439dd44502b56d934e41de9c0d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"达坂城区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650102","baseAreaId":"587639f38e364b27b04be9501b5a6056","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"天山区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650105","baseAreaId":"88a162e4d4464123897022c4f4856576","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"水磨沟区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650109","baseAreaId":"88ec4e5bc20e4ea586777f98ec15b41c","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"米东区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650104","baseAreaId":"991c53b0b59b4bf3a9e1e7ee51bab0a0","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"新市区","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"650121","baseAreaId":"db637391c67241a992f1111788d53e41","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"634d29426fc245b3ac309ac1fac984be","mapOutput":"","areaName":"乌鲁木齐县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340122","baseAreaId":"048d6c17f23744ef8105dba285bdac8f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"1c06e5c1ab084626bc9f4e632cc31f05","mapOutput":"","areaName":"肥东","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341125","baseAreaId":"506414bace1f4a378fbdc06faa9d3e6f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"2443f05759c042e7a47ac71327f78796","mapOutput":"","areaName":"定远","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341181","baseAreaId":"fc2fae77d18d44508da720da3420a61a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"2443f05759c042e7a47ac71327f78796","mapOutput":"","areaName":"天长","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340621","baseAreaId":"005036740b754f21b300d6c3c6a83e42","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"2829186f71b1468a9069a6d1ee898746","mapOutput":"","areaName":"濉溪","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340522","baseAreaId":"e64f12b0e25b4768a4629bc689a87eee","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"36b21102d9fe4639b0d72259ca31dce9","mapOutput":"","areaName":"含山","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341282","baseAreaId":"7cc2e76517c74a1286d29d0c4ad4f925","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"3ee77eb077084f09b501d8cfc20d353d","mapOutput":"","areaName":"界首","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341723","baseAreaId":"42324fe18be448f781be1da82708e85e","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"445f2da1284a43a0ac2e5eb7d23cc175","mapOutput":"","areaName":"青阳","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341724","baseAreaId":"4a4b36e1da334e428bff165442ec7530","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"445f2da1284a43a0ac2e5eb7d23cc175","mapOutput":"","areaName":"九华山","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"341702","baseAreaId":"aa78294ca34f42b2ad7b270831d7b09a","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"445f2da1284a43a0ac2e5eb7d23cc175","mapOutput":"","areaName":"贵池","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340881","baseAreaId":"0d4135a16c824eba8fc0849063869943","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"54fb43b4847b4b759c99e91eaf3b5ba7","mapOutput":"","areaName":"桐城市","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340826","baseAreaId":"9ef3cf447e9e40baa0668cb04e2c7728","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"54fb43b4847b4b759c99e91eaf3b5ba7","mapOutput":"","areaName":"宿松县","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"340828","baseAreaId":"e3f7f0345ac748518fb24b20cb9cd4bc","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"54fb43b4847b4b759c99e91eaf3b5ba7","mapOutput":"","areaName":"岳西","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121008","baseAreaId":"0ef9c7a586ac4ffab7bbc4581a1d66f0","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"方高坪镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":" 421121006","baseAreaId":"14ce3589c13d4620a2229fb1a04bc6b5","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"淋山河镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121010","baseAreaId":"1bd7ffb4fdaa493f95fe8705bd7b01cb","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"团风镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121007","baseAreaId":"2ad224f3e6d14d709505786192f1aabd","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"马曹庙镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121001","baseAreaId":"55b8eff189cc4fd69bb4b3108566514d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"但店镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121005","baseAreaId":"841885cf8f2e41bbafa366a6e2117a7d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"上巴河镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121003","baseAreaId":"b164636405ac437abf334fa32174b6b8","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"杜皮乡","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121009","baseAreaId":"bf65b01cc9b94a5c8764590f7b661d8d","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"回龙山镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121002","baseAreaId":"dab370dc521a461ba2305718e8d9815f","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"贾庙乡","areaPath":"","areaLevel":0,"editSchedule":"","childs":false},{"areaIdPath":"","createSchool":"","sort":0,"areaCode":"421121004","baseAreaId":"e48aa1e82748453f82137a5073175fb1","mapSource":"","baseFileServerId":"","softwareUpgrade":"","basePmsServerId":"","parentId":"a35397bb1de24cf096c7ac9aec3a1403","mapOutput":"","areaName":"总路嘴镇","areaPath":"","areaLevel":0,"editSchedule":"","childs":false}];
+	    	var keyMap = {};
+	    	var parentMap = {};
+	    	var id2KeyMap = {};
+	    	var keyTree = {
+	    		"0": [SVG_PATH.key]
+	    	};
+	    	for (var key in COLOR_GROUP_MAP) {
+	    		COLOR_GROUP_MAP2[COLOR_GROUP_MAP[key]] = key;
+	    	}
+	    	$.each(dataBase, function () {
+	    		id2KeyMap[this.baseAreaId] = this.areaCode;
+	    		keyMap[this.areaCode] = this.areaName;
+	    	})
+	    	$.each(dataBase, function () {
+	    		if (this.parentId) {
+	    			var parentKey = id2KeyMap[this.parentId];
+	    			parentMap[this.areaCode] = parentKey;
+	    			keyTree[parentKey] = keyTree[parentKey] || [];
+	    			keyTree[parentKey].push(this.areaCode);
+	    		}
+	    	})
+	    	SVG_PATH.parentMap = parentMap;
+	    	SVG_PATH.keyMap = keyMap;
+	    	SVG_PATH.keyTree = keyTree;
+
+	        /*var m = SVG_PATH.keyMap;
+	        m[0] = m[0].split(',');
+	        m[1] = m[1].split(',');
+	        var keyMap = {};
+	        $.each(m[0], function(index) {
+	            keyMap[this] = m[1][index];
+	        })
+	        SVG_PATH.keyMap = keyMap;
+	        $.each(SVG_PATH.svgTab, function() {
+	            if (this.shap == "path") {
+	                this.color = COLOR_GROUP_MAP[this.color] || this.color;
+	            }
+	        });
+	        var tab = [];
+	        for (var key in SVG_PATH.keyTree) {
+	            tab.push(key);
+	            SVG_PATH.keyTree[key] = SVG_PATH.keyTree[key].split(',');
+	        }
+	        SVG_PATH.keyTree[SVG_PATH.key] = tab;
+	        SVG_PATH.keyTree["0"] = [SVG_PATH.key];*/
+	    })();
+	    require(["domReady!"], function() {
+	        var $doc = $(document);
+	        window.vmSvgMap = avalon.define({
+	            $id: "svgMap",
+				areaName: SVG_PATH.keyMap[SVG_PATH.key],
+	            selectCode: "",
+	            hasRoom: [],
+	            svgTab: [],
+	            addShap: {
+	                shap: "",
+	                key: "",
+	                path: '',
+	                x: '',
+	                y: '',
+	                textArea: '',
+	                color: COLOR_GROUP_MAP[0],
+	                level: 1,
+	                hasRoom: true,
+	                isMultiPath: false,
+	                isLeft: true
+	            }
+	        });
+	        var getInsertObj = function(addShap, oldShap) {
+	            var shap = addShap.shap;
+	            if (shap == 'path') {
+	                var obj = {
+	                    key: addShap.key,
+	                    shap: shap,
+	                    path: addShap.path,
+	                    color: addShap.color
+	                }
+	                if (addShap.isMultiPath) {
+	                    if (oldShap && oldShap.path) {
+	                        obj.path = oldShap.path + obj.path;
+	                    }
+	                }
+	            } else if (shap == 'center') {
+	                obj = {
+	                    key: addShap.key,
+	                    shap: shap,
+	                    level: addShap.level,
+	                    x: addShap.x,
+	                    y: addShap.y,
+	                    text: 0
+	                }
+	                if (addShap.textArea) {
+	                	obj.textArea = addShap.textArea;
+	                }
+	            } else if (shap == 'star') {
+	                obj = {
+	                    key: addShap.key,
+	                    shap: shap,
+	                    x: addShap.x,
+	                    y: addShap.y
+	                }
+	                if (addShap.textArea) {
+	                	obj.textArea = addShap.textArea;
+	                }
+	            } else if (shap == 'text') {
+	                obj = {
+	                    key: addShap.key,
+	                    shap: shap,
+	                    x: addShap.x,
+	                    y: addShap.y
+	                }
+	                if (addShap.textArea) {
+	                	obj.textArea = addShap.textArea;
+	                }
+	            }
+	            return obj;
+	        };
+	        var getAddShap = function (obj, addShap) {
+
+	        	var shap = obj.shap;
+	            if (shap == 'path') {
+	            	addShap.color = obj.color;
+	            	if (COLOR_GROUP_MAP2[obj.color]) {
+	            		vmConfigureBox.selectColor = COLOR_GROUP_MAP2[obj.color];
+	            	} else {
+	            		vmConfigureBox.textColor = obj.color;
+	            	}
+	            	vmConfigureBox.hasRoom = vmSvgMap.hasRoom.indexOf(obj.key) != -1;
+	            	vmConfigureBox.isMultiPath = false;
+	            } else if (shap == 'center') {
+	            	vmConfigureBox.selectLevel = obj.level;
+	            	addShap.x = obj.x;
+	            	addShap.y = obj.y;
+	            } else if (shap == 'star') {
+	               	addShap.x = obj.x;
+	            	addShap.y = obj.y;
+	            } else if (shap == 'text') {
+	                addShap.x = obj.x;
+	            	addShap.y = obj.y;
+	            }
+	        };
+	        window.vmConfigureBox = avalon.define({
+	            $id: "configureBox",
+				areaName: SVG_PATH.keyMap[SVG_PATH.key],
+	            selectShapType: "",
+	            selectColor: "0",
+	            textColor: "",
+	            selectLevel: '1',
+	            isMultiPath: false,
+	            hasRoom: true,
+	            selectArea: "",
+	            textArea: '',
+	            areas: SVG_PATH.key,
+	            areaShap: [SVG_PATH.key, ""],
+	            info: '',
+	            $onSelectchange2: true,
+	            addShapFn: function() {
+	                var addShap = vmSvgMap.addShap;
+	                if (!addShap.shap || !addShap.key) return;
+	                var shap = addShap.shap;
+	                var svgTab = vmSvgMap.svgTab;
+	                var hasSame = false;
+	                //根据覆盖关系, 图形排序, path, center, text, star
+	                var weight = {
+	                    path: 1,
+	                    center: 2,
+	                    text: 3,
+	                    star: 4
+	                };
+	                var oldShap = [];
+	                var shapWeight = weight[shap];
+	                var hasInsert = -1;
+	                var i = 0,
+	                    len = 0;
+	                if (addShap.isLeft == false) {//右边编辑，先删除原图形
+						var delRKey = selectShap.getAttribute('key');
+						var delRShap = selectShap.getAttribute('data-shap');
+						for (i = 0, len = svgTab.size(); i < len; i++) {
+							var obj = svgTab[i];
+							if (obj.key == delRKey && obj.shap == delRShap) {
+								svgTab.splice(i, 1);
+								break;
+							}
+						}
+					}
+	                for (i = 0, len = svgTab.size(); i < len; i++) {
+	                    var obj = svgTab[i];
+	                    var objWeight = weight[obj.shap];
+	                    if (shapWeight == 3 && objWeight == 2 && obj.key == addShap.key) { //插入文字，点数据修正
+	                        obj.text = 1;
+	                    }
+	                    if (objWeight > shapWeight) { //当前位置是该图像最后位置，插入图形
+	                        hasInsert = i;
+	                        break;
+	                    } else if (objWeight == shapWeight) { //相同图形
+	                        if (obj.key == addShap.key) {
+	                            oldShap = svgTab.splice(i, 1);
+	                            i--;
+	                            len--;
+	                        }
+	                    }
+	                }
+	                var insertObj = getInsertObj(addShap, oldShap[0]);
+	                if (hasInsert != -1) {
+	                    if (insertObj.shap == 'center') {
+	                        for (; i < len; i++) {
+	                            var obj = svgTab[i];
+	                            if (obj.shap == 'text' && obj.key == insertObj.key) {
+	                                insertObj.text = 1;
+	                            }
+	                        }
+	                    }
+	                    svgTab.splice(hasInsert, 0, insertObj);
+	
+	                } else {
+	                    svgTab.push(insertObj);
+	                }
+	                if (addShap.hasRoom) {
+	                    vmSvgMap.hasRoom.ensure(addShap.key);
+	                } else {
+	                    vmSvgMap.hasRoom.removeAll([addShap.key]);
+	                }
+	            },
+	            delShapFn: function() {
+	                var addShap = vmSvgMap.addShap;
+	                var svgTab = vmSvgMap.svgTab;
+	                if (!addShap.shap || !addShap.key) return;
+	                var isText = addShap.shap == 'text';
+	                var len = svgTab.size();
+	                var flag = false;
+	                while (len--) {
+	                    var obj = svgTab[len];
+	                    if (obj.key == addShap.key) {
+	                    	if (isText && obj.shap == 'center') {
+	                    		obj.text = 0;
+	                    	}
+	                        if (obj.shap == addShap.shap) {
+	                            svgTab.splice(len, 1);
+	                        } else {
+	                            flag = true;
+	                        }
+	                    }
+	                }
+	                if (!flag) {
+	                    vmSvgMap.hasRoom.removeAll([addShap.key]);
+	                }
+	            },
+	            delKeyFn: function() {
+	                vmSvgMap.hasRoom.removeAll([vmConfigureBox.selectArea]);
+	                vmSvgMap.svgTab.removeAll(function(shap) {
+	                    return shap.key == vmConfigureBox.selectArea;
+	                });
+	            },
+	            clearShapFn: function() {
+	                vmSvgMap.svgTab.clear();
+	                vmSvgMap.hasRoom.clear();
+	            },
+	            saveShapFn: function() {
+	            	var keyMap = SVG_PATH.keyMap;
+	            	var _keyMap = {};
+	            	var svgTab = vmSvgMap.$model.svgTab;
+	            	for (var i = 0, len = svgTab.length; i < len ; i++) {
+	            		var obj = svgTab[i];
+	            		if (obj.shap == 'path') {
+	            			obj.color = COLOR_GROUP_MAP2[obj.color] || obj.color;
+	            		}
+	            		if (!obj.textarea) {
+	            			_keyMap[obj.key] = SVG_PATH.keyMap[obj.key];
+	            		}
+	            	}
+					console.log('保存地图信息', {
+						hasRoom: vmSvgMap.hasRoom.join(),
+						svgData: svgTab,
+						keyMap: _keyMap,
+						areaName: vmSvgMap.areaName
+					});
+					for (var i = 0, len = svgTab.length; i < len ; i++) {
+						var obj = svgTab[i];
+						if (obj.shap == 'path') {
+							obj.color = COLOR_GROUP_MAP[obj.color] || obj.color;
+						}
+					}
+	            },
+	            /*selectchange: function(val, m) {
+	                var index = m.args[0].$index;
+	                var areas = vmConfigureBox.areas;
+	                if (SVG_PATH.keyTree[val] || val === "") {
+	                    for (var i = areas.length - 1, end = index; i > end; i--) {
+	                        areas.removeAt(i);
+	                    }
+	                    if (val !== "")
+	                        areas.push("");
+	                }
+	                for (var i = index; i >= 0; i--) {
+	                    if (areas[i]) {
+	                        vmConfigureBox.areaShap = [areas[i], ""];
+	                        break;
+	                    }
+	                }
+	                vmSvgMap.svgTab = [];
+	            },*/
+	            selectchange2: function(val, m) {
+	            	if (!vmConfigureBox.$onSelectchange2) return;
+	            	//vmConfigureBox.textArea = "";
+					
+
+	                var index = m.args[0].$index;
+		        	var areas = vmConfigureBox.areaShap;
+					
+					for (var i = areas.length - 1, end = index; i > end; i--) {
+						areas.removeAt(i);
+					}
+	                if (SVG_PATH.keyTree[val]) {
+	                    areas.push("");
+	                }
+	                var len = areas.size();
+	                while (len--) {
+	                    if (areas[len] && areas[len] != "0" && len != 0) {
+	                        vmConfigureBox.selectArea = areas[len];
+	                        return;
+	                    }
+	                }
+	                vmConfigureBox.selectArea = "";
+	       
+	            },
+	            selectColorFn: function(c) {
+	                vmConfigureBox.selectColor = c;
+	            }
+	        });
+	        var watchCallBack = function(key, value, oldValue) {
+	            var selectShapType = vmConfigureBox.selectShapType;
+	            var selectArea = vmConfigureBox.selectArea;
+	            var addShap = vmSvgMap.addShap;
+	            if (key == "selectShapType") { //修改了图形
+	                var showShap = selectShap || hoverShap;
+	                var $showShap = $(showShap);
+	                if (selectShapType == 'path') {
+	                	var str = "";
+	                    if (showShap.tagName == 'polygon') {
+	                        str = "M" + $.trim(showShap.getAttribute('points')).split(' ').join('L') + 'Z';
+	                    } else {
+	                        str = showShap.getAttribute('d') || showShap.getAttribute('path');
+	                    }
+	                    addShap.path = str.replace(/\s+/g,'');
+	                    /*.replace(/[MLHV].*?[CSQTZ]/gi, function (a) {
+	                    	return a.replace(/\.\d+/g, '');
+	                    });*/
+	                } else if (selectShapType == 'center') {
+	                    if (showShap.tagName.toLowerCase() == 'div') {
+	                        addShap.x = parseInt($showShap.css('left'), 10)>>0;
+	                        addShap.y = parseInt($showShap.css('top'), 10)>>0;
+	                    } else {
+	                        addShap.x = showShap.getAttribute('cx')>>0;
+	                        addShap.y = showShap.getAttribute('cy')>>0;
+	                    }
+	                } else if (selectShapType == 'star') {
+	                    if (showShap.tagName.toLowerCase() == 'div') {
+	                        addShap.x = (parseInt($showShap.css('left'), 10)>>0) + 5;
+	                        addShap.y = (parseInt($showShap.css('top'), 10)>>0) + 5;
+	                    } else {
+	                        addShap.x = showShap.getAttribute('cx')>>0;
+	                        addShap.y = showShap.getAttribute('cy')>>0;
+	                    }
+	                } else if (selectShapType == 'text') {
+						if (showShap.tagName.toLowerCase() == 'div') {
+	                        addShap.x = (parseInt($showShap.css('left'), 10)>>0) + 5;
+	                        addShap.y = (parseInt($showShap.css('top'), 10)>>0) + 5;
+	                    } else {
+	                        addShap.x = showShap.getAttribute('x')>>0;
+	                        addShap.y = showShap.getAttribute('y')>>0;
+	                    }
+					}
+	                if (selectShapType && selectArea) {
+	                    addShap.shap = selectShapType;
+	                } else {
+	                    addShap.shap = "";
+	                }
+	            } else if (key == "textArea") {
+	            	addShap.textArea = value;
+	            } else if (key == "textColor" || key == "selectColor") {
+	                addShap.color = vmConfigureBox.textColor || COLOR_GROUP_MAP[vmConfigureBox.selectColor];
+	            } else if (key == "hasRoom" || key == "isMultiPath") {
+	                addShap[key] = value;
+	            } else if (key == "selectLevel") {
+	                addShap.level = value;
+	            } else if (key == "selectArea") {
+	                addShap.key = value;
+	                if (selectShapType && selectShapType != addShap.shap) {
+	                    addShap.shap = selectShapType;
+	                }
+	            } else if (key == "areaName") {
+					vmSvgMap.areaName = value;
+				}
+	        };
+	        $.each("selectShapType,selectColor,textColor,selectLevel,isMultiPath,hasRoom,selectArea,textArea,areaName".split(','), function() {
+	            vmConfigureBox.$watch(this, (function(key) {
+	                return function(value, oldValue) {
+	                    watchCallBack(key, value, oldValue);
+	                }
+	            })(this));
+	        })	
+	        //vmSvgMap.svgTab = SVG_PATH.svgTab;
+	        avalon.scan();
+		
+	        var selectShap = null;
+	        var hoverShap = null;
+	        var action = {
+	            on: function(ele) {
+	                if (!ele) return;
+	                var isText = ele.tagName == 'text';
+	                var oldStroke = ele.getAttribute('stroke');
+	                var oldStrokeWidth = ele.getAttribute('stroke-width');
+	                ele.setAttribute('stroke', 'red');
+	                if (!isText) {
+	                	ele.setAttribute('stroke-width', 6);
+	                }
+	                if (!ele.getAttribute('oldStroke')) {
+	                    ele.setAttribute('oldStroke', oldStroke);
+	                    ele.setAttribute('oldStrokeWidth', oldStrokeWidth);
+	                }
+	            },
+	            off: function(ele) {
+	                if (!ele) return;
+	                var isText = ele.tagName == 'text';
+	                var oldStroke = ele.getAttribute('oldStroke');
+	                var oldStrokeWidth = ele.getAttribute('oldStrokeWidth');
+	                ele.setAttribute('stroke', oldStroke);
+	                if (!isText) {
+	                	ele.setAttribute('stroke-width', oldStrokeWidth);
+	                }
+	            }
+	        };
+	        $('#svgLoad').on('mouseenter', 'polygon,path,circle', function() {
+	            if (!selectShap) {
+	                action.on(this);
+	                hoverShap = this;
+	               	vmSvgMap.addShap.isLeft = true;
+	                vmConfigureBox.selectShapType = SHAP_MAP[this.tagName.toLowerCase()];
+	            }
+	        }).on('mouseleave', 'polygon,path,circle', function() {
+	            if (!selectShap) {
+	                action.off(this);
+	                hoverShap = null;
+	                vmConfigureBox.selectShapType = "";
+	            }
+	        }).on('click', 'polygon,path,circle', function() {
+	            if (selectShap == this) {
+	                action.off(selectShap);
+	                selectShap = null;	          
+	                vmConfigureBox.selectShapType = "";
+	            } else {
+	                action.off(selectShap);
+	                action.on(this);
+	                selectShap = this;
+	                hoverShap = null;
+	                vmSvgMap.addShap.isLeft = true;
+	                vmConfigureBox.selectShapType = "";
+	                vmConfigureBox.selectShapType = SHAP_MAP[this.tagName];
+	            }
+	        });
+	        $('#addSvgBox').on('click', 'path,image,text', function() {
+	            var key = this.getAttribute('key');
+	            var shap = this.getAttribute('data-shap');
+	            if (!key) return;
+	            for (var i = 0, len = vmSvgMap.svgTab.size();i< len; i++) {
+	            	var obj = vmSvgMap.svgTab[i];
+	            	if (obj.key == key && obj.shap == shap) {
+	            		var parentMap = SVG_PATH.parentMap;
+	            		var mainKey = SVG_PATH.key;
+	            		action.off(selectShap);
+	            		if (selectShap == this) {
+	            			selectShap = null;
+	            		} else {
+	            			selectShap = this;
+	            			action.on(selectShap);
+	            			vmSvgMap.addShap.isLeft = false;
+	            			vmConfigureBox.selectShapType = shap;
+	            			var tab = [key];
+	            			var tKey = key;
+	            			while((tKey = parentMap[tKey])) {
+								tab.unshift(tKey);
+	            			}
+	            			vmConfigureBox.areaShap = [mainKey, ""];
+	            			for (var i = 1, len = tab.length; i < len; i++) {
+	            				vmConfigureBox.$onSelectchange2 = false;
+            					setTimeout((function(i, k, isEnd) {
+	            					return function () {
+	            						vmConfigureBox.areaShap.set(i, k);
+	            						if (SVG_PATH.keyTree[k]) {
+	            							vmConfigureBox.areaShap.push("");
+	            						}
+	            						if (isEnd) {
+	            							vmConfigureBox.selectArea = k;
+	            							vmConfigureBox.textArea = obj.textArea;
+	            							vmConfigureBox.$onSelectchange2 = true;
+	            						}
+	            					}
+	            				})(i, tab[i], i == len-1), i*100);       				
+	            			}
+	            			getAddShap(obj, vmSvgMap.addShap);
+	            		} 
+	            		break;
+	            	}
+	            }
+	            vmConfigureBox.info = '显示 <span style="color:#79d466;">' + SVG_PATH.keyMap[key] + '</span> 数据';
+	        }).on('mouseenter', 'path,image,text', function() {
+	            var key = this.getAttribute('key');
+	            vmSvgMap.selectCode = key;
+				if (key) {
+					vmConfigureBox.info = '显示 <span style="color:#79d466;">' + SVG_PATH.keyMap[key] + '</span> 数据';
+				}
+	        }).on('mouseleave', 'path,image,text', function() {
+	            vmSvgMap.selectCode = "";
+	            vmConfigureBox.info = '';
+	        });
+	        
+	        var _clearSelect;
+	        if (window.getSelection) {
+	            _clearSelect = function() {
+	                window.getSelection().removeAllRanges()
+	            }
+	        } else {
+	            _clearSelect = function() {
+	                document.selection.empty();
+	            }
+	        }
+	        $('.circle-btn,.text-btn').on('mousedown', function(e) {
+	            _clearSelect();
+	            var $elm = $(this);
+	            var $parent = $elm.parent();
+	            var mouse = [e.clientX, e.clientY],
+	                start = [parseInt($elm.css('left'), 10), parseInt($elm.css('top'), 10)];
+	            if (selectShap != this) {
+	                action.off(selectShap);
+	                selectShap = this;
+	                hoverShap = null;
+	                vmConfigureBox.selectShapType = "";
+	                vmConfigureBox.selectShapType = this.getAttribute('data-shap');
+	            }
+	            $parent.on("mousemove", function(e) {
+	                _clearSelect();
+	                var left = start[0] + e.clientX - mouse[0];
+	                var top = start[1] + e.clientY - mouse[1];
+	                if (vmSvgMap.addShap.shap == 'star') {
+	                    vmSvgMap.addShap.x = left + 5;
+	                    vmSvgMap.addShap.y = top + 5;
+	                } else {
+	                    vmSvgMap.addShap.x = left;
+	                    vmSvgMap.addShap.y = top;
+	                }
+	
+	                $elm.css({
+	                    left: left,
+	                    top: top
+	                });
+	            }).one("mouseup", function() {
+	                $parent.off("mousemove");
+	            });
+	        });
+			
+			var $uploadBtn = $('#uploadBtn').on('change', function () {
+				console.log(this.value);
+				var file = $uploadBtn[0].files[0];
+				if (file) {
+					var reader = new FileReader();
+					reader.readAsText(file, 'utf8');
+					reader.onload = function (e) {
+						$('#svgLoad').html(this.result.replace(/^.*?<\s*svg\s*/, '<svg ').replace(/<\/\s*svg\s*>.*?$/, '</svg>'));
+					};
+				}
+			});
+		 	var dataBase = {};
+			dataBase.svgData = dataBase.svgData || [];
+	    	if (dataBase.hasRoom) {
+	    		vmSvgMap.hasRoom = dataBase.hasRoom.split(',');
+	    	} else {
+	    		vmSvgMap.hasRoom = [];
+	    	}
+	    	if (typeof dataBase.areaName != "undefined")
+				vmConfigureBox.areaName = dataBase.areaName;
+			
+	    	var svgData = dataBase.svgData;
+	    	for (var i =0 ,len = svgData.length; i < len; i++) {
+	    		var obj = svgData[i];
+	    		if (obj.shap == 'path') {
+	    			obj.color = COLOR_GROUP_MAP[obj.color] || obj.color;
+	    		}
+	    	}
+	    	vmSvgMap.svgTab = dataBase.svgData;
+	    	
+	    	
+	    	var $mapPopTip = $('<div class="map-popTip"><div class="map-popTip-l"></div><div class="map-popTip-m"></div><div class="map-popTip-r"></div></div>').appendTo('body');
+	    	var mapPopTipTime = 0;
+	    	$('#addSvgBox').on('mouseenter', 'text', function (){
+	    		var pathKey = this.getAttribute('key');
+	    		var shap = this.getAttribute('data-shap');
+	    		if (shap == 'star') {
+	    			var elm = this;
+	    			var textArea = this.getAttribute('textarea');
+	    			clearTimeout(mapPopTipTime);
+	    			mapPopTipTime = setTimeout(function(){
+	    				var offset = $(elm).offset();
+	    				$mapPopTip.css({left: offset.left-10, top: offset.top-30});
+						$mapPopTip.find('.map-popTip-m').html( textArea || SVG_PATH.keyMap[pathKey]);
+						$mapPopTip.show();
+					},200);
+	    		}
+	    	}).on('mouseleave', 'text', function (){
+	    		clearTimeout(mapPopTipTime);
+	    		$mapPopTip.hide();
+	    	})
+
+	    	var $configureBox = $('.configure-box');
+	    	var activeBox = 'left';
+	    	$('.svg-box').on('mouseenter', function (){
+	    		if (activeBox != 'left') {
+	    			$configureBox.css({
+	    				left: 670,
+	    				right: "auto"
+	    			});
+	    			activeBox = 'left';
+	    		}
+	    	})
+			$('#addSvgBox').on('mouseenter', function (){
+	    		if (activeBox != 'right') {
+	    			$configureBox.css({
+	    				right: 670,
+	    				left: "auto"
+	    			});
+	    			activeBox = 'right';
+	    		}
+	    	})
+	    });
+    </script>
+</head>
+<body>
+    <div class="configure-box" ms-controller="configureBox">
+        <div>配置地图信息
+			<div class="file-upload map-btn">载入svg图形<input type="file" class="upload" id="uploadBtn"></div>   
+            <button class="map-btn" ms-click="saveShapFn">保存svg数据</button>
+        </div>
+        <div>选择配置区域
+            <div style="display: inline-block;margin-left: 5px;color:#79d466;">{{SVG_PATH.keyMap[areas]}}</div>
+            <input ms-duplex="areaName">
+            <button class="map-btn del-btn" ms-click="clearShapFn">清空图形</button>
+            <!--span ms-each-area="areas">
+                    <select  ms-if-loop="$index != 0" ms-duplex="area" data-duplex-changed="selectchange">
+                        <option value="">请选择</option>
+                        <option ms-repeat="SVG_PATH.keyTree[areas[$index-1]]" ms-attr-value="{{el}}">{{SVG_PATH.keyMap[el]}}</option>
+                    </select>
+                </span-->
+        </div>
+        <div>当前选择图形
+            <div style="display: inline-block;margin-left: 5px;color:#79d466;">{{SHAP_NAME_MAP[selectShapType]}}</div>
+            <span ms-if="selectShapType=='center' || selectShapType=='star'">
+                    <label><input ms-duplex-string="selectShapType" type="radio" value="center"/>行政中心</label>
+                    <label><input ms-duplex-string="selectShapType" type="radio" value="star"/>星星</label>
+                </span>
+        </div>
+       
+        <div>图形对应区域
+            <span ms-each-area="areaShap">
+				<select ms-if-loop="$index != 0" ms-duplex="area" data-duplex-changed="selectchange2">
+					<option value="">请选择</option>
+					<option ms-repeat="SVG_PATH.keyTree[areaShap[$index-1]]" ms-attr-value="{{el}}" ms-attr-selected="{{el==area}}" >{{SVG_PATH.keyMap[el]}}</option>
+				</select>
+			</span>
+            <button class="map-btn del-btn" ms-click="delKeyFn">清空区域</button>
+        </div>
+        <div ms-if="selectShapType=='center' || selectShapType=='star' || selectShapType=='text'" >页面显示文字
+             <input ms-duplex="textArea">
+        </div>
+        <div ms-if="selectShapType=='path'" class="color-sel">颜色值
+            <div class="color1" ms-class="sel:selectColor=='0' && !textColor" ms-click="selectColorFn('0')"></div>
+            <div class="color2" ms-class="sel:selectColor=='1' && !textColor" ms-click="selectColorFn('1')"></div>
+            <div class="color3" ms-class="sel:selectColor=='2' && !textColor" ms-click="selectColorFn('2')"></div>
+            <div class="color4" ms-class="sel:selectColor=='3' && !textColor" ms-click="selectColorFn('3')"></div>
+            <div class="color5" ms-class="sel:selectColor=='4' && !textColor" ms-click="selectColorFn('4')"></div>
+            <label>
+                <input ms-duplex="textColor">
+            </label>
+        </div>
+        <div ms-if="selectShapType=='path'">
+            <label>
+                <input type="checkbox" ms-duplex-checked="isMultiPath">支持多块</label>
+            <label>
+                <input type="checkbox" ms-duplex-checked="hasRoom">存在在线教室</label>
+        </div>
+        <div ms-if="selectShapType=='center'">
+            <select ms-duplex="selectLevel">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select><img ms-attr-src="../../public/map/{{selectLevel}}.png" ms-attr-alt="等级{{selectLevel}}" style="margin-left:5px;" width='10px;' height="10px;">
+        </div>
+        <div>
+            <button class="map-btn" ms-click="addShapFn">添加图形</button>
+            <button class="map-btn del-btn" ms-click="delShapFn">删除图形</button>
+        </div>
+        <div>{{info|html}}</div>
+    </div>
+    <div ms-controller="svgMap" style="float: right;" id="addSvgBox">
+        <div class='circle-btn' data-shap="center"></div>
+        <div class='text-btn' data-shap="text"></div>
+        <svg height="660" version="1.1" width="660" style="overflow: hidden; position: relative;" xmlns="http://www.w3.org/2000/svg">
+			<text ms-attr-x="{{660-15*areaName.length}}" y="30" text-anchor="middle" stroke="none" fill="#000000" font-size="30px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif">{{areaName}}</text>
+			<g ms-each-shap="svgTab">
+                <path ms-if-loop="shap.shap == 'path'" ms-attr-fill="{{shap.color.split(',')[hasRoom.indexOf(shap.key)!=-1?(selectCode==shap.key?1:0):2]}}" ms-attr-d="shap.path" ms-attr-key="shap.key" stroke="#eeeeee" stroke-width="2" stroke-linejoin="round" style="cursor: pointer;" data-shap="path"></path>
+                <image ms-if-loop="shap.shap == 'center'" ms-attr-x="shap.x" ms-attr-y="shap.y" width="10" height="10" ms-attr-xlink:href="../../public/map/{{shap.level}}.png" xlink:href="" style="cursor: pointer;" ms-attr-key="shap.key" data-shap="center"/>
+                <text ms-if-loop="shap.shap == 'center' && shap.text != 1" ms-attr-x="shap.x" ms-attr-y="shap.y" text-anchor="middle" stroke="none" fill="#000000" font-size="15px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif" style="cursor: pointer;" ms-attr-key="shap.key" data-shap="center">{{shap.textArea||SVG_PATH.keyMap[shap.key]}}</text>
+                <text ms-if-loop="shap.shap == 'text'" ms-attr-x="shap.x" ms-attr-y="shap.y" text-anchor="middle" stroke="none" fill="#000000" font-size="15px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif" style="cursor: pointer;" ms-attr-key="shap.key" data-shap="text">{{shap.textArea||SVG_PATH.keyMap[shap.key]}}</text>
+                <text ms-if="shap.shap == 'star'" ms-attr-x="shap.x" ms-attr-y="shap.y" text-anchor="middle" stroke="none" fill="#FF2424" font-size="15px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif" style="cursor: pointer;" ms-attr-key="shap.key" data-shap="star" ms-attr-textarea="shap.textArea" >★</text>
+            </g>
+            <g ms-if="addShap.key && addShap.isLeft">
+	            <path ms-if="addShap.shap == 'path'" ms-attr-fill="{{addShap.color.split(',')[addShap.hasRoom?(selectCode==addShap.key?1:0):2]}}" fill-opacity="0.5" stroke="#eeeeee" stroke-width="2" stroke-dasharray="5,5" stroke-linejoin="round" style="cursor: pointer;" ms-attr-d="addShap.path" ms-attr-key="addShap.key" data-shap="path"></path>
+	            <image ms-if="addShap.shap == 'center'" ms-attr-x="addShap.x" ms-attr-y="addShap.y" width="10" height="10" ms-attr-xlink:href="../../public/map/{{addShap.level}}.png" xlink:href="" style="cursor: pointer;" ms-attr-key="addShap.key" data-shap="center"/>
+	            <text ms-if="addShap.shap == 'center' && addShap.text != 1" ms-attr-x="addShap.x" ms-attr-y="addShap.y" text-anchor="middle" stroke="none" fill="#000000" fill-opacity="0.5" font-size="15px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif" style="cursor: pointer;" ms-attr-key="addShap.key" data-shap="center">{{addShap.textArea||SVG_PATH.keyMap[addShap.key]}}</text>
+	            <text ms-if="addShap.shap == 'text'" ms-attr-x="addShap.x" ms-attr-y="addShap.y" text-anchor="middle" stroke="none" fill="#000000" fill-opacity="0.5" font-size="15px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif" style="cursor: pointer;" ms-attr-key="addShap.key" data-shap="text">{{addShap.textArea||SVG_PATH.keyMap[addShap.key]}}</text>
+	            <text ms-if="addShap.shap == 'star'" ms-attr-x="addShap.x" ms-attr-y="addShap.y" text-anchor="middle" stroke="none" fill="#FF2424" fill-opacity="0.5" font-size="15px" font-family="Microsoft YaHei,微软雅黑,STXihei,华文细黑,serif" style="cursor: pointer;" ms-attr-key="addShap.key" data-shap="star" ms-attr-textarea="addShap.textArea" >★</text>
+            </g>
+        </svg>
+    </div>
+    <div class="svg-box" style="float: left;">
+        <div class='circle-btn' data-shap="center"></div>
+        <div class='text-btn' data-shap="text"></div>
+        <div id="svgLoad" style="float: left;"></div>
+    </div>
+</body>
+</html>
