@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<title>图片滚动</title>
+	<link type="text/css" rel="stylesheet"  href="../../public/reset.css" >
+	<link type="text/css" rel="stylesheet"  href="../../public/syntaxhighlighter/styles/shCoreDefault.css" >
+	<script src="../../public/jquery-1.11.3.min.js"></script>
+	<script src="../../public/syntaxhighlighter/scripts/shCore.js"></script>
+	<script src="../../public/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+	<script src="photoScroll.js"></script>
+	<style>
+		#rollWarp {
+			background-color: #e0e0e0;
+			position: relative;
+			width: 820px;
+		}
+		#rollBox {
+			overflow: hidden;
+		}
+		#rollList {
+			width: 3000px;
+			overflow: hidden;
+		}
+		li {
+			display: inline;
+			float: left;
+			margin: 25px 18px;
+			text-align: center;
+			width: 232px;
+		}
+		li a {
+			background-color: #7fa8de;
+			color: #fff;
+			display: block;
+			font-size: 16px;
+			line-height: 30px;
+			padding: 5px;
+		}
+		li img {
+			display: block;
+			height: 125px;
+			width: 222px;
+		}
+		.circle {
+			bottom: 7px;
+			left: 335px;
+			position: absolute;
+		}
+		.circle a {
+			background: #e0e0e0 url("circle.png") no-repeat scroll 0 0;
+			display: block;
+			float: left;
+			height: 11px;
+			margin: 0 10px;
+			width: 11px;
+		}
+		.circle a:hover,.circle a.selected {
+			background-position: 0 -20px;
+		}
+	</style>
+</head>
+<body>
+	<div id="rollWarp">
+		<div id="rollBox">
+			<ul id="rollList">
+				<li><a href="javascript:;">在线课堂<img src="在线课堂.jpg" /></a></li>
+				<li><a href="javascript:;">直录播教室<img src="直录播教室.jpg" /></a></li>
+				<li><a href="javascript:;">在线教育<img src="在线教育.jpg" /></a></li>
+				<li><a href="javascript:;">人人通生态教育云平台<img src="人人通.jpg" /></a></li>
+			</ul>	
+		</div>
+		<div class="circle clearfix">
+			<a class="selected" href="javascript:;"></a>
+			<a href="javascript:;"></a>
+			<a href="javascript:;"></a>
+			<a href="javascript:;"></a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$('#rollBox').photoScroll({
+			showNum: 3,
+			items: 'li',
+			marquee: 'ul',
+			autoScroll: true,
+			init: function () {
+				var self = this;
+				$('#rollRight').click(function () {
+					self.next();
+				});
+				$('#rollLeft').click(function () {
+					self.prev();
+				});
+				var $items = this.$wrapper.find('li').hover(function(){
+					self.off();
+					$items.removeClass('selected');
+					$(this).addClass('selected');
+				}, function () {
+					$(this).removeClass('selected');
+					self.on();
+				});
+				var $icons = $('.circle a').hover(function(){
+					self.off($(this).index());
+					$icons.removeClass('selected');
+					$(this).addClass('selected');
+				}, function () {
+					self.on();
+				});
+			},
+			onScroll: function(index){
+				console.log('.circle a', index);
+				$('.circle a').removeClass('selected').get(index).className = 'selected';
+			}
+		});
+		SyntaxHighlighter.all();
+	</script>
+	<pre class="brush: js;">
+		$('#rollBox').photoScroll({
+			index: 0, //开始个数
+			firstInterval: 3000, // 第一次开始循环的间隔
+			interval: 3000, //循环间隔
+			step: 1, //每次滚动多少个item
+			speed: 300, //动画执行时间
+			easing: 'linear', //动画执行参数
+			showNum: 3, //显示个数
+			items: 'li',//获取item的选择器
+			marquee: 'ul',//不无限滚动为false,无限滚动为复制元素的选择器
+			autoScroll: true,//是否自动滚动,
+			direction: 'scrollLeft',//滚动动画参数,[见getStepLength方法,在特殊的direction,需要重写getStepLength, 获取每次变化的距离]
+			getStepLength: function (direction, $items) {
+				if (direction == 'scrollLeft') {
+					return $items.outerWidth(true);
+				} else {
+					return $items.outerHeight(true);
+				} 
+			},
+			init: function () {//初始化，定义
+				var self = this;
+				$('#rollRight').click(function () {
+					self.next();//下一个
+				});
+				$('#rollLeft').click(function () {
+					self.prev();//上一个
+				});
+				var $items = this.$wrapper.find('li').hover(function(){
+					self.off();//暂停滚动
+					$items.removeClass('selected');
+					$(this).addClass('selected');
+				}, function () {
+					$(this).removeClass('selected');
+					self.on();//继续滚动
+				});
+				var $icons = $('.circle a').hover(function(){
+					self.off($(this).index());//暂停滚动，并显示当前index的元素
+					$icons.removeClass('selected');
+					$(this).addClass('selected');
+				}, function () {
+					self.on();//继续滚动
+				});
+			},
+			onScroll: function(index){//滚动动画开始执行
+				$('.circle a').removeClass('selected').get(index).className = 'selected';
+			},
+			onScrolled: function(){}//滚动动画完成执行
+		});
+	</pre>
+</body>
+</html>
+
+
+
