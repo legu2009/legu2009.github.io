@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="../../public/avalon.js"></script>
+        <script>
+
+            var data = [
+                {"id": 0, "name": "1公司", "grade": -1, "parentid": "-1"},
+                {"id": 1, "name": "广东公司", "grade": 0, "parentid": "0"},
+                {"id": 2012300001, "name": "广州1分公司", "grade": 1, "parentid": 1},
+                {"id": 200000000, "name": "广州分公司", "grade": 1, "parentid": 1},
+                {"id": 4050, "name": "天河分公司", "grade": 2, "parentid": 200000000},
+                {"id": 999182, "name": "工业园营销服务中心", "grade": 3, "parentid": 4050},
+                {"id": 4174, "name": "南沙分公司", "grade": 2, "parentid": 200000000},
+                {"id": 10121, "name": "南沙营销服务中心", "grade": 3, "parentid": 4174},
+            ]
+            var a = avalon.define("test", function(vm) {
+                vm.searchForm = [];
+                vm.setSearchFormInit = function(currNode) {
+                    var childNodes = vm.getChildOrg(currNode);
+                    if (childNodes.length)
+                        vm.searchForm = [childNodes];
+                };
+                vm.setSearchForm = function(index) {
+                    //vm.searchForm._del(index,10)//在选中某个select后，取得index，删除它后边的所有成员
+                    avalon.log("删除第" + index + "个元素后的所有成员")
+                    a.searchForm.removeAll(function(arr, i) {
+                        if (i > index)
+                            return true;
+                        return false;
+                    });
+                    var currNode = this.value;
+                    var childNodes = vm.getChildOrg(currNode);
+                    if (childNodes.length)
+                        vm.searchForm.push(childNodes);
+                };
+                vm.getChildOrg = function(id) {
+                    var retList = [];
+                    for (var i = 0; i < data.length; i++) {
+                        var elem = data[i]
+                        if (elem.parentid != id)
+                            continue;
+                        retList.push({
+                            id: elem.id,
+                            name: elem.name,
+                            parentid: elem.parentid
+                        });
+                    }
+                    return retList;
+                }
+            })
+            a.setSearchFormInit(0);
+			
+			
+			var MAIN_KEY;
+			var keyTree = {};
+			var keyMap = {};
+			for (var i = 0, len = data.length; i < len; i++) {
+				var obj = data[i];
+				var pId = obj.parentid;
+				keyMap[obj.id] = obj;
+				
+				if (obj.parentid == -1) {
+					MAIN_KEY = obj.id;
+				} else {
+					keyTree[pId] = keyTree[pId] || [];
+					keyTree[pId].push(obj.id);
+				}
+			}
+			
+			var  noop =  function () {};
+			window.vmMultiSelect = avalon.define({
+	            $id: "multiSelect",
+	            areaShap: [MAIN_KEY, ""],
+	            selectchange: function(val, m) {
+					var index = m.args[0].$index;
+					if (vmMultiSelect.isInitSelect(index) === false) return;
+		        	var areas = vmMultiSelect.areaShap;
+					for (var i = areas.length - 1, end = index; i > end; i--) {
+						areas.removeAt(i);
+					}
+	                if (keyTree[val]) {
+	                    areas.push("");
+	                }
+	            },
+				isInitSelect: noop,
+				initSelect: function (val) {
+					vmMultiSelect.areaShap = [0, "1", "200000000", "4050", ""];
+					var len = vmMultiSelect.areaShap.length - 1;
+					vmMultiSelect.isInitSelect = function (index) {
+						console.log(index, len)
+						if (index < len) {	
+							return false;
+						} else {
+							vmMultiSelect.isInitSelect = noop;
+							return false;
+						}
+					}
+				}
+	        });
+			//vmMultiSelect.initSelect([0, "1", "200000000", "4050", ""]);
+
+        </script>
+    </head>
+    <body >
+		<div ms-controller="test">
+			官网实例<br>
+			<div ms-repeat-form="searchForm" style="display: inline;">
+				<select ms-change="setSearchForm($index)">
+					<option></option>
+					<option ms-repeat-el="form" ms-value="el.id">{{el.name}}</option>
+				</select>
+			</div>
+		</div>
+		
+		
+		<div ms-controller="multiSelect">
+			我的实现<br>
+			<span ms-each-area="areaShap" >
+				<select ms-if-loop="$index != 0" ms-duplex="area" data-duplex-changed="selectchange">
+					<option value="">请选择</option>
+					<option ms-repeat="keyTree[areaShap[$index-1]]" ms-attr-value="{{el}}" ms-attr-selected="{{el==area}}" >{{keyMap[el].name}}</option>
+				</select>
+			</span>
+		</div>
+    </body>
+</html>
