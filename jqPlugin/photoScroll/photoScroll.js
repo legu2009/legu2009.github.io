@@ -79,7 +79,11 @@
 			if (opt.marquee && num < 0) {
 				opt.index = (num + opt.maxIndex/2)% (opt.maxIndex/2);
 			} else {
-				opt.index = (num + opt.maxIndex)% opt.maxIndex;
+				if (num > opt.maxIndex) {//下次循环则从0开始
+					opt.index = 0;
+				} else {
+					opt.index = num;
+				}
 			}	
 			clearTimeout(self.timeId);
 			var parms = {};
