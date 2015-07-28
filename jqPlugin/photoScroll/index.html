@@ -13,7 +13,7 @@
 		#rollWarp {
 			background-color: #e0e0e0;
 			position: relative;
-			width: 820px;
+			width: 1074px;
 		}
 		#rollBox {
 			overflow: hidden;
@@ -55,7 +55,7 @@
 			margin: 0 10px;
 			width: 11px;
 		}
-		.circle a:hover,.circle a.selected {
+		.circle a:hover,.circle a.sel {
 			background-position: 0 -20px;
 		}
 	</style>
@@ -64,22 +64,18 @@
 	<div id="rollWarp">
 		<div id="rollBox">
 			<ul id="rollList">
-				<li><a href="javascript:;">在线课堂<img src="在线课堂.jpg" /></a></li>
-				<li><a href="javascript:;">直录播教室<img src="直录播教室.jpg" /></a></li>
-				<li><a href="javascript:;">在线教育<img src="在线教育.jpg" /></a></li>
-				<li><a href="javascript:;">人人通生态教育云平台<img src="人人通.jpg" /></a></li>
+				<li><a href="javascript:;">1在线课堂<img src="在线课堂.jpg" /></a></li>
+				<li><a href="javascript:;">2直录播教室<img src="直录播教室.jpg" /></a></li>
+				<li><a href="javascript:;">3在线教育<img src="在线教育.jpg" /></a></li>
+				<li><a href="javascript:;">4人人通生态教育云平台<img src="人人通.jpg" /></a></li>
+				<li><a href="javascript:;">5人人通生态教育云平台<img src="人人通.jpg" /></a></li>
 			</ul>	
 		</div>
-		<div class="circle clearfix">
-			<a class="selected" href="javascript:;"></a>
-			<a href="javascript:;"></a>
-			<a href="javascript:;"></a>
-			<a href="javascript:;"></a>
-		</div>
+		<div class="circle clearfix"></div>
 	</div>
 	<script type="text/javascript">
 		$('#rollBox').photoScroll({
-			showNum: 3,
+			showNum: 4,
 			items: 'li',
 			marquee: 'ul',
 			autoScroll: true,
@@ -93,23 +89,38 @@
 				});
 				var $items = this.$wrapper.find('li').hover(function(){
 					self.off();
-					$items.removeClass('selected');
-					$(this).addClass('selected');
+					$items.removeClass('sel');
+					$(this).addClass('sel');
 				}, function () {
-					$(this).removeClass('selected');
+					$(this).removeClass('sel');
 					self.on();
 				});
-				var $icons = $('.circle a').hover(function(){
-					self.off($(this).index());
-					$icons.removeClass('selected');
-					$(this).addClass('selected');
+				
+				var stepIndexs = this.options.stepIndexs;
+				console.log(stepIndexs);
+				var html = [];
+				for (var i = 0, len = stepIndexs.length; i < len ;i++) {
+					html.push('<a href="javascript:;" data-index="' + stepIndexs[i] + '" ' + (i == 0? ' class="sel" ': '') + '></a>');
+				}
+				var $circle = $('.circle').html(html.join(''));
+				var $icons = $circle.find('a').hover(function(){
+					self.off($(this).attr('data-index')*1);
+					$icons.removeClass('sel');
+					$(this).addClass('sel');
 				}, function () {
 					self.on();
 				});
 			},
 			onScroll: function(index){
-				console.log('.circle a', index);
-				$('.circle a').removeClass('selected').get(index).className = 'selected';
+				var $item = $('.circle a').removeClass('sel');
+				$item.each(function () {
+					var $elm = $(this);
+					var i = $elm.attr("data-index");
+					if (index <= i) {
+						$elm.addClass('sel')
+						return false;
+					}
+				});
 			}
 		});
 		SyntaxHighlighter.all();
@@ -144,22 +155,22 @@
 				});
 				var $items = this.$wrapper.find('li').hover(function(){
 					self.off();//暂停滚动
-					$items.removeClass('selected');
-					$(this).addClass('selected');
+					$items.removeClass('sel');
+					$(this).addClass('sel');
 				}, function () {
-					$(this).removeClass('selected');
+					$(this).removeClass('sel');
 					self.on();//继续滚动
 				});
 				var $icons = $('.circle a').hover(function(){
 					self.off($(this).index());//暂停滚动，并显示当前index的元素
-					$icons.removeClass('selected');
-					$(this).addClass('selected');
+					$icons.removeClass('sel');
+					$(this).addClass('sel');
 				}, function () {
 					self.on();//继续滚动
 				});
 			},
 			onScroll: function(index){//滚动动画开始执行
-				$('.circle a').removeClass('selected').get(index).className = 'selected';
+				$('.circle a').removeClass('sel').get(index).className = 'sel';
 			},
 			onScrolled: function(){}//滚动动画完成执行
 		});

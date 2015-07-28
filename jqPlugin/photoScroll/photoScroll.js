@@ -1,24 +1,19 @@
 (function ($) {
 	var slice = Array.prototype.slice;
+	//showNum >= step
 	var defaults = {
 		index: 0,
 		autoScroll: false,
 		interval: 3000,
 		step: 1,
-		speed: 300,
+		type: 1,
+		speed: 1000,
 		easing: 'linear',
 		showNum: 1,
 		marquee: false,
 		state: 'scroll',
 		scrollState: 'stop',
 		direction: 'scrollLeft',
-		getStepLength: function (direction, $items) {
-			if (direction == 'scrollLeft') {
-				return $items.outerWidth(true);
-			} else {
-				return $items.outerHeight(true);
-			} 
-		},
 		firstInterval: 0,
 		init: function () {},
 		onScroll: function(){},
@@ -26,17 +21,56 @@
 	}
 	function PhotoScroll($wrapper, options) {
 		this.$wrapper = $wrapper;
-		this.options = options;
-		var $items = $wrapper.find(options.items);
-		options.stepLength = options.getStepLength(options.direction, $items);
-		options.maxIndex = $items.length - options.showNum + 1;
-		if (options.marquee && $items.length > options.showNum) {
+		var opt = this.options = options;
+		
+		var type = opt.type;
+		var showNum = opt.showNum;
+		
+		var step = opt.step;
+		var $items = $wrapper.find(opt.items);
+		var itemLen = this.itemLen = $items.length;
+		
+		if (opt.direction == 'scrollLeft') {
+			opt.stepLength = $items.outerWidth(true);
+		} else {
+			opt.stepLength = $items.outerHeight(true);
+		}
+		
+		var stepLen = Math.ceil(itemLen/step);
+		opt.totleIndex = stepLen * step ;
+		
+		
+		//if (totleIndex + (showNum - step) - itemLen < step) {
+			//options.totleIndex += showNum - step;
+		//}
+		//options.maxIndex = (Math.ceil(itemLen/showNum) - 1) * showNum;
+		if (options.marquee && itemLen > showNum) {
 			var $marquee = this.$wrapper.find(options.marquee);
 			$marquee.children().clone().appendTo($marquee);
-			options.maxIndex = $items.length * 2;
+			options.totleIndex = Math.ceil(itemLen * 2/step) * step;
+			type = opt.type = 2;
 		} else {
 			options.marquee = false;
 		}
+		
+		var stepIndexs = [];
+		for (var i = 0; i < stepLen; i++) {
+			if (type == 2) {
+				stepIndexs.push(i*step);
+			} else {
+				var f = itemLen - i * step - showNum;
+				if (f > 0) {
+					stepIndexs.push(i*step);
+				} else if (f == 0) {
+					stepIndexs.push(i*step);
+					break;
+				} else {
+					stepIndexs.push(itemLen-showNum);
+					break;
+				}
+			}
+		}
+		options.stepIndexs = stepIndexs;
 		this.timeId = 0;
 		this.init();
 	}
@@ -50,6 +84,7 @@
 					self.next();
 				}, opt.firstInterval||opt.interval);
 			}
+			opt.onScroll.call(this, opt.index);
 		},
 		off: function (index) {
 			var opt = this.options;
@@ -73,29 +108,47 @@
 		scroll: function (num, isStop) {		
 			isStop =  isStop || false;
 			var opt = this.options;
-			var self = this;
 			if ((opt.scrollState == 'scroll' && isStop == false) || opt.state == 'stop') return;
-			opt.scrollState = 'scroll';
-			if (opt.marquee && num < 0) {
-				opt.index = (num + opt.maxIndex/2)% (opt.maxIndex/2);
-			} else {
-				if (num > opt.maxIndex) {//下次循环则从0开始
-					opt.index = 0;
-				} else {
-					opt.index = num;
-				}
-			}	
+			
+			var self = this;
 			clearTimeout(self.timeId);
-			var parms = {};
-			parms[opt.direction] = (opt.index * opt.stepLength + 'px');
-			if (opt.marquee && opt.index == opt.maxIndex/2) {
-				opt.index = 0;
+			opt.scrollState = 'scroll';
+			var totleIndex = opt.totleIndex;
+			var type = opt.type;
+			var step = opt.step;
+			console.log(num, totleIndex);
+			var index = opt.index = (num + totleIndex)% totleIndex;
+			var itemLen = this.itemLen;
+			var showNum = opt.showNum;
+			if (type == 1 && !opt.marquee) {
+				var f1 = index + showNum - step - itemLen;
+				var f = index + showNum - itemLen;
+				if (f > 0) {
+					if (f1 >= 0) {
+						index = opt.index = 0;
+					} else {
+						index = opt.index = itemLen - showNum;
+					}
+				}
 			}
-			opt.onScroll.call(self, opt.index);
+
+			var parms = {};
+			parms[opt.direction] = (index * opt.stepLength + 'px');
+			
+			console.log(num, totleIndex, index);
+			
+			
+			var flag = false;
+			if (opt.marquee && index >= totleIndex/2) {
+				index = opt.index = index - totleIndex/2;
+				console.log('2', num, totleIndex, index);
+				flag = true;
+			}
+			opt.onScroll.call(self, index);
 			this.$wrapper.animate(parms, opt.speed, opt.easing, function () {
 				opt.scrollState = 'stop';
-				if (opt.marquee && opt.index == 0) {
-					self.$wrapper[0][opt.direction] = '0px';
+				if (flag) {
+					self.$wrapper[0][opt.direction] = index * opt.stepLength;
 				}
 				if (opt.autoScroll && (isStop == false || opt.state == 'scroll')) {
 					clearTimeout(self.timeId);
@@ -103,7 +156,7 @@
 						self.next();
 					}, opt.interval);
 				}
-				opt.onScrolled.call(self, opt.index);
+				opt.onScrolled.call(self, index);
 			})
 		},
 		next: function () {
@@ -126,12 +179,12 @@
 		var flag = false;
 		this.each(function () {
 			var $elm = $(this);
-			var obj = $elm.data('photoScroll');
+			var photoScroll = $elm.data('photoScroll');
 			if (typeof options == "string" ) {
-				if (obj && obj[options]) {
-					var opt = obj[options];
+				if (photoScroll && photoScroll[options]) {
+					var opt = photoScroll[options];
 					if ($.isFunction(opt)) {
-						res = opt.apply(obj, args);
+						res = opt.apply(photoScroll, args);
 						if (res !== undefined) {
 							flag = true;
 							return true;
@@ -142,7 +195,7 @@
 							flag = true;
 							return true;
 						} else if (args.length == 1) {
-							obj[options] = args[0];
+							photoScroll[options] = args[0];
 						}
 					}
 				}
@@ -154,6 +207,6 @@
 			return res;
 		} else {
 			return this;
-		}
+		}	
 	}
 })(jQuery);
