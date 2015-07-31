@@ -47,7 +47,7 @@
 		if (options.marquee && itemLen > showNum) {
 			var $marquee = this.$wrapper.find(options.marquee);
 			$marquee.children().clone().appendTo($marquee);
-			options.totleIndex = Math.ceil(itemLen * 2/step) * step;
+			options.totleIndex = itemLen * 2;
 			type = opt.type = 2;
 		} else {
 			options.marquee = false;
@@ -116,7 +116,7 @@
 			var totleIndex = opt.totleIndex;
 			var type = opt.type;
 			var step = opt.step;
-			console.log(num, totleIndex);
+
 			var index = opt.index = (num + totleIndex)% totleIndex;
 			var itemLen = this.itemLen;
 			var showNum = opt.showNum;
@@ -134,14 +134,10 @@
 
 			var parms = {};
 			parms[opt.direction] = (index * opt.stepLength + 'px');
-			
-			console.log(num, totleIndex, index);
-			
-			
+
 			var flag = false;
 			if (opt.marquee && index >= totleIndex/2) {
 				index = opt.index = index - totleIndex/2;
-				console.log('2', num, totleIndex, index);
 				flag = true;
 			}
 			opt.onScroll.call(self, index);

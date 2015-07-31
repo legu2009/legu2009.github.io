@@ -19,7 +19,7 @@
 			overflow: hidden;
 		}
 		#rollList {
-			width: 3000px;
+			width: 300000px;
 			overflow: hidden;
 		}
 		li {
@@ -28,19 +28,11 @@
 			margin: 25px 18px;
 			text-align: center;
 			width: 232px;
-		}
-		li a {
 			background-color: #7fa8de;
-			color: #fff;
-			display: block;
-			font-size: 16px;
-			line-height: 30px;
-			padding: 5px;
 		}
 		li img {
 			display: block;
-			height: 125px;
-			width: 222px;
+			margin: 0 auto;
 		}
 		.circle {
 			bottom: 7px;
@@ -64,11 +56,15 @@
 	<div id="rollWarp">
 		<div id="rollBox">
 			<ul id="rollList">
-				<li><a href="javascript:;">1在线课堂<img src="在线课堂.jpg" /></a></li>
-				<li><a href="javascript:;">2直录播教室<img src="直录播教室.jpg" /></a></li>
-				<li><a href="javascript:;">3在线教育<img src="在线教育.jpg" /></a></li>
-				<li><a href="javascript:;">4人人通生态教育云平台<img src="人人通.jpg" /></a></li>
-				<li><a href="javascript:;">5人人通生态教育云平台<img src="人人通.jpg" /></a></li>
+				<li><img src="bg1.png" /></li>
+				<li><img src="bg2.png" /></li>
+				<li><img src="bg3.png" /></li>
+				<li><img src="bg4.png" /></li>
+				<li><img src="bg5.png" /></li>
+				<li><img src="bg6.png" /></li>
+				<li><img src="bg7.png" /></li>
+				<li><img src="bg8.png" /></li>
+				<li><img src="bg9.png" /></li>
 			</ul>	
 		</div>
 		<div class="circle clearfix"></div>
@@ -76,8 +72,9 @@
 	<script type="text/javascript">
 		$('#rollBox').photoScroll({
 			showNum: 4,
+			step: 1,
 			items: 'li',
-			marquee: 'ul',
+			type: 2,
 			autoScroll: true,
 			init: function () {
 				var self = this;
