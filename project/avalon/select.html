@@ -86,7 +86,7 @@
 	            },
 				isInitSelect: noop,
 				initSelect: function (val) {
-					vmMultiSelect.areaShap = [0, "1", "200000000", "4050", ""];
+					vmMultiSelect.areaShap = val;
 					var len = vmMultiSelect.areaShap.length - 1;
 					vmMultiSelect.isInitSelect = function (index) {
 						console.log(index, len)
