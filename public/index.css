@@ -1,0 +1,197 @@
+a {
+	color: #29b4f0;
+	text-decoration: none;
+}
+h1, .h1 {
+    font-size: 36px;
+}
+@font-face {
+    font-family: "w3cplus";
+    font-style: normal;
+    font-weight: normal;
+    src: url("http://www.w3cplus.com/sites/all/themes/w3cplusV2/fonts/w3cplus.eot%3F%23iefix") format("embedded-opentype"), url("http://cdn2.w3cplus.com/cdn/farfuture/v33ZbhxDPhDRGPu3J2DsVbNbPF1LyOn6SalMzJW69rU/mtime:1414079821/sites/all/themes/w3cplusV2/fonts/w3cplus.woff") format("woff"), url("http://cdn.w3cplus.com/cdn/farfuture/v33ZbhxDPhDRGPu3J2DsVbNbPF1LyOn6SalMzJW69rU/mtime:1414079821/sites/all/themes/w3cplusV2/fonts/w3cplus.ttf") format("truetype"), url("http://www.w3cplus.com/sites/all/themes/w3cplusV2/fonts/w3cplus.svg%23w3cplus") format("svg");
+}
+#pageWapper {
+    padding-top: 48px;
+	background-color: #eee;
+    color: #404040;
+    font: 14px/1.42857 "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,Arial,sans-serif;
+	height: 100%;
+	padding-bottom: 40px;
+}
+header {
+    background-color: #333;
+    color: #fff;
+    height: 48px;
+    left: 0;
+    line-height: 48px;
+    min-width: 320px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+#logo {
+    margin: 0 10px 0 0;
+	float: left;
+}
+#logo a {
+    background: #00a3cf url("http://cdn2.w3cplus.com/cdn/farfuture/RF1xpRJEoklyAb7wAfpNNpU93FkYVXyUYdKenU7JOEY/mtime:1414079823/sites/all/themes/w3cplusV2/images/logo.png") no-repeat scroll center center / 48px auto;
+    height: 48px;
+    width: 48px;
+	display: block;
+    overflow: hidden;
+    text-indent: -999em;
+}
+.container {
+    margin:0 auto;
+    max-width: 1360px;
+    position: relative;
+}
+.header-menu  a {
+    color: #ccc;
+    display: block;
+    float: left;
+    padding: 0 10px;
+}
+.header-menu  a.active, .header-menu  a:hover{
+	color: #fff;
+}
+.blog-list-wrap {
+	background: #fff none repeat scroll 0 0;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+	margin-top: 8px;
+}
+.blog-list {
+	padding: 20px;
+}
+
+.blog-item {
+	border-bottom: 1px solid #d3d7d9;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+}
+
+.blog-title {
+	display: block;
+    font-size: 24px;
+    transition: color 0.3s ease 0s;
+	margin: 0 0 15px;
+	font-weight: 700;
+	position: relative;
+}
+.blog-title  a{
+	transition: color 0.3s ease 0s;
+}
+.blog-title  a:hover{
+	color: #0d8abf;
+}
+.blog-title::before {
+    background-color: #008fb5;
+    bottom: 0;
+    content: "";
+    left: -20px;
+    position: absolute;
+    top: 0;
+    width: 5px;
+}
+.blog-header {
+    border-bottom: 1px dashed #ddd;
+    color: #ccc;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+.blog-info {
+	float: left;
+}
+.blog-tags {
+	float: right;
+}
+.blog-tags a {
+	color: #ccc;
+}
+.blog-tags a:hover {
+	color: #00a3cf;
+}
+.blog-tags:before {
+   font-family:"w3cplus";
+   content:"\e00d";
+   display:inline-block;
+   vertical-align:middle;
+   margin-right:10px;
+}
+.blog-body p {
+	font-size: 16px;
+	line-height: 30px;
+	margin-bottom: 25px;
+}
+.blog-body p code {
+    background: #ddd none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+    margin: 0 3px;
+    padding: 1px 3px;
+}
+.blog-body  strong, .blog-body  b {
+    font-weight: bold;
+}
+.blog-more {
+	text-align: right;
+}
+.blog-more a {
+    background-color: #008fb5;
+    border-radius: 3px;
+    color: #fff;
+    line-height: 18px;
+    padding: 5px 10px;
+    transition: all 0.28s ease-in 0s;
+}
+.blog-more a:hover{
+    background-color: #00b7e9;
+}
+
+.pager {
+    clear: both;
+    text-align: center;
+	 margin-bottom: 25px;
+}
+.pager li {
+	line-height: 36px;
+    margin: 0 3px;
+    padding: 0;
+    background-image: none;
+    display: inline;
+    list-style-type: none;
+}
+.pager li.pager-current {
+	background-color: #007b9c;
+    border: 1px solid #007b9c;
+    color: #fff;
+    line-height: 1.42857;
+    padding: 6px 12px;
+}
+.pager a {
+    background-color: #fff;
+    border: 1px solid #00a3cf;
+    color: #00a3cf;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: all 0.28s ease 0s;
+    white-space: nowrap;
+}
+.pager a:hover {
+    background-color: #007b9c;
+    border-color: #007b9c;
+    color: #fff;
+}
+#totop a {
+    background: rgba(0, 0, 0, 0) url("http://cdn.w3cplus.com/cdn/farfuture/rd7thViJNExImZAYWWCDkaBJSaBypKZOcvslEjyCpcI/mtime:1414079824/sites/all/themes/w3cplusV2/images/scrollup.png") no-repeat scroll center center;
+    display: block;
+    height: 50px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 50px;
+}
