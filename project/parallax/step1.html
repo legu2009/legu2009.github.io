@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" > 
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="stylesheet" href="default.css" media="all" />
+	<link rel="stylesheet" href="style.css" media="all" >
+	<style>
+		body {
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<img class="debris debris-1" src="debris-1.png" alt=""/>
+	<img class="debris debris-2" src="debris-2.png" alt=""/>
+	<img class="title" src="title.png" alt=""/>
+</div>
+</body>
+<script type="text/javascript" src="../../public/jquery-1.11.3.min.js"></script>
+<script>
+	var bg_h = 1080;
+	var bg_w = 1920;
+	var win_h = $('.wrapper').height();
+	var win_w = $('.wrapper').width();
+	if (bg_h/ bg_w >= win_h/ win_w) {
+		$('.w-bg ,.w-bg-blur ,.debris').attr('style', "width:100%;position:absolute;left:50%;top:50%;margin-top:-" + bg_h*(win_w/bg_w)/2 + "px;margin-left:-" + win_w/2 + "px");
+	} else {
+		$('.w-bg ,.w-bg-blur ,.debris').attr('style', "height:100%;position:absolute;top:50%;left:50%;margin-left:-" + bg_w*(win_h/bg_h)/2 + "px;margin-top:-" + win_h/2 + "px");
+	}
+	$('.title').css({
+		marginLeft: -$('.title').width()/2,
+		marginTop: -$('.title').height()*3/4
+	});
+	$('.debris-1 ,.debris-2 ,.title').css({
+		left:'50%',
+		top:'50%'
+	});
+	
+	var mouse_pos = null;
+	function parallax(e){
+		if(!e){
+			$('.debris-1 ,.debris-2 ,.title').css({left:'50%',top:'50%'});
+			return ;
+		}
+		if(mouse_pos){
+			var left = parseInt($('.wrapper').width()/2);
+			var top = parseInt($('.wrapper').height()/2);
+			var offsetX = e.pageX - mouse_pos.x;
+			var offsetY = e.pageY - mouse_pos.y;
+			$('.debris-1').css({left:left+offsetX*0.04,top:top+offsetY*0.04});
+			$('.debris-2').css({left:left+offsetX*0.02,top:top+offsetY*0.02});
+			$('.title').css({left:left+offsetX*0.015,top:top+offsetY*0.015});
+		}else{
+			mouse_pos = {};
+			mouse_pos.x = e.pageX;
+			mouse_pos.y = e.pageY;
+		}
+	}
+
+    setTimeout(function(){
+        $('.title').fadeIn(800,function(){
+            $('.debris').fadeIn(800,function(){
+                $('.debris').addClass('show');
+                $('body').mousemove(parallax);
+                $(top.window.document.body).mousemove(parallax);
+            });
+        });
+    },500);
+</script>
+</html>
