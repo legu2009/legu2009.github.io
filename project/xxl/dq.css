@@ -1,0 +1,300 @@
+body, h1, h2, h3, p, dl, ul, ol, form ,input,div,em{
+ 	margin: 0;
+ 	padding: 0;
+ 	font-size:0.6rem;
+	color:#fff;
+	font-family:Microsoft Yahei;
+ }
+ dd {
+     margin-left: 0;
+ }
+:focus{outline:0;}
+ol,ul{list-style-type:none;}
+.clear-both{clear:both;height:0;overflow:hidden}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+img{border: 0;vertical-align: middle;-ms-interpolation-mode: bicubic; display:block;}
+em,var,i{font-style:normal;}
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+
+body,html,.container{position:relative; width:100%; background-color: #45a1ff;overflow: hidden;height: 100%;}
+.mask{width: 100%;height: 100%;background-color: #000;position: fixed;left: 0;top: 0;z-index: 99;padding: 2rem 0.8rem;box-sizing: border-box;display: none;}
+.logo{width: 6.1rem;position: absolute;left: 0.4rem;top: 0.3rem;}
+.index .cloud{width: 100%;position: absolute;left: 0;top: 1rem;max-width: 100%;}
+/*index*/
+.index .title{width: 83%;margin: 11% auto auto auto;}
+.index .index_img{width: 86%;margin: 0 auto;position: relative;}
+.index .ship{width: 1.85rem;position: absolute;left: 0.8rem;bottom: 5.5rem}
+.index .index_btn,.code{width: 100%;height: 6.15rem;background: url(../img/seawater.png) no-repeat;background-size: 100% 100%;z-index: 10;padding-top: 1.3rem;box-sizing:border-box;position: absolute;left: 0;bottom: 0;z-index: 2;}
+.index .index_btn .start{width: 8.55rem;margin: 0 auto;display: block;position: relative;}
+.index .index_btn .start .anim_1{width: 1rem;position: absolute;right: 2.25rem;top: 0.1rem;-webkit-animation: zhuan 0.9s infinite;
+-o-animation: zhuan 0.9s infinite;
+animation: zhuan 0.9s infinite;}
+.index .index_btn .start .anim_2{width: 0.9rem;position: absolute;left: 3.65rem;top: 0.3rem;position: absolute;
+	-webkit-animation: zhuan 0.9s infinite;
+	-webkit-transform-origin:bottom center;
+	-o-animation: zhuan 0.9s infinite;
+	animation: zhuan 0.9s infinite;
+}
+.index .index_btn .atv_btn{width: 100%;padding: 0 0.5rem;box-sizing:border-box;margin-top: 1.2rem}
+.index .index_btn .atv_btn a{font-size: 0.9rem;color: #006bb9;}
+.index .index_btn .atv_btn .rule{float: left;}
+.index .index_btn .atv_btn .ticket{float: right}
+@-webkit-keyframes zhuan{
+	0%{-webkit-transform:rotate(6deg);}
+	50%{-webkit-transform:rotate(-6deg);}
+	100%{-webkit-transform:rotate(6deg);}
+}
+/*code*/
+/*.code input{border-radius: 0.2rem;color: #000;border:0;box-shadow: inset 2px 1px #9c9c9c;height: 1.75rem;width: 8.65rem}*/
+.code{padding-top: 1rem;}
+.code .ok{width: 2.25rem;display: block;margin: 0.3rem auto auto auto;}
+.code .input_box{width: 8.65rem;margin: 0 auto;}
+.code .input_box .prize_code{border-radius: 0.2rem;color: #000;border:0;-webkit-box-shadow: inset 2px 1px #9c9c9c;box-shadow: inset 2px 1px #9c9c9c;height: 1.35rem;width: 100%;font-size: 0.9rem;padding: 0 0.5rem;box-sizing:border-box;}
+.code .input_box .auth_code{width: 100%;height: 1.35rem;margin-top: 0.5rem;position: relative;}
+.code .input_box .auth_code input{border-radius: 0.2rem;color: #000;border:0;-webkit-box-shadow: inset 2px 1px #9c9c9c;box-shadow: inset 2px 1px #9c9c9c;height: 1.35rem;width: 6.35rem;float: left;padding: 0 0.5rem;box-sizing:border-box;font-size: 0.9rem;}
+.code .input_box .auth_code .verify_code{width: 2rem;display: block;position: absolute;top: 0;right: 0;height: 100%;}
+.code .input_box .auth_code .verify_code img{width: 100%;height: 100%;}
+
+/*rule*/
+.bg{width: 100%;}
+.rule .main{width: 86%;position: absolute;left: 50%;margin-left: -43%;bottom: 0.1rem;}
+.rule .rule_main{width: 100%;padding: 0.8rem;box-sizing: border-box;border: 0.05rem solid #000;border-radius: 0.2rem;box-shadow: #000000 1px 1px 4px;background: url(../img/rule_main_bg.png) no-repeat bottom #fff;background-size: 100%;}
+.rule .rule_main .tit{font-weight: 700;line-height: 1.5rem;font-size: 0.55rem;}
+.rule .rule_title{width: 9.4rem;height: 3.3rem;margin: auto auto 0.5rem auto;}
+.rule .rule_title .tit_l{width: 64%;float: left;position: relative;}
+.rule .rule_title .tit_l .lt,.rule .rule_title .tit_l .rb{width: 1.25rem;position: absolute;}
+.rule .back{display: block;width: 2rem;margin: 0.5rem auto auto auto;}
+.lt{
+	left: 0;
+	top: 0;
+	-webkit-animation: dong1 0.5s infinite;
+}
+.rb{
+	right: 0;
+	bottom: 0;
+	-webkit-animation: dong2 0.5s infinite;
+}
+.rule .rule_title .tit_r{width: 36%;float: right;}
+@-webkit-keyframes dong1{
+	from{-webkit-transform: translate(0,0);}
+	to{-webkit-transform: translate(-0.2rem,-0.2rem);}
+}
+@-webkit-keyframes dong2{
+	from{-webkit-transform: translate(0,0);}
+	to{-webkit-transform: translate(0.2rem,0.2rem);}
+}
+/*flower*/
+.flower p{color: #000;}
+.flower .flower_ticket,.flower .fifty_ticket{position: relative;}
+.flower .flower_ticket b{display: block;position: absolute;right: 12%;top: 22%;color: #000;font-size: 1.2rem;}
+/*costa*/
+.costa p{color: #800000;}
+.costa .rule_main{background: url(../img/costa_rule_bg.jpg) no-repeat #fff bottom;background-size: 100%;}
+/*fifty_ticket*/
+.flower .fifty_ticket .txt{font-size: 0.75rem;position: absolute;right: 9%;top: 17%;color: #000;}
+.flower .fifty_ticket .txt .nub{width: 100%;text-align: center;display: inline-block;color: #000;letter-spacing: 0.1rem;}
+
+/*going*/
+.going .main{position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%,-40%);overflow: hidden;width: 100%;}
+.going .main .cup{width: 9rem;height: 9.3rem;position: relative;margin: 0 auto;}
+.going .main .cup .cup_img{width: 100%;position: absolute;left: 0;top: 0;}
+.going .main .txt{text-align: center;font-size: 1.25rem;color: #45a1ff;width: 100%;}
+.going .title{width: 12.8rem;position: absolute;left: 50%;top: 3.5rem;margin-left: -6.4rem;}
+.going .brow{width: 12.8rem;position: absolute;left: 50%;margin-left: -6.4rem;top: 2.85rem;height: 1.15rem;}
+.going .brow_1,.going .brow_2{width: 100%;position: absolute;left: 0;top: 0;}
+#cup2{display: none;}
+#brow2{display: none;}
+
+/*explain*/
+.explain{position:absolute;left: 0;top: 0; width:100%; background-color: #45a1ff;overflow: hidden;height: 100%;z-index: 50;}
+.explain .tit{width:13.4rem;position: absolute;left: 50%;margin-left: -6.7rem;top: 2rem;}
+.explain .air_ball{width: 5.05rem;position: absolute;right: 0.35rem;top: 0.1rem;}
+.explain .main{width: 100%;position: absolute;left: 0;top: 6.6rem;}
+.explain .main .game{width: 15.4rem;margin: 0 auto;position: relative;}
+.explain .main p{font-size: 1rem;color: #006bb9;text-align: center;line-height: 2rem;}
+.explain .main .ok{width: 4.4rem;margin: 1.6rem auto auto auto;display: block;}
+.explain .main .game .explain_1 {
+	width: 2.5rem;
+	position: absolute;
+	left: 7.75rem;
+	top: 0;
+	-webkit-animation: hide 4s infinite;
+}
+.explain .main .game .explain_2 {
+	width: 7.7rem;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	opacity: 0;
+	-webkit-animation: show 4s 2.5s infinite;
+}
+.explain .main .game .hand_1 {
+	width: 4rem;
+	position: absolute;
+	right: 2.35rem;
+	top: 1.2rem;
+	-webkit-animation: down 4s 0.5s infinite ;
+}
+.explain .main .game .hand_2 {
+	width: 4rem;
+	position: absolute;
+	left: 1rem;
+	bottom: -2rem;
+	opacity: 0;
+	-webkit-animation: right 4s 2.5s infinite ;
+}
+@-webkit-keyframes hide{
+	0%{opacity: 1;}
+	40%{opacity: 1;}
+	45%{opacity: 0;}
+	100%{opacity: 0;}
+}
+@-webkit-keyframes show{
+	0%{opacity: 1;}
+	40%{opacity: 1;}
+	45%{opacity: 0;}
+	100%{opacity: 0;}
+}
+@-webkit-keyframes down{
+	0%{-webkit-transform: translateY(0);opacity: 1;}
+	35%{-webkit-transform: translateY(5.75rem);opacity: 1;}
+	40%{opacity: 0;}
+	100%{opacity: 0;}
+}
+@-webkit-keyframes right{
+	0%{-webkit-transform: translateY(0);opacity: 1;}
+	35%{-webkit-transform: translateX(5.75rem);opacity: 1;}
+	40%{opacity: 0;}
+	100%{opacity: 0;}
+}
+
+/*loading 45A1FF*/
+.loading{width: 100%;height: 100%;background-color: #45A1FF;position: fixed;left: 0;top: 0;z-index: 99;}
+.loading .ship_water{position: absolute;left: 0;bottom: 0;width: 100%;}
+.loading .ship{width: 2.15rem;margin: -0.6rem auto;}
+.loading .water {
+	width: 100%;
+	height: 13.7rem;
+	background: url(../img/loading_bg.png) repeat-x;
+	background-size: 1.3rem 100%; 
+	/*background: url(../img/loading_bg.png) no-repeat;
+	background-size: auto 100%;*/
+	-webkit-animation:left_right 1s infinite;
+	animation:left_right 1s infinite;
+	position: relative;
+}
+.loading .water p{text-align: center;color: #000;font-size: 1rem;position: relative;}
+.loading .cloud{width: 2.55rem;height: 2.95rem;position: absolute;left: 50%;top: -4rem;z-index: 10;margin-left: -1rem;}
+.loading .cloud1 {
+	width: 0.8rem;
+	position: absolute;
+	left: 0.65rem;
+	bottom: 0;
+	-webkit-animation: fade1 2s infinite alternate;
+}
+.loading .cloud2 {
+	width: 1.05rem;
+	position: absolute;
+	right: 0;
+	bottom: 0.85rem;
+	-webkit-animation: fade2 2s 1s infinite alternate;
+}
+.loading .cloud3 {
+	width: 1.95rem;
+	position: absolute;
+	left: 0;
+	top: 0;
+	-webkit-animation: fade3 2s 2s infinite alternate;
+}
+.loading .water .load{width: 6rem;position: absolute;left: 50%;margin-left: -3rem;top: 1rem;}
+.loading .water .loading_font{width: 4.1rem;display:block;float: left;}
+.loading .water .load .dian{width: 0.55rem;display: block;float: left;}
+.loading .water .load .dian1{opacity: 0;
+	-webkit-animation: loading1 1.5s 0.5s infinite alternate;
+}
+.loading .water .load .dian2{opacity: 0;
+	-webkit-animation: loading2 1.5s 1s infinite alternate;
+}
+.loading .water .load .dian3{opacity: 0;
+	-webkit-animation: loading3 1.5s 1.5s infinite alternate;
+}
+/*.loading .water{width: 100%;height: 50%;position: absolute;left: 0;bottom: 0;background: url(../img/seawater.png) no-repeat top #e8f5f6;background-size: 100%;}*/
+@-webkit-keyframes left_right{
+	0%{background-position:0 0;}
+	50%,100%{background-position:-1.3rem 0;}
+}
+
+@-webkit-keyframes fade1{
+	0%{opacity: 1;}
+	50%{opacity: 0;}
+	100%{opacity: 0;}
+}
+@-webkit-keyframes fade2{
+	0%{opacity: 1;}
+	60%{opacity: 0;}
+	100%{opacity: 0;}
+}
+@-webkit-keyframes fade3{
+	0%{opacity: 1;}
+	70%{opacity: 0;}
+	100%{opacity: 0;}
+}
+@-webkit-keyframes loading1{
+	0%{opacity: 0;}
+	33%{opacity: 1;}
+	100%{opacity: 1;}
+}
+@-webkit-keyframes loading2{
+	0%{opacity: 0;}
+	66%{opacity: 1;}
+	100%{opacity: 1;}
+}
+@-webkit-keyframes loading3{
+	0%{opacity: 0;}
+	99%{opacity: 1;}
+	100%{opacity: 1;}
+}
+
+/*game*/
+.game_page .start{position: absolute;left: 50%;top: 50%;-webkit-transform: translate(-50%,-50%);z-index: 9;}
+.game_page .cloud{width: 9.55rem;float: right;}
+.game_page .cup{width: 4.25rem;position: absolute;right: 0.15rem;top: 0;height: 4.25rem;}
+.game_page .cup1,.game_page .cup2{width: 100%;position: absolute;left: 0;top: 0;}
+.game_page .cup2{display: none;}
+.game_page .content{position: relative;width: 100%;}
+.game_page .content .ship{width: 1.85rem;position: absolute;left: 50%;margin-left: -0.925rem;top: 2.8rem;}
+.game_page .content .bg{position: relative;z-index: 1;}
+.game_container{width: 100%;position: absolute;top: 4.5rem;;z-index: 9;}
+.game_container .time{margin: 1.3rem auto;width: 4.95rem;height: 2.4rem;position: relative;}
+.game_container .time img{position: absolute;left: 0;top: 0;width: 100%;}
+.game_main{background: url(../img/game_bg.jpg) repeat;background-size:2rem 2rem;}
+
+/*mask*/
+.mask .rule_txt{width: 100%;height: 100%;overflow: scroll;}
+.mask .rule_txt h2{text-align: center;font-size: 0.65rem;}
+.mask .rule_txt .ruxia{line-height: 1.5rem;}
+.mask .close{width: 1.45rem;display: block;position: absolute;right: 0.1rem;top: 0.1rem;}
+
+/*ticket*/
+.ticket{height: auto;overflow: auto;}
+.ticket .main{width: 100%;position: absolute;left: 0;top: 4rem;padding: 0 1.5rem;box-sizing: border-box;background-color: #e8f5f6;}
+.ticket .main .card{display: block;margin: 0.5rem 0;}
+.ticket .main .back{width: 3.25rem;display: block;margin: 0 auto 1rem auto;}
+
+/*error*/
+.error{width: 100%;height: 100%;overflow: hidden;}
+.error p{text-align: center;position: absolute;left: 50%;top: 50%;-webkit-transform:translate(-50%,-50%);color: #f00;font-size: 1rem;word-wrap:break-word;width: 14rem;}
+@media only screen and (max-height:416px ) {
+	body,html,.container{height: auto;overflow: auto;}
+	.error{width: 100%;height: 100%;overflow: hidden;}
+	.lottery-img{overflow: hidden;}
+	.index .index_btn,.code{margin-top: 0;}
+}

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>'DQ培你"消"遥游，重重好礼等你拿</title>
+    <meta name="description" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <script type="text/javascript" src="http://event.verystar.cn/dq/xxl/js/rem_w.js" ></script>
+    <script type="text/javascript" src="http://event.verystar.cn/dq/xxl/js/jquery.min2.0.3.js" ></script>
+    <link rel="stylesheet" type="text/css" href="http://event.verystar.cn/dq/xxl/css/dq.css">
+    <script type="text/javascript" src="http://static.veryweibo.com/js/weixin/jsticketapi-2.1.1.min.js"></script>
+    <script type="text/javascript" src="http://static.veryweibo.com/js/other/imagesloaded.pkgd.min.js"></script>
+    <style>
+        body,html,.container{height: 100%;}
+    </style>
+</head>
+<div class="loading">
+    <div class="ship_water">
+        <div class="cloud">
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/loading_cloud_1.png" alt="" class="cloud1" />
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/loading_cloud_2.png" alt="" class="cloud2" />
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/loading_cloud_3.png" alt="" class="cloud3" />
+        </div>
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/index_ship.png" alt="" class="ship" />
+        <div class="water">
+            <div class="load clearfix">
+                <span class="loading_font"><img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/loading_font.png" width="100%"/></span>
+                <span class="dian dian1"><img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/dian.png" width="100%" /></span>
+                <span class="dian dian2"><img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/dian.png" width="100%" /></span>
+                <span class="dian dian3"><img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/dian.png" width="100%" /></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="http://event.verystar.cn/dq/xxl/js/game.js"></script>
+<link rel="stylesheet" type="text/css" href="http://event.verystar.cn/dq/xxl/css/dq.css?rev=@@hash">
+<link rel="stylesheet" href="http://event.verystar.cn/dq/xxl/css/game.css"/>
+<link rel="stylesheet" type="text/css" href="http://static.veryweibo.com/css/css3/magic-master/magic.min.css">
+<div class="explain">
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/logo.png" alt="" class="logo"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/balloon.png" alt="" class="air_ball"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_explain_bg.png" alt="" class="bg"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_explain_title.png" alt="" class="tit"/>
+    <div class="main">
+        <div class="game">
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_explain.png" width="100%"/>
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_explain_1.png" alt="" class="explain_1"/>
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_explain_2.png" alt="" class="explain_2"/>
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/hand1.png" alt="" class="hand_1"/>
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/hand1.png" alt="" class="hand_2"/>
+        </div>
+        <p>三个相同的图案连成一排就会消除</p>
+        <a href="javascript:;" class="ok">
+            <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/ok.png" width="100%"/>
+        </a>
+    </div>
+</div>
+<div class="container game_page">
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/logo.png" alt="" class="logo"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_cloud.png" alt="" class="cloud"/>
+    <div class="cup">
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/beizi_1.png" alt="" class="cup1"/>
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/beizi_2.png" alt="" class="cup2"/>
+    </div>
+    <div class="content">
+        <div class="game_container">
+            <div id="gameContainer" style="margin:auto auto;" class="game_main"></div>
+            <div class="time">
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_0.png"   style="display:none"    class="time_0"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_1.png"   style="display:none"    class="time_1"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_2.png"   style="display:none"    class="time_2"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_3.png"   style="display:none"    class="time_3"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_4.png"   style="display:none"    class="time_4"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_5.png"   style="display:none"    class="time_5"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_6.png"   style="display:none"    class="time_6"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_7.png"   style="display:none"    class="time_7"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_8.png"   style="display:none"    class="time_8"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_9.png"   style="display:none"    class="time_9"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_10.png"  style="display:none"    class="time_10"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_11.png"  style="display:none"    class="time_11"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_12.png"  style="display:none"    class="time_12"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_13.png"  style="display:none"    class="time_13"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_14.png"  style="display:none"    class="time_14"/>
+                <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/time_15.png"  class="time_15"/>
+            </div>
+        </div>
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/index_ship.png" alt="" class="ship"/>
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_bg.png" alt="" width="100%" class="bg"/>
+    </div>
+    <div style="display: none">
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/1.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/2.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/3.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/4.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/5.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/6.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/7.png" />
+        <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/8.png" />
+    </div>
+</div>
+<script>
+    $(function () {
+        var gemWidth = Math.floor(($(document).width() / 6));
+        $('.game_main').css('background-size', gemWidth + 'px' + ' ' + gemWidth + 'px');
+        var game = new ttaxc({
+            gemWidth: gemWidth,
+            container: '#gameContainer',
+//            timeContainer: '#timer',
+            minEliminate: 3,
+            scoreBase: 50,
+            rows: 6,
+            columns: 6,
+            stage: [
+                {
+                    time: 15,
+                    gem: [
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/1.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/2.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/3.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/4.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/5.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/6.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/7.png',
+                        'http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/8.png',
+                    ],
+                    score: 10000,
+                },
+            ],
+            onEliminateStop: function () {
+                $('#addScore').fadeOut();
+                $('#combos').fadeOut();
+            },
+            onGameOver: function (stage, needScore, currentScore) {
+                alert('时间到！进入抽奖！');
+				//location.href =  '/dq/xxl/game_over';
+                //$('#gameOver div[name=stage]').html('第 ' + stage + ' 关');
+                //$('#gameOver div[name=stageScore]').html('目标得分: ' + needScore + ' 分');
+                //$('#gameOver div[name=score]').html('最终得分: ' + currentScore + ' 分');
+            },
+            onGameClear: function (score) {
+                $('#gameClear').show();
+                $('#gameClear div[name=score]').html(score + ' 分');
+            },
+            onTimer: function (second_current, second_stage){
+                var n = parseInt(second_current) + 1;
+                $('.time_'+n).hide();
+                $('.time_'+second_current).show();
+                //console.log(second_current + ' - ' + second_stage);
+            },
+        });
+
+        $(".ok").on('click', function () {
+            game.play();
+            $(".explain").hide();
+        })
+
+        setInterval(function () {
+            if ($('.cup1').css('display') != 'none') {
+                $('.cup1').hide();
+                $('.cup2').show();
+            } else {
+                $('.cup1').show();
+                $('.cup2').hide();
+            }
+        }, 300);
+    });
+</script>
+<div style="display: none">
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/seawater.png"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/rule_main_bg.png"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/costa_rule_bg.jpg"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/loading_bg.png"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/loading_bg.png"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/seawater.png"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/game_bg.jpg"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/lottery-bg.png"/>
+    <img src="http://vscdn.b0.upaiyun.com/html_page/DQ/dq_game/img/lottery-turntable.png"/>
+</div>
+<script>
+    $(function () {
+
+        var loaded = 0;
+        if ($('body img').length === 0 || navigator.userAgent.indexOf('MSIE 9') != -1) {
+            $('.loading').fadeOut();
+            $('.container').fadeIn();
+        } else {
+            $('body img').imagesLoaded().progress(function (instance, image) {
+                loaded++;
+                var loaded_num = parseInt(loaded / instance.images.length * 100);
+                if (loaded == instance.images.length) {
+                    $('.loading').fadeOut();
+                    $('.container').fadeIn();
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
