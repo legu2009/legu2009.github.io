@@ -33,7 +33,7 @@
             <key>metadata</key>
             <dict>
                 <key>bundle-identifier</key>
-                <string>com.snailgames.taiji2222</string>
+                <string>com.snailgames.taiji</string>
                 <key>bundle-version</key>
                 <string>1.0.0</string>
                 <key>kind</key>
