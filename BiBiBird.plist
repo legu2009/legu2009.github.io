@@ -33,15 +33,15 @@
             <key>metadata</key>
             <dict>
                 <key>bundle-identifier</key>
-                <string>com.snailgames.taiji</string>
+                <string>com.snailgames.taiji2222</string>
                 <key>bundle-version</key>
                 <string>1.0.0</string>
                 <key>kind</key>
                 <string>software</string>
                 <key>subtitle</key>
-                <string>SnailKey</string>
+                <string>BiBiBird</string>
                 <key>title</key>
-                <string>SnailKey</string>
+                <string>BiBiBird</string>
             </dict>
         </dict>
     </array>
