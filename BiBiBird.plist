@@ -11,7 +11,7 @@
                     <key>kind</key>
                     <string>software-package</string>
                     <key>url</key>
-                    <string><string>http://m.qiank.com/p/BiBiBird.ipa</string></string>
+                    <string>http://m.qiank.com/p/BiBiBird3111435.ipa</string>
                 </dict>
                 <dict>
                     <key>kind</key>
@@ -41,7 +41,7 @@
                 <key>subtitle</key>
                 <string>BiBiBird，带你赚钱带你飞～</string>
                 <key>title</key>
-                <string>BiBiBird 1.0.0</string>
+                <string>BiBiBird 2.0</string>
             </dict>
         </dict>
     </array>
