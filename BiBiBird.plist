@@ -35,13 +35,13 @@
                 <key>bundle-identifier</key>
                 <string>com.snailgames.snailkey</string>
                 <key>bundle-version</key>
-                <string>1.0.1</string>
+                <string>1.0.0</string>
                 <key>kind</key>
                 <string>software</string>
                 <key>subtitle</key>
                 <string>BiBiBird，带你赚钱带你飞～</string>
                 <key>title</key>
-                <string>BiBiBird 1.0.1</string>
+                <string>BiBiBird 1.0.0</string>
             </dict>
         </dict>
     </array>
