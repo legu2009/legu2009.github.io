@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+
+	</head>
+	<body>
+		<input type="text" id="setV" style="width: 400px;" value="wgu,kk,998">&nbsp;&nbsp;&nbsp;&nbsp;<button id='set'>设置</button><br><br><br>
+		<input type="text" id="getV" style="width: 400px;" value="wgu,kk" >&nbsp;&nbsp;&nbsp;&nbsp;<button id='get'>读取</button><br>
+		
+		<div id="log"></div>
+	</body>
+	<script>
+		var brower = (function (){var w = window, ver = w.opera ? (opera.version().replace(/\d$/, "") - 0)
+    : parseFloat((/(?:IE |fox\/|ome\/|ion\/)(\d+\.\d)/.
+        exec(navigator.userAgent) || [,0])[1]);
+    return {
+        //测试是否为ie或内核为trident，是则取得其版本号
+        ie: !!w.VBArray && Math.max(document.documentMode||0, ver),//内核trident
+        //测试是否为firefox，是则取得其版本号
+        firefox: !!w.netscape && ver,//内核Gecko
+        //测试是否为opera，是则取得其版本号
+        opera:  !!w.opera && ver,//内核 Presto 9.5为Kestrel 10为Carakan
+        //测试是否为chrome，是则取得其版本号
+        chrome: !! w.chrome &&  ver ,//内核V8
+        //测试是否为safari，是则取得其版本号
+        safari: /apple/i.test(navigator.vendor) && ver// 内核 WebCore
+    }})();
+		var doc = document, win = window;
+		var util = window.wgu = (function () {
+		//数字过滤
+        var arrayFilter = function (arr, filter) {
+            var res = [], item;
+            for(var i = 0, len = arr.length; i < len; i++) {
+                item = arr[i];
+                if(filter(item)) {
+					res.push(item);
+				}
+            }
+            return res;
+        };
+        //返回一个元素下的所有子节点
+        var children = doc.documentElement.children ? function(el) {
+            return el.children;
+		} : function (el) {
+            return arrayFilter(el.children, function(el){return !!el.tagName;});
+        };
+				
+		var getChild = function (ele, tab) {
+			var childs = children(ele);
+			if (childs.length == 0) return;
+			var item;
+			for (var i = 0, len = childs.length; i < len; i++) {
+				item = childs[i];
+				if (item.getAttribute("wn_tj_click")) {
+					tab.push(item);
+				}
+				getChild(item, tab);
+			}
+		};
+		
+		var addEvent = doc.attachEvent ? function(element, event, fn) {
+			element.attachEvent('on' + event, fn);
+		} : function(element, event, fn) {
+			element.addEventListener(event, fn, false);
+		};
+		return {
+			addEvent: addEvent,
+			setCookie: function (k, v, t, p, m) {
+				var r = k + "=" + encodeURIComponent(v);
+				if (t) {
+					if (typeof t == "string") {
+						t = new Date(t.replace(/-/g, "/").replace(/\.\d+$/, ""));
+					}
+					r += "; expires=" + t.toGMTString();
+				}
+				if (p) {
+					r += "; path=" + p;
+				}
+				if (m) {
+					r += "; domain=" + m;
+				}
+				doc.cookie = r;
+				return this;	
+			},
+			removeCookie: function (name, path, domain, secure) {
+				this.setCookie(name, "", new Date(0), path, domain, secure);
+			},
+			getCookie:  function (name, str) {
+				var re = new RegExp("(?:; )?" + name + "=([^;]*);?");
+				if (str === undefined) {
+					str = doc.cookie;
+				}
+				if (re.test(str)) {
+					return decodeURIComponent(RegExp["$1"]);
+				} else {
+					return "";
+				}
+			},
+			sendRequest: function(a, f) {
+				var d = new Image(1, 1);
+				d.onerror = d.onload = function() {
+					d = null;
+					!!f && f();
+				};
+				d.src = a;
+			},
+			bindClickAction: function(fn) {
+				var eles = [];
+				if (win.jQuery) {
+					jQuery("[wn_tj_click]").click(fn);
+					return;
+				}
+				if (doc.querySelectorAll) {
+					eles = doc.querySelectorAll("[wn_tj_click]");
+				} else {
+					getChild(doc.body, eles);
+				}
+				for (var i = 0, len = eles.length; i < len; i++) {
+					addEvent(eles[i], "click", fn);
+				}
+			},
+			obj2Str: function(obj) {//要不要url编码
+				var arr = [];
+				for (var i in obj) {
+					arr.push(i + "=" + obj[i]);
+				}
+				return arr.join('&');
+			},
+			inArray: function(array, str){
+				for( var i = 0, len = array.length; i < len; i++ ){
+					if( str == array[i] ){
+						return i;
+					}
+				}
+				return -1;
+			},
+			scriptLoad: function(win, url, opts, callback) {
+				opts = opts || {};
+				var head;
+				var node = doc.createElement("script");
+				node.type = "text/javascript";
+				node.src = url;
+				for (var i in opts) {
+					if (opts.hasOwnProperty(i)) {
+						node.setAttribute(i, opts[i]);
+					}
+				}
+				head = doc.getElementsByTagName("head")[0];
+				if (!head) {
+					head = doc.createElement("head");
+					doc.documentElement.appendChild(head);
+				}
+				head.appendChild(node);
+				if (!!callback) {
+					node.onload = node.onerror = node.onreadystatechange = function() {
+						if (/loaded|complete|undefined/.test(node.readyState)) {
+							node.onload = node.onerror = node.onreadystatechange = null;
+							node = undefined;
+							callback();
+						}
+					};
+				}
+				return node;
+			},
+			flashVesion : (function() {
+				if (navigator.plugins && navigator.mimeTypes.length) {
+					var x = navigator.plugins["Shockwave Flash"];
+					if (x) {
+						return 1;
+					}
+				}
+				else{ /// Win IE (non mobile)
+					var axo;
+					try {
+						axo = new window.ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+					} catch(e) {
+						try {
+							axo = new window.ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
+						} catch(e){}
+						try {
+							axo = new window.ActiveXObject("ShockwaveFlash.ShockwaveFlash");
+						} catch(e){}
+					}
+					if(axo != null){
+						return 1;
+					}
+				}
+				return 0;
+			})(),
+            replace_ : function(val) {
+				var ary = val.split('|');
+				for (var i = 0, len = ary.length; i < len; i++) {
+					if (ary[i] == '-')
+						ary[i] = '';
+				}
+				return ary.join('|');
+			},
+            getJsNode : function () {
+				var scripts = doc.getElementsByTagName("script");
+				var len = scripts.length;
+				var item;
+				while (len--) {
+					item = scripts[len];
+					if (item.src && item.src.indexOf('statistics_ty') != -1) {
+						return item;
+					}
+				}
+				return null;
+			}
+		}
+	})();
+
+		var flash = (function() {
+			var _status = '';
+			var _flashObj;
+			var _createFlash = function (opt) {
+				var fn = function () {
+					var body = doc.body;
+					if (!!body) {
+						var id = opt.id || "sdo_beacon_flash";
+						if (!!doc[id]) {//
+							_flashObj = doc[id];
+							_status = "create";
+							return;
+						}
+						var html = '<div style="position:absolute;display:block;left:-500px;width:1px;height:1px;">' + 
+							'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="1px" height="1px" id="' + id + '">'
+								+ '<param name="allowScriptAccess" value="always" />'
+								+ '<param name="quality" value="high" />' 
+								+ '<param name="wmode" value="window" />' 
+								+ '<param name="movie" value="' + opt.src + '" />'
+								+ '<embed style="width:1px;height:1px;" wmode="window" src="' + opt.src + '" quality="high" name="' + id + '" allowScriptAccess="always" type="application/x-shockwave-flash"/></embed>'
+								+ '</object></div>'
+						body.insertAdjacentHTML('afterBegin', html);
+						_flashObj = doc[id];
+						_status = "create";
+					} else {
+						setTimeout(fn, 200);
+					}
+				}
+				fn();
+			}
+			
+			var _ckeckFlashReady = function () {
+				if (!!_flashObj && !!_flashObj.saveAttribute && !!_flashObj.loadAttribute) {
+					_status = 'load';
+					if (!!flash.onload) {
+						flash.onload();
+					}
+				} else {
+					setTimeout(_ckeckFlashReady, 1000);
+				}
+			};
+
+			return {
+				getStatus : function() {
+					return _status;
+				},
+				create : function(flashUrl) {
+					if (!(location.protocol == "http:" && util.flashVesion)) {
+						_status = 'nosupport';
+						return false;
+					}
+					_createFlash({
+						src : flashUrl
+					});
+					_ckeckFlashReady();
+				},
+				save : function() {
+					try {
+						_flashObj.saveAttribute.apply(_flashObj, arguments);
+					} catch(e) {}
+					return this;
+				},
+				get : function() {
+					try {
+						return _flashObj.loadAttribute.apply(_flashObj, arguments) || '';
+					} catch(e) {
+						return ''
+					}
+				},
+				load : function() {
+					return util.replace_(this.get.apply(this, arguments));
+				}
+			}
+		})();
+		var log = document.getElementById('log');
+		var setV = document.getElementById('setV');
+		var getV = document.getElementById('getV');
+		(function () {
+			for (var key in brower) {
+				if (brower[key]) {
+					setV.value = "wgu,kk," + key + ':' + brower[key];
+				}
+			}
+		})();
+		document.getElementById('set').onclick = function () {
+			var t = setV.value.split(',');
+			flash.save(t[0], t[1], t[2]);
+			addLog('设置信息成功' + t.join('   '));
+		};
+		document.getElementById('get').onclick = function () {
+			var t = getV.value.split(',');
+			var res = flash.get(t[0], t[1]);
+			addLog('读取信息成功' + t.join('   ') + ':' + res);
+		}
+		var addLog = function (str) {
+			log.insertAdjacentHTML('afterBegin', str + '<br>');
+		};
+    	flash.onload = function () {
+			addLog('flash 加载完成');
+		};
+		flash.create("http://gg.woniu.com/src/api/flash/share.swf");
+	</script>
+</html>
