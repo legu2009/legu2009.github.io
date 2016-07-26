@@ -48,10 +48,6 @@ require.config({
 			deps: ['css!../css/swiper-3.3.1.min.css','jQuery'],
 			exports: "Swiper"
 		}, 
-		Swiper: {
-			deps: ['css!../css/swiper-3.3.1.min.css','jQuery'],
-			exports: "Swiper"
-		},
 		'jquery.smooth-scroll': ['jQuery'],
 	}
 });
@@ -229,17 +225,11 @@ require(["jQuery", "Vue"], function($, Vue) {
 		vm.isWideContent = !vm.isWideContent;
 	})
 });
-require(["echarts3"], function() {});
+
 require(["jQuery", "Vue", "underscore"], function ($, Vue, _) {
 	CUBE.vm.isWideContent = true;
 	$('.breadcrumbs').hide();
 	$('.panel-content').css('paddingTop', 0);
-	
-	var today = new Date();
-	today = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
-	$('.form_datetime').each(function () {
-		this.value = today;
-	});
 	
 	require([
 			'zrender/core/vector',
@@ -1002,24 +992,5 @@ require(["jQuery", "Vue", "underscore"], function ($, Vue, _) {
 			})
 	});
 });
-require(["jQuery", 'css!../css/bootstrap-datetimepicker.min.css', "datetimepicker"], function ($) {
-	$.fn.datetimepicker.dates['en'] = {
-		days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-		daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-		daysMin:  ["日", "一", "二", "三", "四", "五", "六", "日"],
-		months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-		monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-		today: "今天",
-		suffix: [],
-		meridiem: ["上午", "下午"]
-	};
-    $('.form_datetime').datetimepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true,
-        autoclose: 1,
-        minView: 2,
-        forceParse: 0,
-        fontAwesome: true
-    });
-});
+
 
