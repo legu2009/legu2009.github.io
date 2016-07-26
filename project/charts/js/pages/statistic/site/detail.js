@@ -1,5 +1,5 @@
 require.config({
-	baseUrl: "/dist/js/",
+	baseUrl: "/project/charts/js/",
 	paths: {
 		jQuery: "lib/jquery/jquery-1.12.3",
 		jquery: "lib/jquery/jquery-1.12.3",
