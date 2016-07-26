@@ -19,12 +19,12 @@ require.config({
 	packages: [
         {
             main: 'echarts',
-            location: '/dist/js/charts/echarts/src',
+            location: '/project/charts/js/charts/echarts/src',
             name: 'echarts'
         },
         {
             main: 'zrender',
-            location: '/dist/js/charts/zrender/src',
+            location: '/project/charts/js/charts/zrender/src',
             name: 'zrender'
         }
     ],
