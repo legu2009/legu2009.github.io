@@ -979,9 +979,9 @@ require(["jQuery", "Vue", "underscore"], function ($, Vue, _) {
 					endTime: $('#endTimeIpt').val()
 				}
 				if (CUBE._param.site == 'woniu') {
-					$.post('woniu.json', params).done(getDataDone);
+					$.get('woniu.json', params).done(getDataDone);
 				} else {
-					$.post('snail.json', params).done(getDataDone);
+					$.get('snail.json', params).done(getDataDone);
 				}	 
 			};
 			getData();
