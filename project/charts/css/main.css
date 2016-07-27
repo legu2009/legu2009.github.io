@@ -446,7 +446,7 @@ header.side-header.light-skin {
     background: #dfe6ec none repeat scroll 0 0;
 }
 .admin-details {
-    background-image: url("../img/admin-bg.jpg");
+
     background-size: cover;
     display: table;
     float: left;
@@ -1254,7 +1254,7 @@ header.side-header.light-skin {
 
 
 .admin-follow {
-    background-image: url("../images/admin-bg.jpg");
+
     background-size: cover;
     
     -webkit-border-radius: 5px;

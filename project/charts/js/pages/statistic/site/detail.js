@@ -1,9 +1,9 @@
 require.config({
 	baseUrl: "/project/charts/js/",
 	paths: {
-		jQuery: "lib/jquery/jquery-1.12.3",
-		jquery: "lib/jquery/jquery-1.12.3",
-		Vue: "lib/vue/vue",
+		jQuery: "lib/jquery/jquery-1.12.3.min",
+		jquery: "lib/jquery/jquery-1.12.3.min",
+		Vue: "lib/vue/vue.min",
 		underscore: "lib/underscore/underscore",
 		VueCommon: "lib/common",
 		text: "plugin/retuirejs/text",
