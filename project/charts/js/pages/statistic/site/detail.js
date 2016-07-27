@@ -14,7 +14,8 @@ require.config({
 		pinyin: "lib/pinyin/pinyin",
 		datetimepicker: "lib/datetimepicker/bootstrap-datetimepicker",
 		'jquery.smooth-scroll' : 'lib/jquery-smooth-scroll-master/jquery.smooth-scroll',
-		echarts3: "lib/echarts/echarts.min"//3.0
+		echarts3: "lib/echarts/echarts.min",//3.0
+		echartsMy: "charts/echarts/dist/echarts.min"
 	},
 	packages: [
         {
@@ -233,15 +234,7 @@ require(["jQuery", "Vue", "underscore"], function ($, Vue, _) {
 	
 	require([
 			'zrender/core/vector',
-			'echarts',
-			'echarts/chart/pie',
-			'echarts/component/title',
-			'echarts/component/legend',
-			'echarts/component/grid',
-			'echarts/component/markLine',
-			'echarts/component/tooltip',
-			'echarts/chart/line',
-			'echarts/component/toolbox'
+			'echartsMy'
 		], function (vec2, echarts) {
 			var chartElm = document.getElementById('main');
 			var chart = echarts.init(chartElm, null, {renderer: 'canvas' });
@@ -750,7 +743,6 @@ require(["jQuery", "Vue", "underscore"], function ($, Vue, _) {
 			};
 			
 			var getDataDone = function (data) {
-					console.log(JSON.stringify(data));
 					$('#loadingBox').hide();
 					if (data.code == 0) {
 						if (!data.extend.totalUV) {
