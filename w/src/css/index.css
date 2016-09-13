@@ -1,0 +1,208 @@
+body {
+  font-family: "PingFang", "Microsoft YaHei", "sans-serif";
+  background-color: #f2f2f2;
+}
+.index-page {
+  padding-top: 1.333333333333333rem;
+}
+.fixed-header header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+header {
+  height: 1.333333333333333rem;
+  line-height: 1.333333333333333rem;
+  background-color: #19a6db;
+  color: #fff;
+  text-align: center;
+}
+header .title {
+  font-size: 0.506666666666667rem;
+}
+header .left,
+header .right {
+  width: 0.8rem;
+  height: 0.533333333333333rem;
+  margin-top: 0.4rem;
+}
+header .left {
+  float: left;
+  margin-left: 0.466666666666667rem;
+}
+header .right {
+  float: right;
+  margin-right: 0.466666666666667rem;
+}
+header .more {
+  background: url("images/more.png") no-repeat center center;
+  background-size: auto 100%;
+}
+header .menu {
+  background: url("images/menu.png") no-repeat center center;
+  background-size: auto 100%;
+}
+.index-swiper {
+  height: 4.4rem;
+  margin-bottom: 0.2rem;
+}
+.index-swiper .swiper-slide img {
+  display: block;
+  max-width: 100%;
+}
+.index-menu {
+  background-color: #fff;
+  margin-bottom: 0.2rem;
+}
+.index-menu .index-menu-item {
+  float: left;
+  width: 25%;
+  box-sizing: border-box;
+  height: 2.666666666666667rem;
+  border: 1px solid #e3e3e3;
+  font-size: 0.373333333333333rem;
+  position: relative;
+  text-align: center;
+  line-height: 3.466666666666667rem;
+  color: #4e4e4e;
+}
+.index-menu .index-menu-item:before {
+  position: absolute;
+  top: 0.666666666666667rem;
+  height: 0.866666666666667rem;
+  left: 0;
+  width: 100%;
+  content: "";
+}
+.index-menu .index-menu-item.company:before {
+  background: url("images/company.png") no-repeat center center;
+  background-size: 0.546666666666667rem 0.506666666666667rem;
+}
+.index-menu .index-menu-item.bond:before {
+  background: url("images/bond.png") no-repeat center center;
+  background-size: 0.84rem 0.493333333333333rem;
+}
+.index-menu .index-menu-item.fund:before {
+  background: url("images/fund.png") no-repeat center center;
+  background-size: 0.48rem 0.76rem;
+}
+.index-menu .index-menu-item.news:before {
+  background: url("images/news.png") no-repeat center center;
+  background-size: 0.773333333333333rem 0.546666666666667rem;
+}
+.index-menu .index-menu-item.member:before {
+  background: url("images/member.png") no-repeat center center;
+  background-size: 0.746666666666667rem 0.533333333333333rem;
+}
+.index-menu .index-menu-item.live:before {
+  background: url("images/live.png") no-repeat center center;
+  background-size: 0.586666666666667rem 0.413333333333333rem;
+}
+.index-menu .index-menu-item.product:before {
+  background: url("images/product.png") no-repeat center center;
+  background-size: 0.533333333333333rem 0.466666666666667rem;
+}
+.index-menu .index-menu-item.collect:before {
+  background: url("images/collect.png") no-repeat center center;
+  background-size: 0.546666666666667rem 0.506666666666667rem;
+}
+.index-channel {
+  background-color: #fff;
+  color: #333;
+  font-size: 0.48rem;
+  height: 1.24rem;
+  line-height: 1.24rem;
+  margin-bottom: 0.2rem;
+  border-top: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 0 0.4rem 0 0.533333333333333rem;
+}
+.index-channel span {
+  float: right;
+  padding-right: 0.4rem;
+  background: url("images/back.png") no-repeat right center;
+  background-size: 0.213333333333333rem 0.4rem;
+}
+.index-bond-list {
+  margin-bottom: 2.333333333333333rem;
+}
+.index-bond-item {
+  margin-bottom: 0.2rem;
+}
+.index-bond-item {
+  color: #333;
+  background-color: #fff;
+  padding: 0 0.4rem 0 0.533333333333333rem;
+  border-top: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e3e3e3;
+}
+.index-bond-item .info {
+  height: 1.333333333333333rem;
+  padding: 0.466666666666667rem 0;
+}
+.index-bond-item .info-desc {
+  height: 0.466666666666667rem;
+  line-height: 0.466666666666667rem;
+  font-size: 0.4rem;
+}
+.index-bond-item .info-title {
+  height: 0.866666666666667rem;
+  font-size: 0.373333333333333rem;
+  font-family: "PingFang SC";
+}
+.index-bond-item .title {
+  line-height: 1.28rem;
+  font-size: 0.426666666666667rem;
+  border-right: 1px solid #e3e3e3;
+  width: 3.2rem;
+  box-sizing: border-box;
+  float: left;
+}
+.index-bond-item .income {
+  float: left;
+  width: 3.2rem;
+  text-align: center;
+}
+.index-bond-item .income .info-title {
+  font-size: 0.613333333333333rem;
+  color: #f60;
+  line-height: 0.666666666666667rem;
+}
+.index-bond-item .time {
+  margin-left: 6.4rem;
+}
+.index-bond-item .time .info-title {
+  text-indent: 0.08rem;
+  line-height: 0.933333333333333rem;
+}
+.index-bond-item .desc {
+  height: 1.04rem;
+  line-height: 1.04rem;
+  color: #b4b4b4;
+  font-size: 0.373333333333333rem;
+  border-top: 1px solid #e3e3e3;
+}
+footer {
+  height: 1.6rem;
+  background-color: #19a6db;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 0.32rem;
+  color: #fff;
+  text-align: center;
+  padding-top: 0.533333333333333rem;
+}
+footer div {
+  height: 0.613333333333333rem;
+  line-height: 0.613333333333333rem;
+}
+footer .company-tel {
+  display: inline-block;
+  background: url("images/tel.png") no-repeat left 0.066666666666667rem;
+  background-size: 0.413333333333333rem 0.413333333333333rem;
+  padding-left: 0.546666666666667rem;
+}

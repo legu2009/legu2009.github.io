@@ -1,0 +1,170 @@
+@import "common.styl"
+body
+    font-family: "PingFang", "Microsoft YaHei", "sans-serif";
+    background-color: #f2f2f2
+.index-page
+    padding-top: $x(100)
+.fixed-header header
+    position: fixed;
+    top 0
+    left 0
+    width: 100%
+    z-index: 100
+header
+    height $x(100)
+    line-height: $x(100)
+    background-color: #19a6db
+    color: #fff
+    text-align: center;
+    .title
+        font-size: $x(38)
+    .left,.right
+        width: $x(60)
+        height: $x(40)
+        margin-top: $x(30)
+    .left
+        float: left
+        margin-left: $x(35)
+    .right
+        float: right
+        margin-right: $x(35)
+    .more
+        background: url(images/more.png) no-repeat center center
+        background-size: auto 100%
+    .menu
+        background: url(images/menu.png) no-repeat center center
+        background-size: auto 100%
+.index-swiper
+    height: $x(330)
+    margin-bottom: $x(15)
+    .swiper-slide img
+        display: block
+        max-width: 100%
+.index-menu
+    background-color: #fff
+    margin-bottom: $x(15)
+    .index-menu-item
+        float: left
+        width: 25%
+        box-sizing: border-box;
+        height: $x(200)
+        border: 1px solid #e3e3e3;
+        font-size: $x(28)
+        position: relative
+        text-align: center
+        line-height: $x(260)
+        color: #4e4e4e
+        &:before
+            position: absolute
+            top: $x(50);
+            height: $x(65);
+            left: 0
+            width: 100%
+            content: ""
+        &.company:before
+            background: url(images/company.png) no-repeat center center
+            background-size: $x(41) $x(38)
+        &.bond:before
+            background: url(images/bond.png) no-repeat center center
+            background-size: $x(63) $x(37)
+        &.fund:before
+            background: url(images/fund.png) no-repeat center center
+            background-size: $x(36) $x(57)
+        &.news:before
+            background: url(images/news.png) no-repeat center center
+            background-size: $x(58) $x(41)
+        &.member:before
+            background: url(images/member.png) no-repeat center center
+            background-size: $x(56) $x(40)
+        &.live:before
+            background: url(images/live.png) no-repeat center center
+            background-size: $x(44) $x(31)
+        &.product:before
+            background: url(images/product.png) no-repeat center center
+            background-size: $x(40) $x(35)
+        &.collect:before
+            background: url(images/collect.png) no-repeat center center
+            background-size: $x(41) $x(38)
+.index-channel
+    background-color: #fff;
+    color: #333
+    font-size: $x(36)
+    height: $x(93)
+    line-height: $x(93)
+    margin-bottom: $x(15)
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    padding 0 $x(30) 0 $x(40)
+    span
+        float: right
+        padding-right: $x(30)
+        background: url(images/back.png) no-repeat right center
+        background-size: $x(16) $x(30)
+.index-bond-list
+    margin-bottom: $x(175)
+.index-bond-item
+    margin-bottom: $x(15)
+.index-bond-item
+    color: #333
+    background-color: #fff;
+    padding 0 $x(30) 0 $x(40)
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    .info
+        height: $x(100)
+        padding: $x(35) 0
+    .info-desc
+        height: $x(35)
+        line-height: $x(35)
+        font-size: $x(30)
+    .info-title
+        height: $x(65)
+        font-size: $x(28)
+        font-family: "PingFang SC";
+    .title
+        line-height: $x(96)
+        font-size: $x(32)
+        border-right: 1px solid #e3e3e3;
+        width: $x(240)
+        box-sizing: border-box
+        float: left
+    .income
+        float: left
+        width: $x(240)
+        text-align: center
+        .info-title
+            font-size: $x(46)
+            color: #f60
+            line-height: $x(50)
+    .time
+        margin-left: $x(480)
+        .info-title
+            text-indent: $x(6)
+            line-height: $x(70)
+    .desc
+        height: $x(78)
+        line-height: $x(78)
+        color: #b4b4b4
+        font-size: $x(28)
+        border-top: 1px solid #e3e3e3;
+footer
+    height: $x(120)
+    background-color: #19a6db
+    position: fixed
+    bottom: 0;
+    left: 0
+    right: 0
+    font-size: $x(24)
+    color: #fff
+    text-align: center
+    padding-top: $x(40)
+    div
+        height: $x(46)
+        line-height: $x(46)
+    .company-tel
+        display: inline-block
+        background: url(images/tel.png) no-repeat left $x(5)
+        background-size: $x(31) $x(31)
+        padding-left: $x(41)
+
+    

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telphone=no" name="format-detection">
+    <link rel="stylesheet" href="./src/css/base.css">
+    <link rel="stylesheet" href="./src/css/jquery.mmenu.css">
+    <link rel="stylesheet" href="./src/css/swiper-3.3.1.min.css">
+    <link rel="stylesheet" href="./src/css/index.css">
+    <script src="./src/js/flexible.js"></script>
+  </head>
+  <body class="fixed-header">
+    <div class="index-page">
+      <header>
+        <div class="right more"></div><a href="#leftMenu" class="left menu"></a>
+        <div class="title">聚集私募资本 发现企业价值</div>
+      </header>
+      <section class="swiper-container index-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="src/css/images/index-ad.jpg"></div>
+          <div class="swiper-slide"><img src="src/css/images/index-ad.jpg"></div>
+          <div class="swiper-slide"><img src="src/css/images/index-ad.jpg"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </section>
+      <section class="index-menu clearfix">
+        <div class="index-menu-item company">挂牌企业</div>
+        <div class="index-menu-item bond">私募债券</div>
+        <div class="index-menu-item fund">私募基金</div>
+        <div class="index-menu-item news">中心公告</div>
+        <div class="index-menu-item member">会员机构</div>
+        <div class="index-menu-item live">直播路演</div>
+        <div class="index-menu-item product">服务产品</div>
+        <div class="index-menu-item collect">我的收藏</div>
+      </section>
+      <section class="index-channel">固定债务<span>更多</span></section>
+      <section class="index-bond-list">
+        <div class="index-bond-item">
+          <div class="info">
+            <div class="title">广发环保债券</div>
+            <div class="income">
+              <div class="info-title">12%</div>
+              <div class="info-desc">预期年化</div>
+            </div>
+            <div class="time">
+              <div class="info-title">24个月</div>
+              <div class="info-desc">产品期限</div>
+            </div>
+          </div>
+          <div class="desc">理财期限，灵活领取，收益不浪费</div>
+        </div>
+        <div class="index-bond-item">
+          <div class="info">
+            <div class="title">广发环保债券</div>
+            <div class="income">
+              <div class="info-title">12%</div>
+              <div class="info-desc">预期年化</div>
+            </div>
+            <div class="time">
+              <div class="info-title">24个月</div>
+              <div class="info-desc">产品期限</div>
+            </div>
+          </div>
+          <div class="desc">理财期限，灵活领取，收益不浪费</div>
+        </div>
+      </section>
+      <footer> 
+        <div class="company-name">江苏省金融办核准交易机构</div>
+        <div class="company-tel">客服电话：0512-66969900</div>
+      </footer>
+      <nav id="leftMenu">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><span>About us</span>
+            <ul>
+              <li><a href="#about/history"></a>
+                <History></History>
+              </li>
+              <li><span>The team</span>
+                <ul>
+                  <li><a href="#about/team/management">Management</a></li>
+                  <li><a href="#about/team/management">Sales</a></li>
+                  <li><a href="#about/team/management">Development</a></li>
+                </ul>
+              </li>
+              <li><a href="#about/team/management">Our address</a></li>
+            </ul>
+          </li>
+          <li><span>The team</span></li>
+        </ul>
+      </nav>
+    </div>
+    <script src="./src/js/jquery-3.1.0.min.js"></script>
+    <script src="./src/js/swiper-3.3.1.jquery.min.js"></script>
+    <script src="./src/js/jquery.mmenu.min.js"></script>
+    <script>
+      $(function() {
+          $('#leftMenu').mmenu({
+              extensions: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+              counters: true,
+              navbar: {
+                  title: 'Advanced menu'
+              },
+              navbars: [
+                  {
+                      position: 'top',
+                      content: [ 'searchfield' ]
+                  }, {
+                      position: 'top',
+                      content: [
+                          'prev',
+                          'title',
+                          'close'
+                      ]
+                  }, {
+                      position: 'bottom',
+                      content: [
+                          '<a href="http://mmenu.frebsite.nl/wordpress-plugin.html" target="_blank">WordPress plugin</a>'
+                      ]
+                  }
+              ]
+          });
+          var mySwiper = new Swiper ('.swiper-container', {
+              loop: true,
+              autoplay: 3000,
+              pagination: '.swiper-pagination',
+              paginationType: 'bullets',
+              autoplayDisableOnInteraction: false,
+              
+          })
+      });
+    </script>
+  </body>
+</html>
