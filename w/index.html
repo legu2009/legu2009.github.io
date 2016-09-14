@@ -34,7 +34,7 @@
         <div class="index-menu-item product">服务产品</div>
         <div class="index-menu-item collect">我的收藏</div>
       </section>
-      <section class="index-channel">固定债务<span>更多</span></section>
+      <section><a href="./p/fixed/index.html" class="index-channel">固定债务<span>更多</span></a></section>
       <section class="index-bond-list">
         <div class="index-bond-item">
           <div class="info">
@@ -71,12 +71,10 @@
       </footer>
       <nav id="leftMenu">
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="p/assets/index.html">资产中心</a></li>
           <li><span>About us</span>
             <ul>
-              <li><a href="#about/history"></a>
-                <History></History>
-              </li>
+              <li><a href="#about/history">History</a></li>
               <li><span>The team</span>
                 <ul>
                   <li><a href="#about/team/management">Management</a></li>
@@ -94,79 +92,7 @@
     <script src="./src/js/jquery-3.1.0.min.js"></script>
     <script src="./src/js/swiper-3.3.1.jquery.min.js"></script>
     <script src="./src/js/jquery.mmenu.min.js"></script>
-    <script>
-      $(function() {
-          $('#leftMenu').mmenu({
-              extensions: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
-              counters: true,
-              navbar: {
-                  title: 'Advanced menu'
-              },
-              navbars: [
-                  {
-                      position: 'top',
-                      content: [ 'searchfield' ]
-                  }, {
-                      position: 'top',
-                      content: [
-                          'prev',
-                          'title',
-                          'close'
-                      ]
-                  }, {
-                      position: 'bottom',
-                      content: [
-                          '<a href="http://mmenu.frebsite.nl/wordpress-plugin.html" target="_blank">WordPress plugin</a>'
-                      ]
-                  }
-              ]
-          });
-          var mySwiper = new Swiper('.swiper-container', {
-              loop: true,
-              autoplay: 3000,
-              pagination: '.swiper-pagination',
-              paginationType: 'bullets',
-              autoplayDisableOnInteraction: false,  
-          })
-          var popMenu = (function () {
-              var state = "hide";
-              var $box = $('.pop-menu');
-              return {
-                  init: function () {
-                      var self = this;
-                      $box.on('click', '.pop-item', function () {
-                          setTimeout(self.hide, 300)
-                      });
-                      $('header .more').on('click', function () {
-                          self.toggle();
-                      })
-                      $(document).on('click', function (e) {
-                          var $target = $(e.target);
-                          if ($target.hasClass('more') || $target.hasClass('pop-item')|| $target.hasClass('pop-menu')) {
-                          } else {
-                              self.hide();
-                          }
-                      })
-                      return this;
-                  },
-                  toggle: function () {
-                      if (state == 'show') {
-                          this.hide();
-                      } else {
-                          this.show();
-                      }
-                  },
-                  hide: function () {
-                      state = "hide";
-                      $box.hide();
-                  },
-                  show: function () {
-                      state = "show";
-                      $box.show();
-                  }
-              }
-          })().init();
-      });
-    </script>
+    <script src="./src/module/common.js"></script>
+    <script src="./src/module/index.js"></script>
   </body>
 </html>

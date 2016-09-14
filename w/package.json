@@ -1,0 +1,23 @@
+{
+  "name": "hello",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yyx990803/vue-hackernews.git"
+  },
+  "dependencies": {
+	"gulp-util": "",
+	"gulp-stylus": "",
+	"gulp-watch": "",
+	"gulp-jade": "",
+	"gulp-batch": "",
+	"gulp-inject-file": "",
+	"images": "",
+	"glob": "",
+	"chokidar": "",
+	"handlebars": "",
+	"font-carrier": "",
+	"sprity": ""
+  }
+}

@@ -1,0 +1,8 @@
+$fz = 75
+$x(h)
+    unit((h/$fz) ,'rem')
+{{#each map}}
+$img_{{name}}
+    background:url({{url}}) center center no-repeat ;
+    background-size: $x({{width}}) $x({{height}});
+{{/each}}

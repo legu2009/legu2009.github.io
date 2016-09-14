@@ -1,0 +1,93 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(content="telphone=no", name="format-detection")
+        link(rel="stylesheet", href="./src/css/base.css")
+        link(rel="stylesheet", href="./src/css/jquery.mmenu.css")
+        link(rel="stylesheet", href="./src/css/swiper-3.3.1.min.css")
+        link(rel="stylesheet", href="./src/css/index.css")
+        script(src="./src/js/flexible.js")
+    body.fixed-header
+        .index-page
+            header
+                a.right.more(href="javascript:;")
+                a.left.menu(href="#leftMenu")
+                .title 聚集私募资本 发现企业价值
+                .pop-menu
+                    a.pop-item.tag(href="javascript:;") 企业挂牌申请
+                    a.pop-item.user(href="javascript:;") 会员加入申请
+                    a.pop-item.file(href="javascript:;") 登记托管申请
+            section.swiper-container.index-swiper
+                .swiper-wrapper
+                    .swiper-slide
+                        img(src="src/css/images/index-ad.jpg")
+                    .swiper-slide
+                        img(src="src/css/images/index-ad.jpg")
+                    .swiper-slide
+                        img(src="src/css/images/index-ad.jpg")
+                .swiper-pagination
+            section.index-menu.clearfix
+                .index-menu-item.company.border-b 挂牌企业
+                .index-menu-item.bond.border-b 私募债券
+                .index-menu-item.fund.border-b 私募基金
+                .index-menu-item.news.border-b 中心公告
+                .index-menu-item.member 会员机构
+                .index-menu-item.live 直播路演
+                .index-menu-item.product 服务产品
+                .index-menu-item.collect 我的收藏
+            section
+                a.index-channel(href="./p/fixed/index.html") 固定债务
+                    span 更多
+            section.index-bond-list
+                .index-bond-item
+                    .info
+                        .title 广发环保债券
+                        .income
+                            .info-title 12%
+                            .info-desc 预期年化
+                        .time
+                            .info-title 24个月
+                            .info-desc 产品期限
+                    .desc 理财期限，灵活领取，收益不浪费
+                .index-bond-item
+                    .info
+                        .title 广发环保债券
+                        .income
+                            .info-title 12%
+                            .info-desc 预期年化
+                        .time
+                            .info-title 24个月
+                            .info-desc 产品期限
+                    .desc 理财期限，灵活领取，收益不浪费
+            footer 
+                .company-name 江苏省金融办核准交易机构
+                .company-tel 客服电话：0512-66969900
+            nav#leftMenu
+                ul
+                    li
+                        a(href="p/assets/index.html") 资产中心
+                    li
+                        span About us
+                        ul
+                            li
+                                a(href="#about/history") History
+                            li
+                                span The team
+                                ul
+                                    li
+                                        a(href="#about/team/management") Management
+                                    li
+                                        a(href="#about/team/management") Sales
+                                    li
+                                        a(href="#about/team/management") Development
+                            li
+                                a(href="#about/team/management") Our address
+                    li
+                        span The team
+        script(src="./src/js/jquery-3.1.0.min.js")
+        script(src="./src/js/swiper-3.3.1.jquery.min.js")
+        script(src="./src/js/jquery.mmenu.min.js")
+        script(src="./src/module/common.js")
+        script(src="./src/module/index.js")

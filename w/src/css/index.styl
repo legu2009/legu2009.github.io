@@ -2,14 +2,15 @@
 body
     font-family: "PingFang", "Microsoft YaHei", "sans-serif";
     background-color: #f2f2f2
-.index-page
-    padding-top: $x(100)
-.fixed-header header
-    position: fixed;
-    top 0
-    left 0
-    width: 100%
-    z-index: 100
+.fixed-header
+    > div
+        padding-top: $x(100)
+    header
+        position: fixed;
+        top 0
+        left 0
+        width: 100%
+        z-index: 100
 header
     height $x(100)
     line-height: $x(100)
@@ -18,18 +19,21 @@ header
     text-align: center;
     .title
         font-size: $x(38)
+        text-align: center
     .left,.right
+        position: absolute
         width: $x(80)
         height: $x(80)
-        margin-top: $x(10)
+        top $x(10)
         &:active
             background-color: #0b94c7
     .left
-        float: left
-        margin-left: $x(25)
+        left: $x(25)
     .right
-        float: right
-        margin-right: $x(25)
+        right: $x(25)
+    .back
+        background: url(images/back2.png) no-repeat center center
+        background-size: $x(23) $x(42)
     .more
         background: url(images/more.png) no-repeat center center
         background-size: $x(33) $x(33)
@@ -59,11 +63,14 @@ header
             top -1*$x(10)
             right $x(40)
         .tag
-            background: url(images/tag.png) no-repeat $x(30) center
+            background: url(images/tag.png) no-repeat $x(35) center
+            background-size: $x(29) $x(29)
         .user
-            background: url(images/user.png) no-repeat $x(30) center
+            background: url(images/user.png) no-repeat $x(35) center
+            background-size: $x(30) $x(30)
         .file
-            background: url(images/file.png) no-repeat $x(30) center
+            background: url(images/file.png) no-repeat $x(40) center
+            background-size: $x(21) $x(28)
     .pop-item
         height: $x(75)
         border-bottom: 1px solid #0e95c8;
@@ -142,6 +149,7 @@ header
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
     padding 0 $x(30) 0 $x(40)
+    display: block
     span
         float: right
         padding-right: $x(30)
@@ -194,6 +202,9 @@ header
         color: #b4b4b4
         font-size: $x(28)
         border-top: 1px solid #e3e3e3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 footer
     height: $x(120)
     background-color: #19a6db
@@ -209,3 +220,206 @@ footer
         background: url(images/tel.png) no-repeat left $x(5)
         background-size: $x(31) $x(31)
         padding-left: $x(41)
+
+.fixed-nav
+    height: $x(90)
+    line-height: $x(90)
+    font-size: $x(30)
+    color: #666
+    text-align: center
+    background-color: #f9f9f9
+    margin-bottom: $x(15)
+    position: relative
+    .nav-item
+        width: 25%
+        float: left
+    .sel
+        color: #19a6db;
+    .nav-bottom
+        position: absolute
+        left 0
+        bottom: 0
+        width: 25%
+        height: 0
+        border-top: 2px solid #19a6db;
+        transition: left .3s;
+        -moz-transition: left .3s;
+        -webkit-transition: left .3s;
+        -o-transition: left .3s;
+.bond-item
+    border-bottom: 1px solid #e3e3e3;
+    border-top: 1px solid #e3e3e3;
+    background-color: #fff
+    margin-bottom: $x(15)
+    .title
+        height: $x(64)
+        line-height: $x(64)
+        padding: $x(26) $x(47) 0 $x(47)
+        font-size: $x(28)
+        color: rgb(51, 51, 51);
+        border-bottom: 1px solid #e3e3e3;
+        > div
+            float: right
+        .type
+            font-size: $x(24)
+            border-radius: $x(19)
+            background-color: #1bc854;
+            width: $x(109)
+            height: $x(40)
+            line-height: $x(40)
+            text-align: center
+            color: white;
+            margin-top: $x(12)
+        .collect
+            padding-left: $x(24+29)
+            background: url(images/heart2.png) no-repeat $x(12) center
+            background-size: $x(29) $x(26)
+            color #a7a7a7
+            margin-left: $x(14)
+            &.sel
+                background: url(images/heart2-h.png) no-repeat $x(12) center
+                background-size: $x(29) $x(26)
+    .info-list
+        padding: $x(26) $x(47) 0 $x(47)
+        color #bdbdbd
+    .info-item
+        float: left
+        width: 33%
+        position: relative
+        text-align: center
+        &.borr:after
+            position: absolute
+            right: 0
+            height: $x(70)
+            top $x(24)
+            width: 0
+            border-right: 1px solid #e3e3e3;
+            content: ""
+        em
+            display: block
+            font-size: $x(28)
+            color: rgb(102, 102, 102);
+            height: $x(52)
+            line-height: $x(60)
+            &.income
+                color: #f60
+                font-size: $x(40)
+                line-height: $x(52)
+        b
+            display: block
+            font-size: $x(27)
+            margin-top: $x(16)
+    .info-desc
+        margin: $x(41) $x(47) $x(45) $x(47)
+        background-color: #f2f2f2
+        padding: $x(22) $x(45) $x(23) $x(30)
+        color: #999
+        line-height: $x(40)
+        font-size: $x(27)
+.assets-page
+    .left
+        float: left
+    .right
+        float: right
+.assets-info
+    background-image: -moz-linear-gradient( 90deg, rgb(0,96,191) 0%, rgb(25,166,219) 99%);
+    background-image: -webkit-linear-gradient( 90deg, rgb(0,96,191) 0%, rgb(25,166,219) 99%);
+    background-image: -ms-linear-gradient( 90deg, rgb(0,96,191) 0%, rgb(25,166,219) 99%);
+    height: $x(483)
+    padding: 0 $x(48)
+    position: relative
+    color: #fff
+    .l1
+        height: $x(120)
+        line-height: $x(120)
+        font-size: $x(30)
+    .l2
+        padding: 0 $x(35)
+        font-size: $x(32)
+        height $x(56)
+        line-height: $x(56)
+    .l3
+        font-size: $x(28)
+        height $x(110)
+        line-height: $x(110)
+    .l4
+        font-size: $x(28)
+        height $x(30)
+        line-height: $x(30)
+    .assets-income
+        background: rgba(255, 255, 255, 0.102)
+        height: $x(118)
+        line-height: $x(118)
+        position: absolute
+        bottom: 0
+        right: 0
+        left: 0
+        padding: 0 $x(45)
+        font-size: $x(29)
+    &:after
+        content: ""
+        height: $x(95)
+        border-right: 2px solid rgba(255, 255, 255, 0.502);
+        position: absolute
+        top $x(99)
+        left: 50%
+.assets-btns
+    text-align: center
+    font-size: $x(35)
+    color: rgb(51, 51, 51);
+    font-weight: bold;
+    padding: $x(22) 0
+    border-bottom: 1px solid #e3e3e3;
+    border-top: 1px solid #e3e3e3;
+    letter-spacing: $x(4)
+    background-color: #fff
+    span
+        display: block;
+        float: left;
+        box-sizing: border-box;
+        width: 50%;
+        height: $x(72)
+        line-height: $x(72)
+        padding-left: $x(65)
+    .recharge
+        border-right: 1px solid rgb(204, 204, 204);
+        background: url(images/recharge.png) no-repeat $x(108) center
+        background-size: $x(59) $x(59)
+    .cash
+        background: url(images/cash.png) no-repeat $x(108) center
+        background-size: $x(59) $x(59)
+.assets-link
+    color: rgb(51, 51, 51);
+    .title
+        height: $x(80)
+        line-height: $x(80)
+        background-color: rga(242, 242, 242)
+        padding: $x(20) 0 0 $x(45)
+        font-size: $x(28)
+        font-weight: bold;
+    .list
+        padding: 0 $x(45)
+        border-bottom: 1px solid #e3e3e3;
+        border-top: 1px solid #e3e3e3;
+        background-color: #fff
+        &:last-child
+            margin-bottom: $x(100)
+    .item
+        height: $x(105)
+        line-height: $x(105)
+        font-size: $x(28)
+        border-bottom: 1px solid #e3e3e3;
+        background: url(images/item-right.png) no-repeat right center
+        background-size: $x(17) $x(27)
+        &:last-child
+            border-bottom none
+
+
+        
+
+
+
+    
+
+
+
