@@ -73,13 +73,16 @@ header .pop-menu:before {
   right: 0.533333333333333rem;
 }
 header .pop-menu .tag {
-  background: url("images/tag.png") no-repeat 0.4rem center;
+  background: url("images/tag.png") no-repeat 0.466666666666667rem center;
+  background-size: $(29) $(29);
 }
 header .pop-menu .user {
-  background: url("images/user.png") no-repeat 0.4rem center;
+  background: url("images/user.png") no-repeat 0.466666666666667rem center;
+  background-size: $(30) $(30);
 }
 header .pop-menu .file {
-  background: url("images/file.png") no-repeat 0.4rem center;
+  background: url("images/file.png") no-repeat 0.533333333333333rem center;
+  background-size: $(21) $(28);
 }
 header .pop-item {
   height: 1rem;
