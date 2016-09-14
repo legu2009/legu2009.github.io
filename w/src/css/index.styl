@@ -19,41 +19,88 @@ header
     .title
         font-size: $x(38)
     .left,.right
-        width: $x(60)
-        height: $x(40)
-        margin-top: $x(30)
+        width: $x(80)
+        height: $x(80)
+        margin-top: $x(10)
+        &:active
+            background-color: #0b94c7
     .left
         float: left
-        margin-left: $x(35)
+        margin-left: $x(25)
     .right
         float: right
-        margin-right: $x(35)
+        margin-right: $x(25)
     .more
         background: url(images/more.png) no-repeat center center
-        background-size: auto 100%
+        background-size: $x(33) $x(33)
     .menu
         background: url(images/menu.png) no-repeat center center
-        background-size: auto 100%
+        background-size: $x(46) $x(39)
+    .pop-menu
+        width: $x(278)
+        color: #fff
+        font-size: $x(28)
+        font-family: "PingFang";
+        line-height: $x(75);
+        background-color: #19a6db
+        top $x(115)
+        right $x(15)
+        position: absolute
+        display: none;
+        &:before
+            width: 0;
+            height: 0;
+            border-left: $x(10) solid transparent;
+            border-right: $x(10) solid transparent;
+            border-bottom: $x(16) solid #19a6db;
+            display: block
+            content: ""
+            position: absolute
+            top -1*$x(10)
+            right $x(40)
+        .tag
+            background: url(images/tag.png) no-repeat $x(30) center
+        .user
+            background: url(images/user.png) no-repeat $x(30) center
+        .file
+            background: url(images/file.png) no-repeat $x(30) center
+    .pop-item
+        height: $x(75)
+        border-bottom: 1px solid #0e95c8;
+        display: block
+        color: #fff
+        padding: 0 $x(30) 0 $x(75)
+        &:active
+            background-color: #0b94c7
+        &:nth-child(3)
+            border-bottom: none
 .index-swiper
     height: $x(330)
     margin-bottom: $x(15)
     .swiper-slide img
         display: block
         max-width: 100%
+        margin: 0 auto
 .index-menu
     background-color: #fff
     margin-bottom: $x(15)
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
     .index-menu-item
         float: left
         width: 25%
         box-sizing: border-box;
         height: $x(200)
-        border: 1px solid #e3e3e3;
         font-size: $x(28)
         position: relative
         text-align: center
         line-height: $x(260)
         color: #4e4e4e
+        border-right: 1px solid #e3e3e3;
+        &:nth-child(4n+4)
+            border-right: none
+        &.border-b
+            border-bottom: 1px solid #e3e3e3;
         &:before
             position: absolute
             top: $x(50);
@@ -101,7 +148,7 @@ header
         background: url(images/back.png) no-repeat right center
         background-size: $x(16) $x(30)
 .index-bond-list
-    margin-bottom: $x(175)
+    margin-bottom: $x(15)
 .index-bond-item
     margin-bottom: $x(15)
 .index-bond-item
@@ -150,10 +197,6 @@ header
 footer
     height: $x(120)
     background-color: #19a6db
-    position: fixed
-    bottom: 0;
-    left: 0
-    right: 0
     font-size: $x(24)
     color: #fff
     text-align: center
@@ -166,5 +209,3 @@ footer
         background: url(images/tel.png) no-repeat left $x(5)
         background-size: $x(31) $x(31)
         padding-left: $x(41)
-
-    

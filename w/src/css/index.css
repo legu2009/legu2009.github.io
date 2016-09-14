@@ -24,25 +24,75 @@ header .title {
 }
 header .left,
 header .right {
-  width: 0.8rem;
-  height: 0.533333333333333rem;
-  margin-top: 0.4rem;
+  width: 1.066666666666667rem;
+  height: 1.066666666666667rem;
+  margin-top: 0.133333333333333rem;
+}
+header .left:active,
+header .right:active {
+  background-color: #0b94c7;
 }
 header .left {
   float: left;
-  margin-left: 0.466666666666667rem;
+  margin-left: 0.333333333333333rem;
 }
 header .right {
   float: right;
-  margin-right: 0.466666666666667rem;
+  margin-right: 0.333333333333333rem;
 }
 header .more {
   background: url("images/more.png") no-repeat center center;
-  background-size: auto 100%;
+  background-size: 0.44rem 0.44rem;
 }
 header .menu {
   background: url("images/menu.png") no-repeat center center;
-  background-size: auto 100%;
+  background-size: 0.613333333333333rem 0.52rem;
+}
+header .pop-menu {
+  width: 3.706666666666667rem;
+  color: #fff;
+  font-size: 0.373333333333333rem;
+  font-family: "PingFang";
+  line-height: 1rem;
+  background-color: #19a6db;
+  top: 1.533333333333333rem;
+  right: 0.2rem;
+  position: absolute;
+  display: none;
+}
+header .pop-menu:before {
+  width: 0;
+  height: 0;
+  border-left: 0.133333333333333rem solid transparent;
+  border-right: 0.133333333333333rem solid transparent;
+  border-bottom: 0.213333333333333rem solid #19a6db;
+  display: block;
+  content: "";
+  position: absolute;
+  top: -0.133333333333333rem;
+  right: 0.533333333333333rem;
+}
+header .pop-menu .tag {
+  background: url("images/tag.png") no-repeat 0.4rem center;
+}
+header .pop-menu .user {
+  background: url("images/user.png") no-repeat 0.4rem center;
+}
+header .pop-menu .file {
+  background: url("images/file.png") no-repeat 0.4rem center;
+}
+header .pop-item {
+  height: 1rem;
+  border-bottom: 1px solid #0e95c8;
+  display: block;
+  color: #fff;
+  padding: 0 0.4rem 0 1rem;
+}
+header .pop-item:active {
+  background-color: #0b94c7;
+}
+header .pop-item:nth-child(3) {
+  border-bottom: none;
 }
 .index-swiper {
   height: 4.4rem;
@@ -51,22 +101,31 @@ header .menu {
 .index-swiper .swiper-slide img {
   display: block;
   max-width: 100%;
+  margin: 0 auto;
 }
 .index-menu {
   background-color: #fff;
   margin-bottom: 0.2rem;
+  border-top: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e3e3e3;
 }
 .index-menu .index-menu-item {
   float: left;
   width: 25%;
   box-sizing: border-box;
   height: 2.666666666666667rem;
-  border: 1px solid #e3e3e3;
   font-size: 0.373333333333333rem;
   position: relative;
   text-align: center;
   line-height: 3.466666666666667rem;
   color: #4e4e4e;
+  border-right: 1px solid #e3e3e3;
+}
+.index-menu .index-menu-item:nth-child(4n+4) {
+  border-right: none;
+}
+.index-menu .index-menu-item.border-b {
+  border-bottom: 1px solid #e3e3e3;
 }
 .index-menu .index-menu-item:before {
   position: absolute;
@@ -126,7 +185,7 @@ header .menu {
   background-size: 0.213333333333333rem 0.4rem;
 }
 .index-bond-list {
-  margin-bottom: 2.333333333333333rem;
+  margin-bottom: 0.2rem;
 }
 .index-bond-item {
   margin-bottom: 0.2rem;
@@ -187,10 +246,6 @@ header .menu {
 footer {
   height: 1.6rem;
   background-color: #19a6db;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   font-size: 0.32rem;
   color: #fff;
   text-align: center;

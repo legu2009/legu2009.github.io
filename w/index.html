@@ -12,9 +12,9 @@
   </head>
   <body class="fixed-header">
     <div class="index-page">
-      <header>
-        <div class="right more"></div><a href="#leftMenu" class="left menu"></a>
+      <header><a href="javascript:;" class="right more"></a><a href="#leftMenu" class="left menu"></a>
         <div class="title">聚集私募资本 发现企业价值</div>
+        <div class="pop-menu"><a href="javascript:;" class="pop-item tag">企业挂牌申请</a><a href="javascript:;" class="pop-item user">会员加入申请</a><a href="javascript:;" class="pop-item file">登记托管申请</a></div>
       </header>
       <section class="swiper-container index-swiper">
         <div class="swiper-wrapper">
@@ -25,10 +25,10 @@
         <div class="swiper-pagination"></div>
       </section>
       <section class="index-menu clearfix">
-        <div class="index-menu-item company">挂牌企业</div>
-        <div class="index-menu-item bond">私募债券</div>
-        <div class="index-menu-item fund">私募基金</div>
-        <div class="index-menu-item news">中心公告</div>
+        <div class="index-menu-item company border-b">挂牌企业</div>
+        <div class="index-menu-item bond border-b">私募债券</div>
+        <div class="index-menu-item fund border-b">私募基金</div>
+        <div class="index-menu-item news border-b">中心公告</div>
         <div class="index-menu-item member">会员机构</div>
         <div class="index-menu-item live">直播路演</div>
         <div class="index-menu-item product">服务产品</div>
@@ -121,14 +121,51 @@
                   }
               ]
           });
-          var mySwiper = new Swiper ('.swiper-container', {
+          var mySwiper = new Swiper('.swiper-container', {
               loop: true,
               autoplay: 3000,
               pagination: '.swiper-pagination',
               paginationType: 'bullets',
-              autoplayDisableOnInteraction: false,
-              
+              autoplayDisableOnInteraction: false,  
           })
+          var popMenu = (function () {
+              var state = "hide";
+              var $box = $('.pop-menu');
+              return {
+                  init: function () {
+                      var self = this;
+                      $box.on('click', '.pop-item', function () {
+                          setTimeout(self.hide, 300)
+                      });
+                      $('header .more').on('click', function () {
+                          self.toggle();
+                      })
+                      $(document).on('click', function (e) {
+                          var $target = $(e.target);
+                          if ($target.hasClass('more') || $target.hasClass('pop-item')|| $target.hasClass('pop-menu')) {
+                          } else {
+                              self.hide();
+                          }
+                      })
+                      return this;
+                  },
+                  toggle: function () {
+                      if (state == 'show') {
+                          this.hide();
+                      } else {
+                          this.show();
+                      }
+                  },
+                  hide: function () {
+                      state = "hide";
+                      $box.hide();
+                  },
+                  show: function () {
+                      state = "show";
+                      $box.show();
+                  }
+              }
+          })().init();
       });
     </script>
   </body>
