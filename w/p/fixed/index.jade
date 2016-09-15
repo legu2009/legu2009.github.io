@@ -21,8 +21,8 @@ html
             section.bond-list
                 .bond-item
                     .title 广发环保债券
-                        .collect 收藏
-                        .type 募集期
+                        .ui-collect 收藏
+                        .ui-state 募集期
                     .info
                         .info-list.clearfix
                             .info-item.borr
@@ -37,8 +37,8 @@ html
                         .info-desc 进阶理财，向稳健高收益进发；10元起购，0申赎费，每月10-15日可赎，T+1到账
                 .bond-item
                     .title 广发环保债券
-                        .collect.sel 收藏
-                        .type 募集期
+                        .ui-collect.sel 收藏
+                        .ui-state 募集期
                     .info
                         .info-list.clearfix
                             .info-item.borr
@@ -52,20 +52,25 @@ html
                                 b 预期年化
                         .info-desc 进阶理财，向稳健高收益进发；10元起购，0申赎费，每月10-15日可赎，T+1到账
 script#bondItemTpl(type="text/jstmp").
-    <div class="bond-item">
-        <div class="title"><@=ProductName@>
-        <div class="collect">收藏</div>
-        <div class="type"><@=Status@></div>
+    <@
+    for (var i = 0, len = list.length; i < len ; i++) {
+        var item = list[i];
+    @>
+        <div class="bond-item" bondId="<@=item.ProductId@>">
+            <div class="title"><@=item.ProductName@>
+            <div class="ui-collect">收藏</div>
+            <div class="ui-state"><@=item.Status@></div>
+            </div>
+            <div class="info">
+            <div class="info-list clearfix">
+                <div class="info-item borr"><em class="income">12%</em><b>预期年化</b></div>
+                <div class="info-item borr"><em>12%</em><b>投资期限</b></div>
+                <div class="info-item"><em>12%</em><b>预期年化</b></div>
+            </div>
+            <div class="info-desc"><@=item.Introduction?item.Introduction.ZXNR||'':''@></div>
+            </div>
         </div>
-        <div class="info">
-        <div class="info-list clearfix">
-            <div class="info-item borr"><em class="income">12%</em><b>预期年化</b></div>
-            <div class="info-item borr"><em>12%</em><b>投资期限</b></div>
-            <div class="info-item"><em>12%</em><b>预期年化</b></div>
-        </div>
-        <div class="info-desc"><@=Introduction.ZXNR@></div>
-        </div>
-    </div>
+    <@}@>
 script(src="../../src/js/jquery-3.1.0.min.js")
 script(src="../../src/module/common.js")
 script(src="../../src/module/p/fixed/index.js")

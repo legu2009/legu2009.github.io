@@ -23,8 +23,8 @@
       <section class="bond-list">
         <div class="bond-item">
           <div class="title">广发环保债券
-            <div class="collect">收藏</div>
-            <div class="type">募集期</div>
+            <div class="ui-collect">收藏</div>
+            <div class="ui-state">募集期</div>
           </div>
           <div class="info">
             <div class="info-list clearfix">
@@ -37,8 +37,8 @@
         </div>
         <div class="bond-item">
           <div class="title">广发环保债券
-            <div class="collect sel">收藏</div>
-            <div class="type">募集期</div>
+            <div class="ui-collect sel">收藏</div>
+            <div class="ui-state">募集期</div>
           </div>
           <div class="info">
             <div class="info-list clearfix">
@@ -54,20 +54,25 @@
   </body>
 </html>
 <script id="bondItemTpl" type="text/jstmp">
-  <div class="bond-item">
-      <div class="title"><@=ProductName@>
-      <div class="collect">收藏</div>
-      <div class="type"><@=Status@></div>
+  <@
+  for (var i = 0, len = list.length; i < len ; i++) {
+      var item = list[i];
+  @>
+      <div class="bond-item" bondId="<@=item.ProductId@>">
+          <div class="title"><@=item.ProductName@>
+          <div class="ui-collect">收藏</div>
+          <div class="ui-state"><@=item.Status@></div>
+          </div>
+          <div class="info">
+          <div class="info-list clearfix">
+              <div class="info-item borr"><em class="income">12%</em><b>预期年化</b></div>
+              <div class="info-item borr"><em>12%</em><b>投资期限</b></div>
+              <div class="info-item"><em>12%</em><b>预期年化</b></div>
+          </div>
+          <div class="info-desc"><@=item.Introduction?item.Introduction.ZXNR||'':''@></div>
+          </div>
       </div>
-      <div class="info">
-      <div class="info-list clearfix">
-          <div class="info-item borr"><em class="income">12%</em><b>预期年化</b></div>
-          <div class="info-item borr"><em>12%</em><b>投资期限</b></div>
-          <div class="info-item"><em>12%</em><b>预期年化</b></div>
-      </div>
-      <div class="info-desc"><@=Introduction.ZXNR@></div>
-      </div>
-  </div>
+  <@}@>
 </script>
 <script src="../../src/js/jquery-3.1.0.min.js"></script>
 <script src="../../src/module/common.js"></script>

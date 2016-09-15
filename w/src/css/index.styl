@@ -2,9 +2,72 @@
 body
     font-family: "PingFang", "Microsoft YaHei", "sans-serif";
     background-color: #f2f2f2
+.left
+    float: left
+.right
+    float: right
+.orange
+    color #f60
+.show
+    display: block !important;
+.hide
+    display: none !important;
+.ui-collect
+    font-size: $x(28)
+    padding-left: $x(24+29)
+    background: url(images/heart2.png) no-repeat $x(12) center
+    background-size: $x(29) $x(26)
+    color #a7a7a7
+    margin-left: $x(14)
+    &.sel
+        background: url(images/heart2-h.png) no-repeat $x(12) center
+        background-size: $x(29) $x(26)
+.ui-state
+    font-size: $x(24)
+    border-radius: $x(19)
+    background-color: #1bc854;
+    height: $x(40)
+    line-height: $x(40)
+    text-align: center
+    color: white;
+    margin-top: $x(12)
+    padding: 0 $x(20)
+    &.done
+        background-color: rgb(153,153,153)
+.num-component
+    height: $x(80)
+    line-height: $x(80)
+    border: 1px solid #e3e3e3;
+    padding: 0 $x(75)
+    position: relative
+    .add,.del
+        width: $x(75)
+        text-align: center
+        color #f60
+        height: 100%
+        box-sizing: border-box
+        position: absolute
+        top 0
+        bottom: 0
+    .add
+        right 0
+        border-left: 1px solid #e3e3e3;
+        background: url(images/add.png) no-repeat center center
+        background-size: $x(40) $x(41)
+    .del
+        left 0
+        border-right: 1px solid #e3e3e3;
+        background: url(images/del.png) no-repeat center center
+        background-size: $x(40) $x(3)
+    input
+        width: 100%
+        height: 100%
+        text-align: center
+        color: #f60
+        font-size: $x(36)
 .fixed-header
     > div
-        padding-top: $x(100)
+        padding-top: $x(88)
     header
         position: fixed;
         top 0
@@ -12,8 +75,8 @@ body
         width: 100%
         z-index: 100
 header
-    height $x(100)
-    line-height: $x(100)
+    height $x(88)
+    line-height: $x(88)
     background-color: #19a6db
     color: #fff
     text-align: center;
@@ -24,7 +87,7 @@ header
         position: absolute
         width: $x(80)
         height: $x(80)
-        top $x(10)
+        top $x(4)
         &:active
             background-color: #0b94c7
     .left
@@ -34,6 +97,9 @@ header
     .back
         background: url(images/back2.png) no-repeat center center
         background-size: $x(23) $x(42)
+    .share
+        background: url(images/share.png) no-repeat center center
+        background-size: $x(42) $x(42)
     .more
         background: url(images/more.png) no-repeat center center
         background-size: $x(33) $x(33)
@@ -88,6 +154,9 @@ header
         display: block
         max-width: 100%
         margin: 0 auto
+    .swiper-pagination-bullet
+        width: $x(10)
+        height: $x(10)
 .index-menu
     background-color: #fff
     margin-bottom: $x(15)
@@ -230,6 +299,7 @@ footer
     background-color: #f9f9f9
     margin-bottom: $x(15)
     position: relative
+    background-color: #fff
     .nav-item
         width: 25%
         float: left
@@ -260,25 +330,6 @@ footer
         border-bottom: 1px solid #e3e3e3;
         > div
             float: right
-        .type
-            font-size: $x(24)
-            border-radius: $x(19)
-            background-color: #1bc854;
-            width: $x(109)
-            height: $x(40)
-            line-height: $x(40)
-            text-align: center
-            color: white;
-            margin-top: $x(12)
-        .collect
-            padding-left: $x(24+29)
-            background: url(images/heart2.png) no-repeat $x(12) center
-            background-size: $x(29) $x(26)
-            color #a7a7a7
-            margin-left: $x(14)
-            &.sel
-                background: url(images/heart2-h.png) no-repeat $x(12) center
-                background-size: $x(29) $x(26)
     .info-list
         padding: $x(26) $x(47) 0 $x(47)
         color #bdbdbd
@@ -316,11 +367,6 @@ footer
         color: #999
         line-height: $x(40)
         font-size: $x(27)
-.assets-page
-    .left
-        float: left
-    .right
-        float: right
 .assets-info
     background-image: -moz-linear-gradient( 90deg, rgb(0,96,191) 0%, rgb(25,166,219) 99%);
     background-image: -webkit-linear-gradient( 90deg, rgb(0,96,191) 0%, rgb(25,166,219) 99%);
@@ -413,13 +459,169 @@ footer
         background-size: $x(17) $x(27)
         &:last-child
             border-bottom none
+.bond-info
+    text-align: center
+    background-color: #fff
+    padding: $x(34) $x(45) 0 $x(45)
+    .title
+        font-size: $x(32)
+        color: rgb(51, 51, 51);
+        position: relative
+    .ui-collect
+        position: absolute
+        right: 0
+        top 0
+    .ui-state
+        position: absolute
+        right: 0
+        top 0
+    .income
+        font-size: $x(70)
+        color: rgb(255, 102, 0);
+        height: $x(100)
+        line-height: $x(120)
+        em 
+            font-size: $x(40)
+    .text
+        font-size: $x(26)
+        color: rgb(167, 167, 167);
+        height: $x(60)
+        line-height: $x(60)
+        position: relative
+        .bond-state
+            position: absolute
+            right 0
+    .process
+        height: $x(7)
+        background-color: rgb(159, 224, 249);
+        border-radius: $x(3)
+        position: relative
+        margin-top: $x(22)
+        .done
+            position: absolute
+            left 0
+            top 0
+            height: $x(7)
+            background-color: rgb(25, 166, 219);
+            border-radius: $x(3)
+        .info
+            border: 1px solid rgb(204, 204, 204);
+            background-color: rgb(255, 255, 255);
+            position: absolute
+            top -1*$x(46)
+            padding: 0 $x(10)
+            font-size: $x(21)
+            color: rgb(204, 204, 204);
+            height: $x(34)
+            line-height: $x(34)
+            border-radius: $x(5)
+            margin-left: -1 * $x(55)
+            &:after
+                content: ""
+                position: absolute
+                width: $x(11)
+                height $x(8)
+                left: 50%
+                margin-left: -1* $x(5)
+                bottom: -1* $x(7)
+                background: url(images/arraw.png) no-repeat right center
+                background-size: 100%
+    .desc
+        font-size: $x(27)
+        color: rgb(167, 167, 167);
+        height: $x(45)
+        line-height: $x(45)
+        padding: $x(23) 0 $x(60) 0
+        em
+            color: #f60
+            margin: 0 $x(4)
+        div
+            float: left;
+            width: 50%
+            box-sizing: border-box
+            &:first-child
+                border-right:  1px solid #e3e3e3;
+.bond-totle
+    height: $x(149)
+    padding: $x(40) $x(45) 0 $x(45)
+    color: rgb(153, 153, 153);
+    div
+        font-size: $x(27)
+    .orange
+        height: $x(80)
+        line-height: $x(90)
+.bond-text
+    background-color: #fff
+    padding: $x(25) $x(45) $x(58) $x(45)
+    font-size: $x(32)
+    color: rgb(167, 167, 167);
+    div
+        height: $x(85)
+        line-height: $x(85)
+    .right
+        color rgb(52,52,52)
+.bond-invest
+    background-color: #fff
+    padding: 0 $x(45) $x(60) $x(45)
+    margin-bottom: $x(15)
+    border-bottom: 1px solid #e3e3e3;
+    .num-component
+        margin-top: $x(32)
+    .title
+        font-size: $x(32)
+        color: rgb(51, 51, 51);
+        font-weight: bold;
+    .info
+        height: $x(86)
+        line-height: $x(80)
+        font-size: $x(28)
+        color: rgb(167, 167, 167);
+    .desc
+        font-size: $x(28)
+        color: rgb(167, 167, 167);
+        li
+            height: $x(48)
+            line-height: $x(48)
+            list-style-type disc
+            margin-left: $x(25)
+        em
+            color: rgb(51, 51, 51)
+    .btn
+        font-size: $x(28)
+        color: #fff
+        text-align: center
+        height: $x(76)
+        line-height: $x(76)
+        background-color: #19a6db
+        border-radius: $x(5)
+        margin-top: $x(18)
+        &.disable
+            background-color: rgb(153, 153, 153);
+.bond-detail
+    background-color: #fff
+    padding-top: $x(24)
+    .tab
+        height: $x(72)
+        line-height: $x(72)
+        font-size: $x(32)
+        color: rgb(0, 0, 0);
+        text-align: center
+        padding-bottom: $x(6)
+        div
+            float: left
+            width: 50%
+            border-bottom: 1px solid #e3e3e3;
+            box-sizing: border-box
+        .sel
+            color: #19a6db
+            border-bottom: $x(4) solid #19a6db;
+    .content
+        height: $x(300)
+        text-align: left
+        font-size: $x(32)
+        display: none
 
 
-        
-
-
-
-    
 
 
 

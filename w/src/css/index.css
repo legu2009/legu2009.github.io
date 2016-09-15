@@ -2,8 +2,86 @@ body {
   font-family: "PingFang", "Microsoft YaHei", "sans-serif";
   background-color: #f2f2f2;
 }
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.orange {
+  color: #f60;
+}
+.show {
+  display: block !important;
+}
+.hide {
+  display: none !important;
+}
+.ui-collect {
+  font-size: 0.373333333333333rem;
+  padding-left: 0.706666666666667rem;
+  background: url("images/heart2.png") no-repeat 0.16rem center;
+  background-size: 0.386666666666667rem 0.346666666666667rem;
+  color: #a7a7a7;
+  margin-left: 0.186666666666667rem;
+}
+.ui-collect.sel {
+  background: url("images/heart2-h.png") no-repeat 0.16rem center;
+  background-size: 0.386666666666667rem 0.346666666666667rem;
+}
+.ui-state {
+  font-size: 0.32rem;
+  border-radius: 0.253333333333333rem;
+  background-color: #1bc854;
+  height: 0.533333333333333rem;
+  line-height: 0.533333333333333rem;
+  text-align: center;
+  color: #fff;
+  margin-top: 0.16rem;
+  padding: 0 0.266666666666667rem;
+}
+.ui-state.done {
+  background-color: #999;
+}
+.num-component {
+  height: 1.066666666666667rem;
+  line-height: 1.066666666666667rem;
+  border: 1px solid #e3e3e3;
+  padding: 0 1rem;
+  position: relative;
+}
+.num-component .add,
+.num-component .del {
+  width: 1rem;
+  text-align: center;
+  color: #f60;
+  height: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.num-component .add {
+  right: 0;
+  border-left: 1px solid #e3e3e3;
+  background: url("images/add.png") no-repeat center center;
+  background-size: 0.533333333333333rem 0.546666666666667rem;
+}
+.num-component .del {
+  left: 0;
+  border-right: 1px solid #e3e3e3;
+  background: url("images/del.png") no-repeat center center;
+  background-size: 0.533333333333333rem 0.04rem;
+}
+.num-component input {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  color: #f60;
+  font-size: 0.48rem;
+}
 .fixed-header > div {
-  padding-top: 1.333333333333333rem;
+  padding-top: 1.173333333333333rem;
 }
 .fixed-header header {
   position: fixed;
@@ -13,8 +91,8 @@ body {
   z-index: 100;
 }
 header {
-  height: 1.333333333333333rem;
-  line-height: 1.333333333333333rem;
+  height: 1.173333333333333rem;
+  line-height: 1.173333333333333rem;
   background-color: #19a6db;
   color: #fff;
   text-align: center;
@@ -28,7 +106,7 @@ header .right {
   position: absolute;
   width: 1.066666666666667rem;
   height: 1.066666666666667rem;
-  top: 0.133333333333333rem;
+  top: 0.053333333333333rem;
 }
 header .left:active,
 header .right:active {
@@ -43,6 +121,10 @@ header .right {
 header .back {
   background: url("images/back2.png") no-repeat center center;
   background-size: 0.306666666666667rem 0.56rem;
+}
+header .share {
+  background: url("images/share.png") no-repeat center center;
+  background-size: 0.56rem 0.56rem;
 }
 header .more {
   background: url("images/more.png") no-repeat center center;
@@ -109,6 +191,10 @@ header .pop-item:nth-child(3) {
   display: block;
   max-width: 100%;
   margin: 0 auto;
+}
+.index-swiper .swiper-pagination-bullet {
+  width: 0.133333333333333rem;
+  height: 0.133333333333333rem;
 }
 .index-menu {
   background-color: #fff;
@@ -281,6 +367,7 @@ footer .company-tel {
   background-color: #f9f9f9;
   margin-bottom: 0.2rem;
   position: relative;
+  background-color: #fff;
 }
 .fixed-nav .nav-item {
   width: 25%;
@@ -317,28 +404,6 @@ footer .company-tel {
 }
 .bond-item .title > div {
   float: right;
-}
-.bond-item .title .type {
-  font-size: 0.32rem;
-  border-radius: 0.253333333333333rem;
-  background-color: #1bc854;
-  width: 1.453333333333333rem;
-  height: 0.533333333333333rem;
-  line-height: 0.533333333333333rem;
-  text-align: center;
-  color: #fff;
-  margin-top: 0.16rem;
-}
-.bond-item .title .collect {
-  padding-left: 0.706666666666667rem;
-  background: url("images/heart2.png") no-repeat 0.16rem center;
-  background-size: 0.386666666666667rem 0.346666666666667rem;
-  color: #a7a7a7;
-  margin-left: 0.186666666666667rem;
-}
-.bond-item .title .collect.sel {
-  background: url("images/heart2-h.png") no-repeat 0.16rem center;
-  background-size: 0.386666666666667rem 0.346666666666667rem;
 }
 .bond-item .info-list {
   padding: 0.346666666666667rem 0.626666666666667rem 0 0.626666666666667rem;
@@ -383,12 +448,6 @@ footer .company-tel {
   color: #999;
   line-height: 0.533333333333333rem;
   font-size: 0.36rem;
-}
-.assets-page .left {
-  float: left;
-}
-.assets-page .right {
-  float: right;
 }
 .assets-info {
   background-image: -moz-linear-gradient(90deg, #0060bf 0%, #19a6db 99%);
@@ -498,4 +557,201 @@ footer .company-tel {
 }
 .assets-link .item:last-child {
   border-bottom: none;
+}
+.bond-info {
+  text-align: center;
+  background-color: #fff;
+  padding: 0.453333333333333rem 0.6rem 0 0.6rem;
+}
+.bond-info .title {
+  font-size: 0.426666666666667rem;
+  color: #333;
+  position: relative;
+}
+.bond-info .ui-collect {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.bond-info .ui-state {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.bond-info .income {
+  font-size: 0.933333333333333rem;
+  color: #f60;
+  height: 1.333333333333333rem;
+  line-height: 1.6rem;
+}
+.bond-info .income em {
+  font-size: 0.533333333333333rem;
+}
+.bond-info .text {
+  font-size: 0.346666666666667rem;
+  color: #a7a7a7;
+  height: 0.8rem;
+  line-height: 0.8rem;
+  position: relative;
+}
+.bond-info .text .bond-state {
+  position: absolute;
+  right: 0;
+}
+.bond-info .process {
+  height: 0.093333333333333rem;
+  background-color: #9fe0f9;
+  border-radius: 0.04rem;
+  position: relative;
+  margin-top: 0.293333333333333rem;
+}
+.bond-info .process .done {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 0.093333333333333rem;
+  background-color: #19a6db;
+  border-radius: 0.04rem;
+}
+.bond-info .process .info {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  position: absolute;
+  top: -0.613333333333333rem;
+  padding: 0 0.133333333333333rem;
+  font-size: 0.28rem;
+  color: #ccc;
+  height: 0.453333333333333rem;
+  line-height: 0.453333333333333rem;
+  border-radius: 0.066666666666667rem;
+  margin-left: -0.733333333333333rem;
+}
+.bond-info .process .info:after {
+  content: "";
+  position: absolute;
+  width: 0.146666666666667rem;
+  height: 0.106666666666667rem;
+  left: 50%;
+  margin-left: -0.066666666666667rem;
+  bottom: -0.093333333333333rem;
+  background: url("images/arraw.png") no-repeat right center;
+  background-size: 100%;
+}
+.bond-info .desc {
+  font-size: 0.36rem;
+  color: #a7a7a7;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  padding: 0.306666666666667rem 0 0.8rem 0;
+}
+.bond-info .desc em {
+  color: #f60;
+  margin: 0 0.053333333333333rem;
+}
+.bond-info .desc div {
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+}
+.bond-info .desc div:first-child {
+  border-right: 1px solid #e3e3e3;
+}
+.bond-totle {
+  height: 1.986666666666667rem;
+  padding: 0.533333333333333rem 0.6rem 0 0.6rem;
+  color: #999;
+}
+.bond-totle div {
+  font-size: 0.36rem;
+}
+.bond-totle .orange {
+  height: 1.066666666666667rem;
+  line-height: 1.2rem;
+}
+.bond-text {
+  background-color: #fff;
+  padding: 0.333333333333333rem 0.6rem 0.773333333333333rem 0.6rem;
+  font-size: 0.426666666666667rem;
+  color: #a7a7a7;
+}
+.bond-text div {
+  height: 1.133333333333333rem;
+  line-height: 1.133333333333333rem;
+}
+.bond-text .right {
+  color: #343434;
+}
+.bond-invest {
+  background-color: #fff;
+  padding: 0 0.6rem 0.8rem 0.6rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid #e3e3e3;
+}
+.bond-invest .num-component {
+  margin-top: 0.426666666666667rem;
+}
+.bond-invest .title {
+  font-size: 0.426666666666667rem;
+  color: #333;
+  font-weight: bold;
+}
+.bond-invest .info {
+  height: 1.146666666666667rem;
+  line-height: 1.066666666666667rem;
+  font-size: 0.373333333333333rem;
+  color: #a7a7a7;
+}
+.bond-invest .desc {
+  font-size: 0.373333333333333rem;
+  color: #a7a7a7;
+}
+.bond-invest .desc li {
+  height: 0.64rem;
+  line-height: 0.64rem;
+  list-style-type: disc;
+  margin-left: 0.333333333333333rem;
+}
+.bond-invest .desc em {
+  color: #333;
+}
+.bond-invest .btn {
+  font-size: 0.373333333333333rem;
+  color: #fff;
+  text-align: center;
+  height: 1.013333333333333rem;
+  line-height: 1.013333333333333rem;
+  background-color: #19a6db;
+  border-radius: 0.066666666666667rem;
+  margin-top: 0.24rem;
+}
+.bond-invest .btn.disable {
+  background-color: #999;
+}
+.bond-detail {
+  background-color: #fff;
+  padding-top: 0.32rem;
+}
+.bond-detail .tab {
+  height: 0.96rem;
+  line-height: 0.96rem;
+  font-size: 0.426666666666667rem;
+  color: #000;
+  text-align: center;
+  padding-bottom: 0.08rem;
+}
+.bond-detail .tab div {
+  float: left;
+  width: 50%;
+  border-bottom: 1px solid #e3e3e3;
+  box-sizing: border-box;
+}
+.bond-detail .tab .sel {
+  color: #19a6db;
+  border-bottom: 0.053333333333333rem solid #19a6db;
+}
+.bond-detail .content {
+  height: 4rem;
+  text-align: left;
+  font-size: 0.426666666666667rem;
+  display: none;
 }
