@@ -12,6 +12,10 @@ body
     display: block !important;
 .hide
     display: none !important;
+.ellipsis
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 .ui-collect
     font-size: $x(28)
     padding-left: $x(24+29)
@@ -49,6 +53,8 @@ body
         position: absolute
         top 0
         bottom: 0
+        &:active
+            background-color: rgb(242,242,242)
     .add
         right 0
         border-left: 1px solid #e3e3e3;
@@ -68,6 +74,8 @@ body
 .fixed-header
     > div
         padding-top: $x(88)
+        &.fixed-page
+            padding-top: $x(88 + 15 + 90)
     header
         position: fixed;
         top 0
@@ -271,9 +279,6 @@ header
         color: #b4b4b4
         font-size: $x(28)
         border-top: 1px solid #e3e3e3;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
 footer
     height: $x(120)
     background-color: #19a6db
@@ -289,7 +294,6 @@ footer
         background: url(images/tel.png) no-repeat left $x(5)
         background-size: $x(31) $x(31)
         padding-left: $x(41)
-
 .fixed-nav
     height: $x(90)
     line-height: $x(90)
@@ -300,6 +304,11 @@ footer
     margin-bottom: $x(15)
     position: relative
     background-color: #fff
+    position: fixed;
+    top: $x(88)
+    left: 0
+    right: 0
+    z-index: 2
     .nav-item
         width: 25%
         float: left
@@ -620,6 +629,83 @@ footer
         text-align: left
         font-size: $x(32)
         display: none
+.news-list
+    background-color: #fff
+.news-item
+    text-align: left;
+    padding: 0 $x(45)
+    display: block;
+    &:active
+        background-color: rgb(242, 242, 242)
+    .box
+        padding: $x(33) 0
+        border-bottom: 1px solid #e3e3e3;
+        height: $x(114)
+        background: url(images/news-right.png) no-repeat right center
+        background-size: $x(18) $x(35)
+    .title
+        font-size: $x(32)
+        color: rgb(51, 51, 51);
+        height: $x(60)
+        line-height: $x(60)
+    .time
+        height: $x(60)
+        line-height: $x(60)
+        font-size: $x(28)
+        color: rgb(180, 180, 180);
+        .level
+            display: inline-block
+            background-color: rgb(243, 18, 18);
+            border-radius: $x(3);
+            height: $x(33)
+            line-height: $x(33)
+            color: #fff
+            position: relative;
+            top: -1 * $x(4)
+            font-size: $x(20)
+            margin-left: $x(18)
+            padding: 0 $x(10)
+.news-detail
+    background-color: #fff
+    padding: $x(45) $x(45) $x(45+35) $x(45)
+    margin-bottom: $x(15)
+    .title
+        font-size: $x(32)
+        span
+            font-size: $x(26)
+            color: rgb(180, 180, 180);
+            margin-left: $x(15)
+    .content
+        font-size: $x(26)
+        color: rgb(78, 78, 78);
+        line-height: $x(45);
+        p
+            margin-top: $x(45)
+.news-files
+    background-color: #fff
+    padding: 0 $x(45)
+    .title
+        height: $x(100)
+        line-height: $x(100)
+        font-size: $x(26)
+        color: rgb(78, 78, 78);
+        border-bottom: 1px solid #e3e3e3;
+    .file
+        font-size: $x(26)
+        color: rgb(25, 166, 219);
+        line-height: $x(100)
+        height: $x(100)
+        display: inline-block;
+        padding: 0 $x(25)
+    .box
+        margin-left: -1*$x(25)
+
+
+
+
+
+
+
 
 
 

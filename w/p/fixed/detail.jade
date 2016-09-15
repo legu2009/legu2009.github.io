@@ -44,7 +44,7 @@ html
                     .right 2018-08-01
             section.bond-invest
                 .title 请输入投资金额：
-                .num-component
+                .num-component(min = "10", max = "1000", step="100")
                     .add
                     .del
                     input(type="number", value="0")

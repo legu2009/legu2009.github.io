@@ -1,0 +1,43 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(content="telphone=no", name="format-detection")
+        link(rel="stylesheet", href="../../src/css/base.css")
+        link(rel="stylesheet", href="../../src/css/index.css")
+        script(src="../../src/js/flexible.js")
+    body.fixed-header
+        .news-page
+            header
+                a.left.back
+                .title 中心公告
+            section.news-list
+                a.news-item(href="detail.html")
+                    .box
+                        .title.ellipsis 房企再融资全线收紧，低评级私募债发行...
+                        .time 2016-7-12
+                            .level 置顶
+                .news-item
+                    .box
+                        .title.ellipsis 房企再融资全线收紧，低评级私募债发行...
+                        .time 2016-7-12
+                            .level 置顶
+ script#newsItemTpl(type="text/jstmp").
+    <@
+    for (var i = 0, len = list.length; i < len ; i++) {
+        var item = list[i];
+    @>
+        <div class="news-item">
+          <div class="box">
+            <div class="title ellipsis">房企再融资全线收紧，低评级私募债发行...</div>
+            <div class="time">2016-7-12
+              <div class="level">置顶</div>
+            </div>
+          </div>
+        </div>
+    <@}@>
+script(src="../../src/js/jquery-3.1.0.min.js")
+script(src="../../src/module/common.js")
+script(src="../../src/module/p/news/index.js")
+           
