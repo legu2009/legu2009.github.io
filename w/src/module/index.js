@@ -1,29 +1,24 @@
 (function() {
-    $('#leftMenu').mmenu({
-        extensions: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
-        counters: true,
-        navbar: {
-            title: 'Advanced menu'
-        },
-        navbars: [
-            {
-                position: 'top',
-                content: [ 'searchfield' ]
-            }, {
-                position: 'top',
-                content: [
-                    'prev',
-                    'title',
-                    'close'
-                ]
-            }, {
-                position: 'bottom',
-                content: [
-                    '<a href="http://mmenu.frebsite.nl/wordpress-plugin.html" target="_blank">WordPress plugin</a>'
-                ]
-            }
-        ]
-    });
+    var isOpen = false;
+    var menu = function () {
+        $('.ui-left-menu')[isOpen?'addClass':'removeClass']('left-menu-open');
+    }
+    $('header .menu').on('click', function () {
+        isOpen = !isOpen;
+        menu();
+    })
+    $('.top-left-menu').on('click', '.menu a', function () {
+        var href = this.getAttribute('data-href');
+        setTimeout(function() {
+            location.href = href;
+        }, 200);
+        isOpen = false;
+        menu();
+    })
+    $('.mask-left-menu').on('touchstart', function () {
+        isOpen = false;
+        menu();
+    })
 
     var mySwiper = new Swiper('.swiper-container', {
         loop: true,

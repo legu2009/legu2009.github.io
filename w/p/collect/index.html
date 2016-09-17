@@ -9,22 +9,15 @@
     <script src="../../src/js/flexible.js"></script>
   </head>
   <body class="fixed-header">
-    <div class="fixed-page page-warper">
+    <div class="collect-page page-warper">
       <header><a class="left back"></a>
-        <div class="title">固收债券</div>
+        <div class="title">我的收藏</div>
       </header>
-      <nav class="fixed-nav clearfix">
-        <div class="nav-item sel">默认排序</div>
-        <div class="nav-item">起投金额</div>
-        <div class="nav-item">投资期限</div>
-        <div class="nav-item">预期年化</div>
-        <div class="nav-bottom"></div>
-      </nav>
+      <section class="collect-tab">债券</section>
       <section class="bond-list">
         <div class="bond-item">
           <div class="title">广发环保债券
-            <div class="ui-collect">收藏</div>
-            <div class="ui-state">募集期</div>
+            <div class="ui-collect sel">收藏</div>
           </div>
           <div class="info">
             <div class="info-list clearfix">
@@ -38,7 +31,6 @@
         <div class="bond-item">
           <div class="title">广发环保债券
             <div class="ui-collect sel">收藏</div>
-            <div class="ui-state">募集期</div>
           </div>
           <div class="info">
             <div class="info-list clearfix">
@@ -60,8 +52,7 @@
   @>
       <div class="bond-item" bondId="<@=item.ProductId@>">
           <div class="title"><@=item.ProductName@>
-          <div class="ui-collect">收藏</div>
-          <div class="ui-state"><@=item.Status@></div>
+          <div class="ui-collect sel">收藏</div>
           </div>
           <div class="info">
           <div class="info-list clearfix">
@@ -76,4 +67,3 @@
 </script>
 <script src="../../src/js/jquery-3.1.0.min.js"></script>
 <script src="../../src/module/common.js"></script>
-<script src="../../src/module/p/fixed/index.js"></script>

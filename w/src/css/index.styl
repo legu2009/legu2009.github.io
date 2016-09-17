@@ -1,4 +1,7 @@
 @import "common.styl"
+html
+    height: 100%;
+    background-color: #fff
 body
     font-family: "PingFang", "Microsoft YaHei", "sans-serif";
     background-color: #f2f2f2
@@ -16,6 +19,42 @@ body
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+label.ui-radio
+    position: relative;
+    display: block;
+    padding-left: $x(65)
+    cursor: pointer;
+    vertical-align: middle;
+    div:before
+        position: absolute;
+        top: 50%;
+        left: $x(25);
+        display: inline-block;
+        width: $x(24)
+        height: $x(24)
+        content: '';
+        border: 1px solid rgb(201, 201, 206);
+        border-radius: 50%;
+        margin-top: -1 * $x(12)
+    div:after
+        position: absolute;
+        display: none;
+        content: '';
+    input 
+        position: absolute;
+        display: none;
+        &:checked + div
+            &:before
+                border: 1px solid rgb(25, 166, 219);
+            &:after
+                top: 50%;
+                left: $x(26 + 12 - 7);
+                width: $x(14)
+                height: $x(14)
+                border-radius: 50%;
+                background: rgb(25, 166, 219);
+                display: block
+                margin-top: -1 * $x(6)
 .ui-collect
     font-size: $x(28)
     padding-left: $x(24+29)
@@ -38,6 +77,95 @@ body
     padding: 0 $x(20)
     &.done
         background-color: rgb(153,153,153)
+.ui-left-menu
+    .mask-left-menu
+        opacity: 0
+        position: fixed
+        right: 0
+        left: $x(490)
+        top: 0
+        bottom: 0
+        z-index: 2
+        display: none;
+    .top-left-menu
+        color: #fff
+        width $x(490)
+        position: fixed
+        left: 0
+        top 0
+        bottom: 0
+        background-image: -moz-linear-gradient( 90deg, rgb(24,210,219) 0%, rgb(25,166,219) 100%);
+        background-image: -webkit-linear-gradient( 90deg, rgb(24,210,219) 0%, rgb(25,166,219) 100%);
+        background-image: -ms-linear-gradient( 90deg, rgb(24,210,219) 0%, rgb(25,166,219) 100%);
+        &:after
+            content: ""
+            bottom: 0
+            left: 0
+            width: 100%
+            height: $x(440)
+            background:  url(images/left-memu.jpg) no-repeat center center
+            position: absolute
+            background-size: 100%
+            z-index: -1;
+    .page-warper
+        -webkit-transition: -webkit-transform .4s ease;
+        transition: -webkit-transform .4s ease;
+        transition: transform .4s ease;
+        transition: transform .4s ease,-webkit-transform .4s ease;
+    &.left-menu-open
+        .page-warper
+            -webkit-transform: translate($x(490),0);
+            -ms-transform: translate($x(490),0);
+            transform: translate($x(490),0);
+            -webkit-transform: translate3d($x(490),0,0);
+            -webkit-box-shadow: 1px 0 $x(23) #000; 
+            -moz-box-shadow: 1px 0 $x(23) #000;
+            box-shadow: 1px 0 $x(23) #000;
+        .mask-left-menu
+            display: block
+.top-left-menu
+    .logo
+        width: $x(188)
+        height: $x(188)
+        border-radius: 50%
+        display: block
+        margin: 0 auto
+        margin-top: $x(90)
+    .title
+        font-size: $x(33)
+        margin-top: $x(8)
+        height: $x(40)
+        line-height: $x(40)
+        text-align: center
+        margin-bottom: $x(50)
+    li a
+        display: block;
+        color: #fff
+        font-size: $x(33)
+        height: $x(112)
+        line-height: $x(112)
+        padding-left: $x(120)
+        position: relative
+        &:after
+            content: ''
+            position: absolute
+            width: $x(14)
+            background: url(images/left-more.png) no-repeat center center
+            background-size: 100% auto
+            top: 0
+            bottom: 0
+            right: $x(56)
+        &.assets
+            background:  url(images/assets-icon.png) no-repeat $x(37) center
+            background-size: $x(60) $x(60)
+        &.setting
+            background:  url(images/setting-icon.png) no-repeat $x(37) center
+            background-size: $x(60) $x(60)
+        &.about
+            background:  url(images/about-icon.png) no-repeat $x(37) center
+            background-size: $x(60) $x(60)
+        &:active, &.active
+            background-color: rgb(12,158,204)
 .num-component
     height: $x(80)
     line-height: $x(80)
@@ -72,8 +200,10 @@ body
         color: #f60
         font-size: $x(36)
 .fixed-header
-    > div
+    .page-warper
         padding-top: $x(88)
+        position: relative
+        background-color: #f2f2f2
         &.fixed-page
             padding-top: $x(88 + 15 + 90)
     header
@@ -372,7 +502,7 @@ footer
     .info-desc
         margin: $x(41) $x(47) $x(45) $x(47)
         background-color: #f2f2f2
-        padding: $x(22) $x(45) $x(23) $x(30)
+        padding: $x(25) $x(45) $x(25) $x(30)
         color: #999
         line-height: $x(40)
         font-size: $x(27)
@@ -699,15 +829,93 @@ footer
         padding: 0 $x(25)
     .box
         margin-left: -1*$x(25)
-
-
-
-
-
-
-
-
-
-
-
+.collect-tab
+    height: $x(93)
+    line-height: $x(93)
+    margin-bottom: $x(15)
+    border-bottom: 1px solid #e3e3e3;
+    font-size: $x(35)
+    color: rgb(51, 51, 51);
+    background-color: #fff
+    text-align: center
+.page-warper.question-page
+    background-color: #fff
+.question-item
+    padding: $x(30) $x(45) $x(20) $x(45)
+    line-height: $x(63)
+    border-bottom: 1px solid #e3e3e3;
+    .title
+        font-size $x(31)
+        font-family: "Adobe Heiti Std";
+        color: rgb(51, 51, 51);
+    .item
+        font-size: $x(26)
+        color: rgb(78, 78, 78);
+.question-btn
+    padding: $x(46) $x(45) $x(92) $x(45)
+    div
+        height: $x(76)
+        line-height: $x(76)
+        color: #fff
+        font-size: $x(30)
+        background-color: rgb(25,166,219)
+        text-align: center
+.about-logo
+    background: url(images/logo.png) no-repeat center $x(40)
+    background-size: $x(246) $x(94)
+    text-align: center
+    height: $x(252)
+    border-bottom: 1px solid #e3e3e3;
+    div
+        padding-top: $x(170)
+        font-size: $x(28)
+        color: rgb(51, 51, 51);
+.about-info
+    background-color: #fff
+    font-size: $x(30);
+    padding-bottom: $x(100)
+    .item
+        padding: 0 $x(45)
+        border-bottom: 1px solid #e3e3e3;
+        color: rgb(167, 167, 167);
+        height: $x(105)
+        line-height: $x(105)
+        .right
+            font-family: "Adobe Heiti Std";
+            color: rgb(51, 51, 51);
+            float: right
+        &:last-child
+            border-bottom: none;
+.trust-page
+    background-color: #fff
+    .question-btn
+        padding-top: $x(93)
+        padding-bottom: $x(60)
+.trust-list
+    font-size: $x(28)
+    .item
+        height: $x(105)
+        line-height: $x(105)
+        border-bottom: 1px solid #e3e3e3;
+    .box
+        padding: 0 $x(45)
+        height: 100%
+    .left
+        width: $x(214)
+        color: rgb(51, 51, 51);
+    input
+        display: block;
+        margin-left: $x(214)
+        height: 100%
+        font-size: $x(28)
+    .code
+        img
+            width: $x(140)
+            height: $x(70)
+            margin-top: $x(17)
+            margin-right: $x(22)
+        span
+            color rgb(25, 166, 219);
+        input
+            width: $x(210)
 

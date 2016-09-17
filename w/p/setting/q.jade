@@ -1,0 +1,51 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(content="telphone=no", name="format-detection")
+        link(rel="stylesheet", href="../../src/css/base.css")
+        link(rel="stylesheet", href="../../src/css/index.css")
+        script(src="../../src/js/flexible.js")
+    body.fixed-header
+        .question-page.page-warper
+            header
+                a.left.back
+                .title 风险评估
+            section.question-list
+                .question-item
+                    .title 1.您的年龄
+                    .list
+                        label.ui-radio.item 
+                            input.magic-radio(type="radio", name="q1", checked)
+                            div 20岁以下或65岁以上
+                        label.ui-radio.item 
+                            input.magic-radio(type="radio", name="q1")
+                            div 51岁至65岁
+                        label.ui-radio.item
+                            input.magic-radio(type="radio", name="q1")
+                            div 51岁至65岁
+                        label.ui-radio.item 
+                            input.magic-radio(type="radio", name="q1")
+                            div 21岁至30岁
+                .question-item
+                    .title 1.您的年龄
+                    .list
+                        label.ui-radio.item 
+                            input.magic-radio(type="radio", name="q2", checked)
+                            div 20岁以下或65岁以上
+                        label.ui-radio.item 
+                            input.magic-radio(type="radio", name="q2")
+                            div 51岁至65岁
+                        label.ui-radio.item
+                            input.magic-radio(type="radio", name="q2")
+                            div 51岁至65岁
+                        label.ui-radio.item 
+                            input.magic-radio(type="radio", name="q2")
+                            div 21岁至30岁
+            section.question-btn
+                div 提交
+script(src="../../src/js/jquery-3.1.0.min.js")
+script(src="../../src/module/common.js")
+
+           

@@ -8,21 +8,15 @@ html
         link(rel="stylesheet", href="../../src/css/index.css")
         script(src="../../src/js/flexible.js")
     body.fixed-header
-        .fixed-page.page-warper
+        .collect-page.page-warper
             header
                 a.left.back
-                .title 固收债券
-            nav.fixed-nav.clearfix
-                .nav-item.sel 默认排序
-                .nav-item 起投金额
-                .nav-item 投资期限
-                .nav-item 预期年化
-                .nav-bottom
+                .title 我的收藏
+            section.collect-tab 债券
             section.bond-list
                 .bond-item
                     .title 广发环保债券
-                        .ui-collect 收藏
-                        .ui-state 募集期
+                        .ui-collect.sel 收藏
                     .info
                         .info-list.clearfix
                             .info-item.borr
@@ -38,7 +32,6 @@ html
                 .bond-item
                     .title 广发环保债券
                         .ui-collect.sel 收藏
-                        .ui-state 募集期
                     .info
                         .info-list.clearfix
                             .info-item.borr
@@ -58,8 +51,7 @@ script#bondItemTpl(type="text/jstmp").
     @>
         <div class="bond-item" bondId="<@=item.ProductId@>">
             <div class="title"><@=item.ProductName@>
-            <div class="ui-collect">收藏</div>
-            <div class="ui-state"><@=item.Status@></div>
+            <div class="ui-collect sel">收藏</div>
             </div>
             <div class="info">
             <div class="info-list clearfix">
@@ -73,5 +65,5 @@ script#bondItemTpl(type="text/jstmp").
     <@}@>
 script(src="../../src/js/jquery-3.1.0.min.js")
 script(src="../../src/module/common.js")
-script(src="../../src/module/p/fixed/index.js")
+
            

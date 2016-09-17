@@ -5,14 +5,22 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta content="telphone=no" name="format-detection">
     <link rel="stylesheet" href="./src/css/base.css">
-    <link rel="stylesheet" href="./src/css/jquery.mmenu.css">
     <link rel="stylesheet" href="./src/css/swiper-3.3.1.min.css">
     <link rel="stylesheet" href="./src/css/index.css">
     <script src="./src/js/flexible.js"></script>
   </head>
-  <body class="fixed-header">
-    <div class="index-page">
-      <header><a href="javascript:;" class="right more"></a><a href="#leftMenu" class="left menu"></a>
+  <body class="fixed-header ui-left-menu">
+    <nav class="top-left-menu"><img src="src/css/images/face.png" class="logo">
+      <div class="title">花以小默</div>
+      <ul class="menu">
+        <li><a data-href="p/assets/index.html" class="assets">资产中心</a></li>
+        <li><a data-href="p/setting/q.html" class="setting">设置</a></li>
+        <li><a data-href="p/about/index.html" class="about">关于我们</a></li>
+      </ul>
+    </nav>
+    <div class="mask-left-menu"></div>
+    <div class="index-page page-warper">
+      <header><a class="right more"></a><a class="left menu"></a>
         <div class="title">聚集私募资本 发现企业价值</div>
         <div class="pop-menu"><a href="javascript:;" class="pop-item tag">企业挂牌申请</a><a href="javascript:;" class="pop-item user">会员加入申请</a><a href="javascript:;" class="pop-item file">登记托管申请</a></div>
       </header>
@@ -29,9 +37,7 @@
         <div class="index-menu-item bond border-b">私募债券</div>
         <div class="index-menu-item fund border-b">私募基金</div><a href="./p/news/index.html" class="index-menu-item news border-b">中心公告</a>
         <div class="index-menu-item member">会员机构</div>
-        <div class="index-menu-item live">直播路演</div>
-        <div class="index-menu-item product">服务产品</div>
-        <div class="index-menu-item collect">我的收藏</div>
+        <div class="index-menu-item live">直播路演</div><a class="index-menu-item product">服务产品</a><a href="./p/collect/index.html" class="index-menu-item collect">我的收藏</a>
       </section>
       <section><a href="./p/fixed/index.html" class="index-channel">固定债务<span>更多</span></a></section>
       <section class="index-bond-list">
@@ -68,25 +74,6 @@
         <div class="company-name">江苏省金融办核准交易机构</div>
         <div class="company-tel">客服电话：0512-66969900</div>
       </footer>
-      <nav id="leftMenu">
-        <ul>
-          <li><a href="p/assets/index.html">资产中心</a></li>
-          <li><span>About us</span>
-            <ul>
-              <li><a href="#about/history">History</a></li>
-              <li><span>The team</span>
-                <ul>
-                  <li><a href="#about/team/management">Management</a></li>
-                  <li><a href="#about/team/management">Sales</a></li>
-                  <li><a href="#about/team/management">Development</a></li>
-                </ul>
-              </li>
-              <li><a href="#about/team/management">Our address</a></li>
-            </ul>
-          </li>
-          <li><span>The team</span></li>
-        </ul>
-      </nav>
     </div>
     <script src="./src/js/jquery-3.1.0.min.js"></script>
     <script src="./src/js/swiper-3.3.1.jquery.min.js"></script>
