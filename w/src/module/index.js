@@ -18,6 +18,7 @@
     $('.mask-left-menu').on('touchstart', function () {
         isOpen = false;
         menu();
+        return false;
     })
 
     var mySwiper = new Swiper('.swiper-container', {

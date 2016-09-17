@@ -33,39 +33,27 @@ label.ui-radio {
   cursor: pointer;
   vertical-align: middle;
 }
-label.ui-radio div:before {
-  position: absolute;
-  top: 50%;
-  left: 0.333333333333333rem;
-  display: inline-block;
-  width: 0.32rem;
-  height: 0.32rem;
-  content: '';
-  border: 1px solid #c9c9ce;
-  border-radius: 50%;
-  margin-top: -0.16rem;
+label.ui-radio div {
+  position: relative;
 }
 label.ui-radio div:after {
   position: absolute;
-  display: none;
+  left: -0.626666666666667rem;
+  width: 0.4rem;
+  top: 0;
+  bottom: 0;
   content: '';
+  background: url("images/radio.png") no-repeat center center;
+  background-size: 100% auto;
+  z-index: 1;
 }
 label.ui-radio input {
   position: absolute;
   display: none;
 }
-label.ui-radio input:checked + div:before {
-  border: 1px solid #19a6db;
-}
 label.ui-radio input:checked + div:after {
-  top: 50%;
-  left: 0.413333333333333rem;
-  width: 0.186666666666667rem;
-  height: 0.186666666666667rem;
-  border-radius: 50%;
-  background: #19a6db;
-  display: block;
-  margin-top: -0.08rem;
+  background: url("images/radio-ck.png") no-repeat center center;
+  background-size: 100% auto;
 }
 .ui-collect {
   font-size: 0.373333333333333rem;

@@ -25,36 +25,25 @@ label.ui-radio
     padding-left: $x(65)
     cursor: pointer;
     vertical-align: middle;
-    div:before
-        position: absolute;
-        top: 50%;
-        left: $x(25);
-        display: inline-block;
-        width: $x(24)
-        height: $x(24)
-        content: '';
-        border: 1px solid rgb(201, 201, 206);
-        border-radius: 50%;
-        margin-top: -1 * $x(12)
+    div
+        position: relative
     div:after
         position: absolute;
-        display: none;
+        left: -1* $x(29+18);
+        width: $x(30)
+        top 0
+        bottom: 0
         content: '';
+        background: url(images/radio.png) no-repeat center center
+        background-size: 100% auto
+        z-index: 1
     input 
         position: absolute;
         display: none;
         &:checked + div
-            &:before
-                border: 1px solid rgb(25, 166, 219);
             &:after
-                top: 50%;
-                left: $x(26 + 12 - 7);
-                width: $x(14)
-                height: $x(14)
-                border-radius: 50%;
-                background: rgb(25, 166, 219);
-                display: block
-                margin-top: -1 * $x(6)
+                background: url(images/radio-ck.png) no-repeat center center
+                background-size: 100% auto
 .ui-collect
     font-size: $x(28)
     padding-left: $x(24+29)
