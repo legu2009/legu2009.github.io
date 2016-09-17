@@ -1,4 +1,8 @@
 ;(function(undefine) {
+    $('#investBtn').on('click', function () {
+        location = 'confirm.html'
+    })
+
     var $content = $('.bond-detail .content');
     $('.bond-detail .tab').on('click', 'div', function () {
         var $elm = $(this);

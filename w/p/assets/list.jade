@@ -1,0 +1,56 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(content="telphone=no", name="format-detection")
+        link(rel="stylesheet", href="../../src/css/base.css")
+        link(rel="stylesheet", href="../../src/css/index.css")
+        script(src="../../src/js/flexible.js")
+    body.fixed-header
+        .assetslist-page.page-warper
+            header
+                a.left.back
+                .title 投资列表
+            section.assets-query
+                .params
+                    .title 投资状态
+                    .content.clearfix
+                        .radio-warper
+                            label.ui-radio.item 
+                                input.magic-radio(type="radio", name="q1", checked)
+                                div 购买记录
+                        .radio-warper
+                            label.ui-radio.item 
+                                input.magic-radio(type="radio", name="q1", checked)
+                                div 购买申请
+                .params.params-time
+                    .title 投资日期
+                    .content.clearfix
+                        input.left
+                        input.right
+                        div ~
+                .params.params-name
+                    .title 名称
+                    .content
+                        input
+                .params-btn
+                    .ui-important-btn 搜索
+            section.assets-result
+                .item 
+                    .title G028H00026 
+                        .right 明德世达债券
+                    .income 项目金额：
+                        em 5000000
+                        span 元
+                    .time 申请时间：2016-08-25  18:45
+                .item 
+                    .title G028H00026 
+                        .right 明德世达债券
+                    .income 项目金额：
+                        em 5000000
+                        span 元
+                    .time 申请时间：2016-08-25  18:45
+        script(src="../../src/js/jquery-3.1.0.min.js")
+        script(src="../../src/module/common.js")
+           

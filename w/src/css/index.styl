@@ -54,6 +54,16 @@ label.ui-radio
     &.sel
         background: url(images/heart2-h.png) no-repeat $x(12) center
         background-size: $x(29) $x(26)
+.ui-important-btn
+    height: $x(76)
+    line-height: $x(76)
+    color: #fff
+    font-size: $x(30)
+    background-color: rgb(25,166,219)
+    border-radius: $x(5)
+    text-align: center
+    &.disable
+        background-color: rgb(153, 153, 153);
 .ui-state
     font-size: $x(24)
     border-radius: $x(19)
@@ -112,13 +122,14 @@ label.ui-radio
             box-shadow: 1px 0 $x(23) #000;
         .mask-left-menu
             display: block
+.ui-logo
+    width: $x(188)
+    height: $x(188)
+    border-radius: 50%
+    display: block
+    margin: 0 auto
 .top-left-menu
-    .logo
-        width: $x(188)
-        height: $x(188)
-        border-radius: 50%
-        display: block
-        margin: 0 auto
+    .ui-logo
         margin-top: $x(90)
     .title
         font-size: $x(33)
@@ -541,7 +552,6 @@ footer
     text-align: center
     font-size: $x(35)
     color: rgb(51, 51, 51);
-    font-weight: bold;
     padding: $x(22) 0
     border-bottom: 1px solid #e3e3e3;
     border-top: 1px solid #e3e3e3;
@@ -579,6 +589,7 @@ footer
         &:last-child
             margin-bottom: $x(100)
     .item
+        display: block
         height: $x(105)
         line-height: $x(105)
         font-size: $x(28)
@@ -714,17 +725,8 @@ footer
             margin-left: $x(25)
         em
             color: rgb(51, 51, 51)
-    .btn
-        font-size: $x(28)
-        color: #fff
-        text-align: center
-        height: $x(76)
-        line-height: $x(76)
-        background-color: #19a6db
-        border-radius: $x(5)
+    .ui-important-btn
         margin-top: $x(18)
-        &.disable
-            background-color: rgb(153, 153, 153);
 .bond-detail
     background-color: #fff
     padding-top: $x(24)
@@ -842,13 +844,7 @@ footer
         color: rgb(78, 78, 78);
 .question-btn
     padding: $x(46) $x(45) $x(92) $x(45)
-    div
-        height: $x(76)
-        line-height: $x(76)
-        color: #fff
-        font-size: $x(30)
-        background-color: rgb(25,166,219)
-        text-align: center
+    background-color: #fff
 .about-logo
     background: url(images/logo.png) no-repeat center $x(40)
     background-size: $x(246) $x(94)
@@ -875,7 +871,7 @@ footer
             float: right
         &:last-child
             border-bottom: none;
-.trust-page
+.page-warper.trust-page
     background-color: #fff
     .question-btn
         padding-top: $x(93)
@@ -889,13 +885,16 @@ footer
     .box
         padding: 0 $x(45)
         height: 100%
+    .content
+        margin-left: $x(214)
+        height: 100%
     .left
         width: $x(214)
         color: rgb(51, 51, 51);
     input
         display: block;
-        margin-left: $x(214)
         height: 100%
+        width: 100%
         font-size: $x(28)
     .code
         img
@@ -905,6 +904,136 @@ footer
             margin-right: $x(22)
         span
             color rgb(25, 166, 219);
-        input
-            width: $x(210)
-
+        .content
+            margin-left: $x(214)
+            margin-right: $x(220)
+            height: 100%
+    .msg-code
+        .btn
+            color: rgb(254, 255, 255);
+            border-radius: 3px;
+            background-color: rgb(138, 219, 249);
+            width: $x(212);
+            height: $x(71)
+            line-height: $x(71)
+            margin-top: $x(34/2)
+            text-align: center
+            box-sizing: border-box
+            border: 1px solid #e3e3e3;
+        .content
+            margin-left: $x(214)
+            margin-right: $x(220)
+            height: 100%
+.fixed-confirm
+    .confirm-info
+        .text
+            margin-top: $x(22)
+        .income
+            height: $x(70)
+            line-height: $x(70)
+            padding-bottom: $x(42)
+            border-bottom: 1px solid #e3e3e3;
+    .bond-text
+        font-size: $x(34)
+        padding: $x(25) $x(45) $x(25) $x(45)
+        margin-bottom: $x(15)
+        div
+            height: $x(80)
+            line-height: $x(80)
+    .trust-list
+        background-color: #fff
+    .question-btn
+        padding-top: $x(92)
+.setting-page
+    .setting-logo
+        padding: $x(38) 0 $x(24) 0
+        background-color: #fff
+    .about-info .item
+        padding-right: $x(94)
+        position: relative
+        &.link:after
+            content: ""
+            position: absolute
+            right: $x(45)
+            width: $x(17)
+            top 0
+            bottom: 0
+            background: url(images/item-right.png) no-repeat center center
+            background-size: $x(17) $x(27)
+    :nth-child(3)
+        margin-bottom: $x(15)
+        padding-bottom: 0
+.assets-query
+    background-color: #fff
+    padding: $x(20) $x(45)
+    margin-bottom: $x(15)
+    font-size: $x(30)
+    border-bottom: 1px solid #e3e3e3;
+    .params
+        height: $x(92)
+        line-height:  $x(92)
+    input
+        font-size: $x(30)
+    .title
+        width $x(140)
+        text-align:justify
+        text-align-last:justify;
+        color: #a7a7a7;
+        float: left
+    .content
+        margin-left: $x(160)
+        height: 100%
+        color: rgb(51, 51, 51)
+        .radio-warper
+            float left
+            width 50%
+    .params-name input
+        height: $x(67)
+        width: 100%
+        border: 1px solid #e3e3e3;
+        border-radius: $x(5)
+        display: block
+        top: $x(14)
+        position: relative;
+        text-indent: $x(20)
+    .params-time
+        .content div
+            margin-left: $x(220)
+            margin-right: $x(220)
+            text-align: center
+        input 
+            height: $x(67)
+            width: $x(220)
+            text-align: center
+            box-sizing: border-box
+            border: 1px solid #e3e3e3;
+            border-radius: $x(5)
+            display: block
+            top: $x(14)
+            position: relative;
+    .params-btn
+        padding: $x(30) 0 $x(15) 0
+        background-color: #fff
+.assets-result
+    color: #a7a7a7;
+    font-size: $x(30)
+    .item
+        margin-bottom: $x(15)
+        background-color: #fff
+        padding: 0 $x(45)
+        padding-bottom: $x(16)
+        border-top: 1px solid #e3e3e3;
+        border-bottom: 1px solid #e3e3e3;
+    .title
+        color: rgb(51, 51, 51)
+        height: $x(96)
+        line-height: $x(96)
+        font-size: $x(26)
+    .income
+        height: $x(32)
+        line-height: $x(32)
+        em
+            color: #f60
+    .time
+        height: $x(64)
+        line-height: $x(64)

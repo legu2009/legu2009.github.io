@@ -1,0 +1,43 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(content="telphone=no", name="format-detection")
+        link(rel="stylesheet", href="../../src/css/base.css")
+        link(rel="stylesheet", href="../../src/css/index.css")
+        script(src="../../src/js/flexible.js")
+    body.fixed-header
+        .fixed-confirm.page-warper
+            header
+                a.left.back
+                .title 交易确认
+            section.bond-info.confirm-info
+                .title 博时信用债券A/B
+                .text 预期年化收益率
+                .income 58000.00
+            section.bond-text
+                div 收益方式
+                    .right 10%
+                div 起息日期
+                    .right 24个月
+                div 到期日期
+                    .right 2018-08-01
+            section.trust-list
+                .item
+                    .box
+                        .left 交易密码
+                        .content
+                            input(placeholder="请输入交易密码")
+                .item
+                    .box.msg-code
+                        .left 短信验证码
+                        .btn.right 获取验证码
+                        .content
+                            input(placeholder="请输入验证码")
+            section.question-btn
+                .ui-important-btn 提交
+script(src="../../src/js/jquery-3.1.0.min.js")
+script(src="../../src/module/common.js")
+
+           
