@@ -38,6 +38,7 @@ body {
   font-size: 0.373333333333333rem;
   line-height: 0.8rem;
   position: fixed;
+  z-index: 99999;
 }
 .ui-toast .txt {
   display: inline-block;

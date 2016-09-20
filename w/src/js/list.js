@@ -26,12 +26,11 @@
                     console.log(valueText, inst)
             },
             onSelect: function (valueText, inst) {
-                setTimeout(function() {
-                    if ($bTime.val() >= $eTime.val()) {
-                        util.toast.show('开始日期 不能大于 结束日期');
-                        inst.show();
-                    }
-                }, 500);
+                console.log($bTime.val() , $eTime.val())
+                if ($bTime.val() >= $eTime.val()) {
+                    util.toast.show('开始日期 不能大于结束 日期');
+                    inst.show();
+                }
             },
             onClosed: function (valueText, inst) {
                     console.log(valueText, inst)
