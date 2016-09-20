@@ -1,5 +1,5 @@
 ;(function() {
-    $('header .back').on('click', function () {
-        history.back();
+    $('.assets-btns .recharge').on('click', function () {
+        location.href = "recharge.html"
     })
 })();

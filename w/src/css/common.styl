@@ -1,15 +1,11 @@
 $fz = 75
-$b()
-    font-weight: bold
 $x(h)
     unit((h/$fz) ,'rem')
-vendor(prop, args)
+$w3c(prop, args)
     -webkit-{prop} args
     -moz-{prop} args
+    -o-{prop} args
     {prop} args
-$s(w, h)
-    width: $x(w)
-    height: $x(h)
 $flex()
     display -webkit-box
     display flex
@@ -19,3 +15,6 @@ $flex1()
 $hm(h)
     height: $x(h)
     line-height: $x(h)
+$s(w, h)
+    width: $x(w)
+    height: $x(h)

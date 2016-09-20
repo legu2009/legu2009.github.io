@@ -1,0 +1,45 @@
+doctype html
+html
+    head(lang="en")
+        meta(charset="UTF-8")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(content="telphone=no", name="format-detection")
+        link(rel="stylesheet", href="../../src/css/base.css")
+        link(rel="stylesheet", href="../../src/css/index.css")
+        script(src="../../src/js/flexible.js")
+    body.fixed-header
+        .assetsrec-page.page-warper
+            header
+                a.left.back
+                .title 充值
+            section.trust-list
+                .item
+                    .box
+                        .left 银行卡
+                        .content.cards.link 中国银行(3482)
+                .item
+                    .box
+                        .left 账户余额
+                        .content.balance 45987.25元
+                .item
+                    .box
+                        .left 充值金额
+                        .content
+                            input
+                .item
+                    .box
+                        .left 交易密码
+                        .content
+                            input
+                .item
+                    .box.msg-code
+                        .left 手机动态码
+                        .btn.right 获取动态码
+                        .content
+                            input
+            section.question-btn
+                .ui-important-btn 充值
+        script(src="../../src/js/jquery-3.1.0.min.js")
+        script(src="../../src/module/common.js")
+        script(src="../../src/module/p/assets/recharge.js")
+           

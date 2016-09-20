@@ -15,10 +15,28 @@ body
     display: block !important;
 .hide
     display: none !important;
+.vhide
+    visibility: hidden !important;
 .ellipsis
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+.ui-toast
+    left: $x(45);
+    right: $x(45);
+    bottom: 20%
+    position: fixed;
+    text-align: center
+    font-size: $x(28)
+    line-height: $x(60)
+    position: fixed;
+    .txt
+        display: inline-block
+        padding: $x(10) $x(50)
+        color: #fff
+        background-color: #444;
+        margin: 0 auto
+        border-radius: $x(50)
 label.ui-radio
     position: relative;
     display: block;
@@ -442,8 +460,20 @@ footer
     .nav-item
         width: 25%
         float: left
-    .sel
-        color: #19a6db;
+        .sort
+            display: inline-block
+            width: $x(13)
+            height: $x(16)
+            background-color: red
+            visibility: hidden
+            background: url(images/sort-down.png) no-repeat center center
+            background-size: $x(13) $x(16)
+        &.sel
+            color: #19a6db;
+            .sort
+                visibility: visible
+        &.sel.up .sort
+            background-image: url(images/sort-up.png)
     .nav-bottom
         position: absolute
         left 0
@@ -577,10 +607,9 @@ footer
     .title
         height: $x(80)
         line-height: $x(80)
-        background-color: rga(242, 242, 242)
+        background-color: rgb(242, 242, 242)
         padding: $x(20) 0 0 $x(45)
-        font-size: $x(28)
-        font-weight: bold;
+        font-size: $x(32)
     .list
         padding: 0 $x(45)
         border-bottom: 1px solid #e3e3e3;
@@ -858,7 +887,7 @@ footer
 .about-info
     background-color: #fff
     font-size: $x(30);
-    padding-bottom: $x(100)
+    margin-bottom: $x(15)
     .item
         padding: 0 $x(45)
         border-bottom: 1px solid #e3e3e3;
@@ -869,8 +898,6 @@ footer
             font-family: "Adobe Heiti Std";
             color: rgb(51, 51, 51);
             float: right
-        &:last-child
-            border-bottom: none;
 .page-warper.trust-page
     background-color: #fff
     .question-btn
@@ -878,6 +905,24 @@ footer
         padding-bottom: $x(60)
 .trust-list
     font-size: $x(28)
+    background-color: #fff
+    .content.balance
+        color: rgb(171,171,171)
+    .content.cards
+        padding-left: $x(108)
+        background: url(images/cards.png) no-repeat left center
+        background-size: $x(83) $x(83)
+    .content.link
+        position: relative
+        &:after
+            content: ""
+            position: absolute
+            right: 0
+            width: $x(17)
+            top 0
+            bottom: 0
+            background: url(images/item-right.png) no-repeat center center
+            background-size: $x(17) $x(27)
     .item
         height: $x(105)
         line-height: $x(105)
@@ -912,7 +957,7 @@ footer
         .btn
             color: rgb(254, 255, 255);
             border-radius: 3px;
-            background-color: rgb(138, 219, 249);
+            background-color: #19a6db;
             width: $x(212);
             height: $x(71)
             line-height: $x(71)
@@ -920,6 +965,8 @@ footer
             text-align: center
             box-sizing: border-box
             border: 1px solid #e3e3e3;
+            &.disabled
+                background-color:rgb(138, 219, 249);
         .content
             margin-left: $x(214)
             margin-right: $x(220)
@@ -940,8 +987,6 @@ footer
         div
             height: $x(80)
             line-height: $x(80)
-    .trust-list
-        background-color: #fff
     .question-btn
         padding-top: $x(92)
 .setting-page
@@ -960,9 +1005,8 @@ footer
             bottom: 0
             background: url(images/item-right.png) no-repeat center center
             background-size: $x(17) $x(27)
-    :nth-child(3)
-        margin-bottom: $x(15)
-        padding-bottom: 0
+    .question-btn
+        padding-top: $x(60)
 .assets-query
     background-color: #fff
     padding: $x(20) $x(45)
@@ -1037,3 +1081,8 @@ footer
     .time
         height: $x(64)
         line-height: $x(64)
+.assetsrec-page
+    .question-btn
+        padding-top: $x(60)
+    .trust-list
+        font-size: $x(30)

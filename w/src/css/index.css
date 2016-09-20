@@ -21,10 +21,31 @@ body {
 .hide {
   display: none !important;
 }
+.vhide {
+  visibility: hidden !important;
+}
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.ui-toast {
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 20%;
+  position: fixed;
+  text-align: center;
+  font-size: 0.373333333333333rem;
+  line-height: 0.8rem;
+  position: fixed;
+}
+.ui-toast .txt {
+  display: inline-block;
+  padding: 0.133333333333333rem 0.666666666666667rem;
+  color: #fff;
+  background-color: #444;
+  margin: 0 auto;
+  border-radius: 0.666666666666667rem;
 }
 label.ui-radio {
   position: relative;
@@ -537,8 +558,23 @@ footer .company-tel {
   width: 25%;
   float: left;
 }
-.fixed-nav .sel {
+.fixed-nav .nav-item .sort {
+  display: inline-block;
+  width: 0.173333333333333rem;
+  height: 0.213333333333333rem;
+  background-color: #f00;
+  visibility: hidden;
+  background: url("images/sort-down.png") no-repeat center center;
+  background-size: 0.173333333333333rem 0.213333333333333rem;
+}
+.fixed-nav .nav-item.sel {
   color: #19a6db;
+}
+.fixed-nav .nav-item.sel .sort {
+  visibility: visible;
+}
+.fixed-nav .nav-item.sel.up .sort {
+  background-image: url("images/sort-up.png");
 }
 .fixed-nav .nav-bottom {
   position: absolute;
@@ -696,10 +732,9 @@ footer .company-tel {
 .assets-link .title {
   height: 1.066666666666667rem;
   line-height: 1.066666666666667rem;
-  background-color: rga(242, 242, 242);
+  background-color: #f2f2f2;
   padding: 0.266666666666667rem 0 0 0.6rem;
-  font-size: 0.373333333333333rem;
-  font-weight: bold;
+  font-size: 0.426666666666667rem;
 }
 .assets-link .list {
   padding: 0 0.6rem;
@@ -1041,7 +1076,7 @@ footer .company-tel {
 .about-info {
   background-color: #fff;
   font-size: 0.4rem;
-  padding-bottom: 1.333333333333333rem;
+  margin-bottom: 0.2rem;
 }
 .about-info .item {
   padding: 0 0.6rem;
@@ -1055,9 +1090,6 @@ footer .company-tel {
   color: #333;
   float: right;
 }
-.about-info .item:last-child {
-  border-bottom: none;
-}
 .page-warper.trust-page {
   background-color: #fff;
 }
@@ -1067,6 +1099,28 @@ footer .company-tel {
 }
 .trust-list {
   font-size: 0.373333333333333rem;
+  background-color: #fff;
+}
+.trust-list .content.balance {
+  color: #ababab;
+}
+.trust-list .content.cards {
+  padding-left: 1.44rem;
+  background: url("images/cards.png") no-repeat left center;
+  background-size: 1.106666666666667rem 1.106666666666667rem;
+}
+.trust-list .content.link {
+  position: relative;
+}
+.trust-list .content.link:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 0.226666666666667rem;
+  top: 0;
+  bottom: 0;
+  background: url("images/item-right.png") no-repeat center center;
+  background-size: 0.226666666666667rem 0.36rem;
 }
 .trust-list .item {
   height: 1.4rem;
@@ -1108,7 +1162,7 @@ footer .company-tel {
 .trust-list .msg-code .btn {
   color: #feffff;
   border-radius: 3px;
-  background-color: #8adbf9;
+  background-color: #19a6db;
   width: 2.826666666666667rem;
   height: 0.946666666666667rem;
   line-height: 0.946666666666667rem;
@@ -1116,6 +1170,9 @@ footer .company-tel {
   text-align: center;
   box-sizing: border-box;
   border: 1px solid #e3e3e3;
+}
+.trust-list .msg-code .btn.disabled {
+  background-color: #8adbf9;
 }
 .trust-list .msg-code .content {
   margin-left: 2.853333333333333rem;
@@ -1140,9 +1197,6 @@ footer .company-tel {
   height: 1.066666666666667rem;
   line-height: 1.066666666666667rem;
 }
-.fixed-confirm .trust-list {
-  background-color: #fff;
-}
 .fixed-confirm .question-btn {
   padding-top: 1.226666666666667rem;
 }
@@ -1164,9 +1218,8 @@ footer .company-tel {
   background: url("images/item-right.png") no-repeat center center;
   background-size: 0.226666666666667rem 0.36rem;
 }
-.setting-page :nth-child(3) {
-  margin-bottom: 0.2rem;
-  padding-bottom: 0;
+.setting-page .question-btn {
+  padding-top: 0.8rem;
 }
 .assets-query {
   background-color: #fff;
@@ -1256,4 +1309,10 @@ footer .company-tel {
 .assets-result .time {
   height: 0.853333333333333rem;
   line-height: 0.853333333333333rem;
+}
+.assetsrec-page .question-btn {
+  padding-top: 0.8rem;
+}
+.assetsrec-page .trust-list {
+  font-size: 0.4rem;
 }

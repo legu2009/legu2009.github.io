@@ -4,14 +4,25 @@
     var $body = $('body');
 
     var $bottom = $('.nav-bottom');
+    var $menus = $('.nav-item');
     $('.fixed-nav').on('click', '.nav-item', function () {
-        $('.nav-item').removeClass('sel');
-        var index = $(this).addClass('sel').index();
-        $bottom.css('left', index * 25 + '%');
+        var $elm = $(this);
+        var isSel = $elm.hasClass('sel');
+        var index = $elm.index();
+        if (isSel) {//切换排序
+            if (index == 0) return;
+            $elm.toggleClass('up');
+        } else {//切换查询
+            $elm.addClass('sel').siblings().removeClass('sel up');
+            $bottom.css('left', index * 25 + '%');
+        }
         query.q(index);
     })
 
-    $('.bond-list').on('click', '.bond-item', function () {
+    $('.bond-list').on('click', '.ui-collect', function () {
+        $(this).toggleClass('sel');
+        return false;
+    }).on('click', '.bond-item', function () {
         window.location.href = 'detail.html?id=' + this.getAttribute('bondId'); 
     })
     
@@ -36,15 +47,13 @@
         return {
             q: function (index) {
                 if (index !== undefine) {
-                    var sort = map[index] || '';
-                    if (_params.Sort !== sort) {
-                        _params.Page = 1;
-                        _params.Sort = sort;
-                        _isLoadingMore = false;
-                        _isEnd = false;
-                        $box.html('');
-                        //加载中
-                    }
+                    _params.Page = 1;
+                    _params.Sort = map[index];
+                    _params.Order = $menus.eq(index).hasClass('up')?'asc':'desc';
+                    _isLoadingMore = false;
+                    _isEnd = false;
+                    $box.html('');
+                    //加载中
                 }
                 var p = $.extend({}, _params);
                 _params = p;
@@ -68,6 +77,5 @@
             }
         }
     })();
-
     query.q(0);
 })();

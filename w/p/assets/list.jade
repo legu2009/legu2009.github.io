@@ -4,7 +4,9 @@ html
         meta(charset="UTF-8")
         meta(name="apple-mobile-web-app-capable", content="yes")
         meta(content="telphone=no", name="format-detection")
+        meta(name="viewport", content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
         link(rel="stylesheet", href="../../src/css/base.css")
+        link(rel="stylesheet", href="../../src/css/mobiscroll.custom-2.6.2.min.css")
         link(rel="stylesheet", href="../../src/css/index.css")
         script(src="../../src/js/flexible.js")
     body.fixed-header
@@ -22,13 +24,13 @@ html
                                 div 购买记录
                         .radio-warper
                             label.ui-radio.item 
-                                input.magic-radio(type="radio", name="q1", checked)
+                                input.magic-radio(type="radio", name="q1")
                                 div 购买申请
                 .params.params-time
                     .title 投资日期
                     .content.clearfix
-                        input.left
-                        input.right
+                        input.left.time-input
+                        input.right.time-input
                         div ~
                 .params.params-name
                     .title 名称
@@ -52,5 +54,6 @@ html
                         span 元
                     .time 申请时间：2016-08-25  18:45
         script(src="../../src/js/jquery-3.1.0.min.js")
+        script(src="../../src/js/mobiscroll.custom-2.6.2.min.js")
         script(src="../../src/module/common.js")
-           
+        script(src="../../src/module/p/assets/list.js")

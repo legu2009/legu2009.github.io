@@ -10,7 +10,9 @@
         var index = $elm.index();
         $content.eq(index).addClass('show').siblings('.content').removeClass('show');
     })
-
+    $('.ui-collect').on('click', function () {
+        $(this).toggleClass('sel');
+    });
     var numComponent = (function () {
         var $box = $('.num-component');
         var min = parseInt($box.attr('min') || 0, 10);
@@ -45,14 +47,14 @@
             add: function (n) {
                 n = n || step;
                 val += n;
-                this.check(val);
+                this.check();
             },
             del: function (n) {
                 n = n || step;
                 val -= n;
-                this.check(val);
+                this.check();
             },
-            check: function (val) {
+            check: function () {
                 if (val < min) {
                     val = min;
                 }
@@ -71,9 +73,9 @@
                 })
                 $ipt.on('change', function () {
                     val = parseFloat($ipt.val() || 0, 10);
-                    self.check(val);
+                    self.check();
                 })
-                this.check(val);
+                this.check();
                 return this;
             }
         }
